@@ -17,6 +17,12 @@ export default async function Footer() {
     const igLink = 'https://www.instagram.com/smpterpadu_alittihadiyah/'
     const githubLink = 'https://github.com/dafbeatx/PPDB-SMP-Terpadu-Al-Ittihadiyah'
 
+    // Clean hours string from redundant day prefixes
+    const cleanHours = (val: string | undefined, defaultVal: string) => {
+        if (!val) return defaultVal
+        return val.replace(/^(Senin\s*-\s*Jumat|Sabtu|Minggu)\s*:\s*/i, '').trim() || defaultVal
+    }
+
     return (
         <footer className="bg-gray-900 text-white pt-16 pb-8 border-t border-gray-800">
             <div className="container mx-auto px-6 lg:px-8">
@@ -118,15 +124,15 @@ export default async function Footer() {
                             <ul className="space-y-3 text-sm">
                                 <li className="flex flex-col sm:flex-row justify-between text-gray-400 gap-1">
                                     <span>Senin - Jumat</span>
-                                    <span className="text-white font-medium">{footer['footer.hours_weekday'] || '07:30 - 13:00'}</span>
+                                    <span className="text-white font-medium">{cleanHours(footer['footer.hours_weekday'], '07:30 - 16:00')}</span>
                                 </li>
                                 <li className="flex flex-col sm:flex-row justify-between text-gray-400 gap-1">
                                     <span>Sabtu</span>
-                                    <span className="text-white font-medium">{footer['footer.hours_saturday'] || '07:30 - 12:00'}</span>
+                                    <span className="text-white font-medium">{cleanHours(footer['footer.hours_saturday'], '07:30 - 12:00')}</span>
                                 </li>
                                 <li className="flex flex-col sm:flex-row justify-between text-gray-400 gap-1">
                                     <span>Minggu</span>
-                                    <span className="text-gray-500">{footer['footer.hours_sunday'] || 'Libur'}</span>
+                                    <span className="text-gray-500">{cleanHours(footer['footer.hours_sunday'], 'Libur')}</span>
                                 </li>
                             </ul>
                         </div>

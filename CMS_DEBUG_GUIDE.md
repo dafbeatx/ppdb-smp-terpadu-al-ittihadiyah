@@ -1,11 +1,12 @@
 # Panduan Debugging CMS Save Issue
 
-## Perubahan yang Dibuat
-
-✅ **Enhanced Logging** - Console log untuk tracking save process
-✅ **Better Error Messages** - Error message yang lebih detail
-✅ **Auto Refresh** - Halaman auto-refresh setelah save sukses
-✅ **Text Input Fix** - Font bold untuk visibility
+## Perubahan & Peningkatan Arsitektur Terbaru
+✅ **Dirty Field Tracking** - Hanya mengirim data yang diedit ke backend, menghemat >95% bandwidth egress dan mencegah timeout.
+✅ **Parallel Updates** - Eksekusi pembaruan paralel aman tanpa loop 57x berurutan.
+✅ **Seamless Auto Refresh** - Menggunakan `router.refresh()` Next.js tanpa me-reload seluruh browser dan tetap berada pada tab yang aktif.
+✅ **Minimal Log Ingestion** - Menghilangkan spam console log di backend agar kuota log ingestion Supabase & hosting tetap aman.
+✅ **Dynamic CTA Alur PPDB** - Box panduan pendaftaran kini terhubung dinamis dengan data database `alur.cta_title` dan `alur.cta_text`.
+✅ **Pembersihan Jam Footer** - Mencegah duplikasi teks hari pada jam operasional footer.
 
 ---
 

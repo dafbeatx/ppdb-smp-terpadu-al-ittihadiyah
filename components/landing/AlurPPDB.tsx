@@ -116,10 +116,10 @@ export default async function AlurPPDB() {
                                         <span>💬 Layanan Bantuan Pendaftaran</span>
                                     </div>
                                     <h3 className="text-2xl md:text-3xl font-extrabold text-white">
-                                        Merasa Awam dengan Teknologi atau Butuh Bantuan?
+                                        {content['alur.cta_title'] || 'Merasa Awam dengan Teknologi atau Butuh Bantuan?'}
                                     </h3>
                                     <p className="text-emerald-100/90 text-sm md:text-base leading-relaxed max-w-xl">
-                                        Bapak/Ibu jangan khawatir atau sungkan. Panitia PPDB kami yang ramah siap memandu langkah demi langkah via WhatsApp, atau Bapak/Ibu bisa langsung datang ke sekolah dengan membawa berkas asli.
+                                        {content['alur.cta_text'] || 'Bapak/Ibu jangan khawatir atau sungkan. Panitia PPDB kami yang ramah siap memandu langkah demi langkah via WhatsApp, atau Bapak/Ibu bisa langsung datang ke sekolah dengan membawa berkas asli.'}
                                     </p>
                                 </div>
 
