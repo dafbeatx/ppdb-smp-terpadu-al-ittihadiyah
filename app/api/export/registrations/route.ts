@@ -1,0 +1,204 @@
+import { NextResponse } from 'next/server'
+import { createClient } from '@/lib/supabase/server'
+import * as XLSX from 'xlsx'
+
+interface StudentExportData {
+    full_name?: string
+    nik_siswa?: string
+    nisn?: string
+    birth_place?: string
+    birth_date?: string
+    gender?: string
+    agama?: string
+    anak_ke?: number | string
+    address?: string
+    desa?: string
+    kecamatan?: string
+    kabupaten?: string
+    previous_school?: string
+    tahun_lulus?: string
+    phone_number?: string
+    tinggal_dengan?: string
+    prestasi?: string
+    hafalan_quran?: string
+}
+
+interface ParentExportData {
+    father_name?: string
+    pendidikan_ayah?: string
+    father_occupation?: string
+    mother_name?: string
+    pendidikan_ibu?: string
+    mother_occupation?: string
+    phone_number?: string
+    email?: string
+    address?: string
+    nama_wali?: string
+    hubungan_wali?: string
+}
+
+interface DocumentExportData {
+    document_type: string
+    file_path: string
+}
+
+interface RegistrationExportRecord {
+    id: string
+    registration_number: string
+    status: string
+    created_at: string
+    students?: StudentExportData | StudentExportData[]
+    parents?: ParentExportData | ParentExportData[]
+    documents?: DocumentExportData[]
+}
+
+export async function GET() {
+    try {
+        const supabase = await createClient()
+
+        // Get current user - verify admin
+        const { data: { user }, error: userError } = await supabase.auth.getUser()
+
+        if (userError || !user || !user.email) {
+            return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
+        }
+
+        // Check admin status
+        const { data: adminData, error: adminError } = await supabase
+            .from('admin_users')
+            .select('id')
+            .ilike('email', user.email.trim())
+            .single()
+
+        if (adminError || !adminData) {
+            return NextResponse.json({ error: 'Not an admin' }, { status: 403 })
+        }
+
+        // Fetch all registrations with related data
+        const { data: registrations, error: fetchError } = await supabase
+            .from('registrations')
+            .select(`
+        *,
+        students (*),
+        parents (*),
+        documents (*)
+      `)
+            .order('created_at', { ascending: false })
+
+        if (fetchError) {
+            console.error('Fetch error:', fetchError)
+            return NextResponse.json({ error: 'Failed to fetch data' }, { status: 500 })
+        }
+
+        // Prepare data for Excel
+        const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || ''
+        const records = (registrations || []) as RegistrationExportRecord[]
+        const excelData = records.map((reg) => {
+            const student = (Array.isArray(reg.students) ? reg.students[0] : reg.students) || {}
+            const parent = (Array.isArray(reg.parents) ? reg.parents[0] : reg.parents) || {}
+            const docs = reg.documents || []
+
+            // Get file paths
+            const ktpDoc = docs.find((d) => d.document_type === 'ktp')
+            const kkDoc = docs.find((d) => d.document_type === 'kartu_keluarga')
+            const ijazahDoc = docs.find((d) => d.document_type === 'ijazah')
+
+            return {
+                'No. Pendaftaran': reg.registration_number,
+                'Status': reg.status,
+                'Tanggal Daftar': new Date(reg.created_at).toLocaleDateString('id-ID'),
+
+                // Student data
+                'Nama Lengkap': student.full_name || '-',
+                'NIK': student.nik_siswa || '-',
+                'NISN': student.nisn || '-',
+                'Tempat Lahir': student.birth_place || '-',
+                'Tanggal Lahir': student.birth_date ? new Date(student.birth_date).toLocaleDateString('id-ID') : '-',
+                'Jenis Kelamin': student.gender || '-',
+                'Agama': student.agama || '-',
+                'Anak Ke': student.anak_ke || '-',
+                'Alamat': student.address || '-',
+                'Desa': student.desa || '-',
+                'Kecamatan': student.kecamatan || '-',
+                'Kabupaten': student.kabupaten || '-',
+                'Asal Sekolah': student.previous_school || '-',
+                'Tahun Lulus': student.tahun_lulus || '-',
+                'Telepon Siswa': student.phone_number || '-',
+                'Tinggal Dengan': student.tinggal_dengan || '-',
+                'Prestasi': student.prestasi || '-',
+                'Hafalan Quran': student.hafalan_quran || '-',
+
+                // Parent data
+                'Nama Ayah': parent.father_name || '-',
+                'Pendidikan Ayah': parent.pendidikan_ayah || '-',
+                'Pekerjaan Ayah': parent.father_occupation || '-',
+                'Nama Ibu': parent.mother_name || '-',
+                'Pendidikan Ibu': parent.pendidikan_ibu || '-',
+                'Pekerjaan Ibu': parent.mother_occupation || '-',
+                'Telepon Orang Tua': parent.phone_number || '-',
+                'Email Orang Tua': parent.email || '-',
+                'Alamat Orang Tua': parent.address || '-',
+                'Nama Wali': parent.nama_wali || '-',
+                'Hubungan Wali': parent.hubungan_wali || '-',
+
+                // Documents
+                'File KTP': ktpDoc?.file_path || '-',
+                'File KK': kkDoc?.file_path || '-',
+                'File Ijazah': ijazahDoc?.file_path || '-',
+                'Link Download ZIP (Semua Dokumen)': `${siteUrl}/api/admin/registrations/${reg.id}/zip`
+            }
+        })
+
+        // Create worksheet from data
+        const ws = XLSX.utils.json_to_sheet(excelData)
+
+        // Set column widths for better readability
+        const colWidths = [
+            { wch: 18 }, // No. Pendaftaran
+            { wch: 12 }, // Status
+            { wch: 15 }, // Tanggal Daftar
+            { wch: 25 }, // Nama Lengkap
+            { wch: 12 }, // NISN
+            { wch: 15 }, // Tempat Lahir
+            { wch: 15 }, // Tanggal Lahir
+            { wch: 12 }, // Jenis Kelamin
+            { wch: 30 }, // Alamat
+            { wch: 25 }, // Asal Sekolah
+            { wch: 15 }, // Telepon Siswa
+            { wch: 25 }, // Nama Ayah
+            { wch: 20 }, // Pekerjaan Ayah
+            { wch: 25 }, // Nama Ibu
+            { wch: 20 }, // Pekerjaan Ibu
+            { wch: 15 }, // Telepon Orang Tua
+            { wch: 30 }, // Alamat Orang Tua
+            { wch: 40 }, // File KTP
+            { wch: 40 }, // File KK
+            { wch: 40 }, // File Ijazah
+            { wch: 60 }, // Link Download ZIP
+        ]
+        ws['!cols'] = colWidths
+
+        // Create workbook
+        const wb = XLSX.utils.book_new()
+        XLSX.utils.book_append_sheet(wb, ws, 'Data Pendaftar')
+
+        // Generate Excel file buffer
+        const excelBuffer = XLSX.write(wb, { type: 'buffer', bookType: 'xlsx' })
+
+        // Create filename with timestamp
+        const timestamp = new Date().toISOString().split('T')[0]
+        const filename = `PPDB-Data-${timestamp}.xlsx`
+
+        // Return as downloadable file
+        return new NextResponse(excelBuffer, {
+            status: 200,
+            headers: {
+                'Content-Type': 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+                'Content-Disposition': `attachment; filename="${filename}"`,
+            },
+        })
+    } catch (error) {
+        console.error('Export error:', error)
+        return NextResponse.json({ error: 'Internal server error' }, { status: 500 })
+    }
+}
