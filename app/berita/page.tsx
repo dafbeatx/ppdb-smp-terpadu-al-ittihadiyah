@@ -1,5 +1,5 @@
 import Link from 'next/link'
-import { ArrowLeft, Calendar, Tag, ArrowRight, Newspaper } from 'lucide-react'
+import { ArrowLeft, Calendar, Tag, ArrowRight } from 'lucide-react'
 import type { Metadata } from 'next'
 
 export const metadata: Metadata = {

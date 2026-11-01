@@ -1,5 +1,5 @@
 import Link from 'next/link'
-import { ArrowLeft, BookOpen, Milestone, ShieldCheck, Heart, GraduationCap } from 'lucide-react'
+import { ArrowLeft, BookOpen, Milestone, ShieldCheck, GraduationCap } from 'lucide-react'
 import type { Metadata } from 'next'
 
 export const metadata: Metadata = {
