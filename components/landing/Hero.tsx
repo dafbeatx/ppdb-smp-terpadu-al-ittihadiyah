@@ -46,46 +46,33 @@ export default async function Hero() {
                         {/* Kolom Kiri: Identitas Resmi & Ajakan Pendaftaran */}
                         <div className="lg:col-span-7 text-left space-y-5 sm:space-y-6">
                             
-                            {/* Identitas Lembaga & Yayasan */}
-                            <div className="flex items-center gap-3">
-                                <div className="w-12 h-12 sm:w-14 sm:h-14 rounded-xl bg-white p-1.5 shadow-md shrink-0 flex items-center justify-center">
-                                    <Image
-                                        src="/logo.webp"
-                                        alt={`Logo ${schoolName}`}
-                                        width={56}
-                                        height={56}
-                                        sizes="(max-width: 640px) 48px, 56px"
-                                        className="w-full h-full object-contain"
-                                        priority
-                                    />
-                                </div>
-                                <div className="min-w-0">
-                                    <p className="text-[11px] sm:text-xs font-semibold text-emerald-300 uppercase tracking-wider">
-                                        Yayasan Pendidikan Islam Al-Ittihadiyah
-                                    </p>
-                                    <div className="flex flex-wrap items-center gap-x-2 gap-y-0.5 text-xs sm:text-sm text-emerald-100/90 font-medium">
-                                        <span className="flex items-center gap-1">
-                                            <MapPin className="w-3.5 h-3.5 text-amber-400 shrink-0" />
-                                            <span>Ciampea, Kab. Bogor</span>
-                                        </span>
-                                        <span className="text-emerald-400">•</span>
-                                        <span className="text-amber-300 font-semibold">Terakreditasi B</span>
-                                    </div>
+                            {/* Identitas Lembaga & Lokasi */}
+                            <div className="space-y-1.5">
+                                <p className="text-xs sm:text-sm font-bold text-emerald-300 uppercase tracking-wider">
+                                    SMP Terpadu Al-Ittihadiyah
+                                </p>
+                                <div className="flex flex-wrap items-center gap-x-2 gap-y-0.5 text-xs sm:text-sm text-emerald-100/90 font-medium">
+                                    <span className="flex items-center gap-1">
+                                        <MapPin className="w-3.5 h-3.5 text-amber-400 shrink-0" />
+                                        <span>Ciampea, Kab. Bogor</span>
+                                    </span>
+                                    <span className="text-emerald-400">•</span>
+                                    <span className="text-amber-300 font-semibold">Terakreditasi B</span>
                                 </div>
                             </div>
 
                             {/* Headline Utama */}
                             <div className="space-y-2.5">
-                                <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-lg bg-emerald-800/80 border border-emerald-600/50 text-emerald-100 text-xs sm:text-sm font-semibold">
-                                    <Calendar className="w-3.5 h-3.5 text-amber-300" />
-                                    <span>Penerimaan Peserta Didik Baru (PPDB) • {year}</span>
-                                </div>
-
                                 <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-black text-white leading-tight sm:leading-tight tracking-tight">
-                                    {schoolName}
+                                    Penerimaan Peserta Didik Baru (PPDB)
                                 </h1>
 
-                                <p className="text-sm sm:text-base md:text-lg text-emerald-100 font-normal leading-relaxed">
+                                <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-lg bg-emerald-800/80 border border-emerald-600/50 text-emerald-100 text-xs sm:text-sm font-semibold">
+                                    <Calendar className="w-3.5 h-3.5 text-amber-300" />
+                                    <span>{year}</span>
+                                </div>
+
+                                <p className="text-sm sm:text-base md:text-lg text-emerald-100 font-normal leading-relaxed pt-1">
                                     {tagline ? tagline : "Membina Generasi Qur'ani yang Aktif, Kreatif, dan Berakhlak Mulia melalui integrasi kurikulum nasional dan nilai-nilai kepesantrenan."}
                                 </p>
                             </div>
