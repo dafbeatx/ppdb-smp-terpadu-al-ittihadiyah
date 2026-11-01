@@ -31,17 +31,19 @@ Sebelum bisa login, Anda harus membuat admin account di Supabase:
    - SQL Editor → New Query
    - Jalankan SQL ini:
    ```sql
-   INSERT INTO admin_users (email) 
+   INSERT INTO admin_users (email)
    VALUES ('admin@smpalittihadiyah.sch.id');
    ```
+
    - Ganti email sesuai yang Anda buat di step 3
 
 ### Step 2: Login ke Admin Panel
 
 1. **Buka Halaman Login**
+
    ```
    URL: https://your-site.com/admin/login
-   
+
    Jika local:
    URL: http://localhost:3000/admin/login
    ```
@@ -67,14 +69,14 @@ Sebelum bisa login, Anda harus membuat admin account di Supabase:
 
 ### Tabs yang Tersedia
 
-| Tab | Isi Content |
-|-----|-------------|
-| **Hero Section** | Nama sekolah, tagline, tahun ajaran, statistik (pengalaman, lulusan, akreditasi) |
-| **Profil Sekolah** | Judul, subjudul, paragraf 1 & 2 tentang sekolah |
-| **Visi & Misi** | Visi sekolah dan 6 poin misi (AKBAR) |
-| **Keunggulan** | 4 keunggulan sekolah (judul + deskripsi masing-masing) |
-| **Alur PPDB** | 4 step pendaftaran + CTA text |
-| **Footer** | Deskripsi, alamat, kontak, jam operasional |
+| Tab                | Isi Content                                                                      |
+| ------------------ | -------------------------------------------------------------------------------- |
+| **Hero Section**   | Nama sekolah, tagline, tahun ajaran, statistik (pengalaman, lulusan, akreditasi) |
+| **Profil Sekolah** | Judul, subjudul, paragraf 1 & 2 tentang sekolah                                  |
+| **Visi & Misi**    | Visi sekolah dan 6 poin misi (AKBAR)                                             |
+| **Keunggulan**     | 4 keunggulan sekolah (judul + deskripsi masing-masing)                           |
+| **Alur PPDB**      | 4 step pendaftaran + CTA text                                                    |
+| **Footer**         | Deskripsi, alamat, kontak, jam operasional                                       |
 
 ### Cara Edit Content
 
@@ -98,12 +100,14 @@ Sebelum bisa login, Anda harus membuat admin account di Supabase:
 ### Tips Edit Content
 
 ✅ **DO**:
+
 - Gunakan Bahasa Indonesia yang formal dan profesional
 - Pastikan ejaan benar (gunakan EYD)
 - Tulis kalimat yang jelas dan mudah dipahami
 - Untuk angka statistik, tulis angka saja (tanpa simbol)
 
 ❌ **DON'T**:
+
 - Jangan gunakan bahasa gaul atau tidak formal
 - Jangan tulis terlalu panjang (user enggan membaca)
 - Jangan gunakan simbol aneh atau emoji berlebihan
@@ -112,21 +116,25 @@ Sebelum bisa login, Anda harus membuat admin account di Supabase:
 ### Contoh Edit yang Baik
 
 **BEFORE** (default):
+
 ```
 Tahun Berpengalaman: 20
 ```
 
 **AFTER** (jika sekolah sudah 25 tahun):
+
 ```
 Tahun Berpengalaman: 25
 ```
 
 **BEFORE** (Visi):
+
 ```
 Menjadi lembaga pendidikan Islam terpadu yang unggul...
 ```
 
 **AFTER** (disesuaikan):
+
 ```
 Menjadi lembaga pendidikan Islam terbaik di Sumatera Utara yang menghasilkan lulusan berakhlak mulia dan berprestasi...
 ```
@@ -168,6 +176,7 @@ Menjadi lembaga pendidikan Islam terbaik di Sumatera Utara yang menghasilkan lul
 ## 📊 Dashboard
 
 Dashboard menampilkan:
+
 - 📈 **Statistik**: Total pendaftar, pending, diterima, ditolak
 - 📋 **Pendaftar Terbaru**: 5 pendaftar terakhir
 - 🔗 **Quick Access**: Link ke menu lain
@@ -179,6 +188,7 @@ Dashboard menampilkan:
 ### Logout
 
 Setelah selesai:
+
 1. Sidebar (paling bawah) → Click **"Logout"**
 2. Anda akan kembali ke halaman login
 3. Session di-clear, aman!
@@ -186,6 +196,7 @@ Setelah selesai:
 ### Password Lupa
 
 Jika lupa password:
+
 1. Reset via Supabase Dashboard
 2. Authentication → Users → Cari email Anda
 3. Click email → Click "Reset Password"
@@ -204,12 +215,14 @@ Jika lupa password:
 ## ❓ Troubleshooting
 
 ### "Email atau password salah"
+
 - ✅ Pastikan email EXACT sama dengan di Supabase
 - ✅ Check caps lock (password case-sensitive)
 - ✅ Pastikan user sudah di-create di Supabase Auth
 - ✅ Pastikan "Auto Confirm User" dicentang saat create user
 
 ### "Anda tidak memiliki akses admin"
+
 - ✅ Pastikan email sudah diinsert ke tabel `admin_users`
 - ✅ Jalankan SQL:
   ```sql
@@ -218,12 +231,14 @@ Jika lupa password:
 - ✅ Jika tidak ada hasil, jalankan INSERT lagi
 
 ### Perubahan content tidak muncul
+
 - ✅ Click "Simpan Perubahan" dulu
 - ✅ Tunggu notifikasi "Berhasil disimpan!"
 - ✅ Hard refresh browser (Ctrl+Shift+R atau Cmd+Shift+R)
 - ✅ Clear browser cache
 
 ### Cannot login setelah deploy ke Vercel
+
 - ✅ Pastikan environment variables sudah diset di Vercel
 - ✅ Pastikan database migration sudah dijalankan
 - ✅ Test create user lagi di production database
@@ -249,20 +264,21 @@ Admin panel juga bisa diakses dari HP:
 ✅ **Backup data** secara berkala dengan export CSV  
 ✅ **Update content** sebelum tahun ajaran baru  
 ✅ **Check pendaftar baru** setiap hari  
-✅ **Verifikasi dokumen** dengan teliti  
+✅ **Verifikasi dokumen** dengan teliti
 
 ### DON'T
 
 ❌ Jangan share password dengan orang lain  
 ❌ Jangan edit content asal-asalan  
 ❌ Jangan hapus content penting  
-❌ Jangan lupa logout di komputer umum  
+❌ Jangan lupa logout di komputer umum
 
 ---
 
 ## 📞 Need Help?
 
 Jika ada masalah:
+
 1. Check troubleshooting section di atas
 2. Check Supabase logs (Dashboard → Logs)
 3. Contact developer/IT support

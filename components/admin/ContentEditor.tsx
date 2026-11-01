@@ -4,7 +4,7 @@ import { useState, useRef } from 'react'
 import { useRouter } from 'next/navigation'
 import Card from '@/components/ui/Card'
 import Button from '@/components/ui/Button'
-import { Save, AlertCircle, CheckCircle, RefreshCw, Image as ImageIcon } from 'lucide-react'
+import { Save, AlertCircle, CheckCircle, RefreshCw, Image as ImageIcon, Target } from 'lucide-react'
 import type { PageContent } from '@/types/content.types'
 
 interface ContentEditorProps {
@@ -162,6 +162,25 @@ export default function ContentEditor({ initialContent }: ContentEditorProps) {
                         <div className="text-xs text-gray-600 space-y-1">
                             <p className="font-semibold text-gray-800">Logo aktif di landing page & navbar</p>
                             <p className="text-gray-500">File default tersimpan di <code className="bg-white px-1.5 py-0.5 rounded border text-green-700 font-mono">/logo.webp</code></p>
+                        </div>
+                    </div>
+                </Card>
+            )}
+
+            {/* Panduan jika berada di tab Visi & Misi */}
+            {activeTab === 'visi_misi' && (
+                <Card className="p-5 mb-6 bg-linear-to-br from-emerald-50 to-green-50/40 border border-emerald-200">
+                    <div className="flex items-start gap-3">
+                        <div className="p-2.5 bg-emerald-100 rounded-xl text-emerald-800 shrink-0">
+                            <Target className="w-5 h-5 text-emerald-700" />
+                        </div>
+                        <div>
+                            <h3 className="text-sm font-bold text-gray-900 mb-1">
+                                Panduan Visi &amp; Misi (AKBAR)
+                            </h3>
+                            <p className="text-xs text-gray-600 leading-relaxed">
+                                Konten ini memuat Visi Resmi Sekolah dan 6 Poin Misi berlandaskan pilar karakter <strong>AKBAR</strong> (Aktif, Kreatif, Bersih, Antusias, dan Religius). Perubahan pada teks akan otomatis tercermin di halaman utama secara real-time.
+                            </p>
                         </div>
                     </div>
                 </Card>
