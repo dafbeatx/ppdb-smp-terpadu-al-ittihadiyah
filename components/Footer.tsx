@@ -24,10 +24,18 @@ export default async function Footer() {
         return val.replace(/^(Senin\s*-\s*Jumat|Sabtu|Minggu)\s*:\s*/i, '').trim() || defaultVal
     }
 
+    const schoolDesc = footer['footer.school_desc']?.trim() || ''
+
+    const hasHours = Boolean(
+        footer['footer.hours_weekday']?.trim() ||
+        footer['footer.hours_saturday']?.trim() ||
+        footer['footer.hours_sunday']?.trim()
+    )
+
     return (
         <footer className="bg-gray-900 text-white pt-10 pb-8 border-t border-gray-800">
             <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 md:gap-10 lg:gap-12 mb-8">
+                <div className={`grid grid-cols-1 md:grid-cols-2 ${hasHours ? 'lg:grid-cols-3' : ''} gap-8 md:gap-10 lg:gap-12 mb-8`}>
                     {/* Brand & Description */}
                     <div className="flex flex-col items-start text-left space-y-3.5 sm:space-y-4">
                         <div className="flex items-center gap-3">
@@ -45,14 +53,16 @@ export default async function Footer() {
                                     SMP Terpadu Al-Ittihadiyah
                                 </h3>
                                 <p className="text-xs text-amber-300 font-medium mt-0.5">
-                                    Ciampea, Bogor • Akreditasi Unggul
+                                    Ciampea, Bogor • Portal Resmi
                                 </p>
                             </div>
                         </div>
 
-                        <p className="text-gray-400 leading-relaxed text-xs sm:text-sm">
-                            {footer['footer.school_desc'] || 'Mewujudkan SMP Terpadu Al-Ittihadiyah yang Aktif, Kreatif, Bersih, Antusias, dan Religius (AKBAR) dalam mencetak generasi cerdas berakhlak mulia.'}
-                        </p>
+                        {schoolDesc && (
+                            <p className="text-gray-400 leading-relaxed text-xs sm:text-sm">
+                                {schoolDesc}
+                            </p>
+                        )}
 
                         <div className="flex items-center gap-3 pt-1">
                             <a
@@ -76,7 +86,7 @@ export default async function Footer() {
                         </div>
                     </div>
 
-                    {/* Contact Info */}
+                    {/* Contact Info (Tetap ada sesuai permintaan user) */}
                     <div className="flex flex-col items-start text-left space-y-3.5 sm:space-y-4">
                         <h4 className="text-sm sm:text-base font-bold text-white uppercase tracking-wider flex items-center gap-2">
                             <span className="w-1.5 h-4 bg-emerald-500 rounded-full"></span>
@@ -123,33 +133,41 @@ export default async function Footer() {
                         </ul>
                     </div>
 
-                    {/* Operation Hours */}
-                    <div className="flex flex-col items-start text-left space-y-3.5 sm:space-y-4 w-full">
-                        <h4 className="text-sm sm:text-base font-bold text-white uppercase tracking-wider flex items-center gap-2">
-                            <span className="w-1.5 h-4 bg-emerald-500 rounded-full"></span>
-                            Jam Operasional
-                        </h4>
-                        <div className="w-full bg-gray-800/60 p-4 sm:p-5 rounded-2xl border border-gray-700/60 space-y-3">
-                            <div className="flex items-center gap-2 pb-2.5 border-b border-gray-700/60">
-                                <Clock className="w-4 h-4 text-emerald-400 shrink-0" />
-                                <span className="text-xs sm:text-sm font-semibold text-white">Waktu Layanan PPDB</span>
-                            </div>
-                            <div className="space-y-2 text-xs sm:text-sm">
-                                <div className="flex items-center justify-between py-1 border-b border-gray-700/30">
-                                    <span className="text-gray-400">Senin - Jumat</span>
-                                    <span className="text-emerald-400 font-semibold">{cleanHours(footer['footer.hours_weekday'], '07:30 - 16:00')}</span>
+                    {/* Operation Hours: Hanya muncul jika admin mengisi jam kerja di CMS */}
+                    {hasHours && (
+                        <div className="flex flex-col items-start text-left space-y-3.5 sm:space-y-4 w-full">
+                            <h4 className="text-sm sm:text-base font-bold text-white uppercase tracking-wider flex items-center gap-2">
+                                <span className="w-1.5 h-4 bg-emerald-500 rounded-full"></span>
+                                Jam Operasional
+                            </h4>
+                            <div className="w-full bg-gray-800/60 p-4 sm:p-5 rounded-2xl border border-gray-700/60 space-y-3">
+                                <div className="flex items-center gap-2 pb-2.5 border-b border-gray-700/60">
+                                    <Clock className="w-4 h-4 text-emerald-400 shrink-0" />
+                                    <span className="text-xs sm:text-sm font-semibold text-white">Waktu Layanan PPDB</span>
                                 </div>
-                                <div className="flex items-center justify-between py-1 border-b border-gray-700/30">
-                                    <span className="text-gray-400">Sabtu</span>
-                                    <span className="text-emerald-400 font-semibold">{cleanHours(footer['footer.hours_saturday'], '07:30 - 12:00')}</span>
-                                </div>
-                                <div className="flex items-center justify-between py-1">
-                                    <span className="text-gray-400">Minggu / Libur</span>
-                                    <span className="text-gray-500 font-medium">{cleanHours(footer['footer.hours_sunday'], 'Libur')}</span>
+                                <div className="space-y-2 text-xs sm:text-sm">
+                                    {footer['footer.hours_weekday'] && (
+                                        <div className="flex items-center justify-between py-1 border-b border-gray-700/30">
+                                            <span className="text-gray-400">Senin - Jumat</span>
+                                            <span className="text-emerald-400 font-semibold">{cleanHours(footer['footer.hours_weekday'], '')}</span>
+                                        </div>
+                                    )}
+                                    {footer['footer.hours_saturday'] && (
+                                        <div className="flex items-center justify-between py-1 border-b border-gray-700/30">
+                                            <span className="text-gray-400">Sabtu</span>
+                                            <span className="text-emerald-400 font-semibold">{cleanHours(footer['footer.hours_saturday'], '')}</span>
+                                        </div>
+                                    )}
+                                    {footer['footer.hours_sunday'] && (
+                                        <div className="flex items-center justify-between py-1">
+                                            <span className="text-gray-400">Minggu / Libur</span>
+                                            <span className="text-gray-500 font-medium">{cleanHours(footer['footer.hours_sunday'], '')}</span>
+                                        </div>
+                                    )}
                                 </div>
                             </div>
                         </div>
-                    </div>
+                    )}
                 </div>
 
                 {/* Bottom Bar */}

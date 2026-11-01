@@ -6,124 +6,137 @@ import ScrollReveal from '@/components/ScrollReveal'
 export default async function Profile() {
     const content = await getContentMap('profile')
 
-    // Profile section uses 'profile.key' format for main content
-    const title = content['profile.title'] || 'Mengenal SMP Terpadu Al-Ittihadiyah'
-    const subtitle = content['profile.subtitle'] || 'Sekolah ramah anak yang mendidik kecerdasan akal sekaligus kemuliaan hati'
-    
-    const paragraph1 = content['profile.paragraph_1'] || 'SMP Terpadu Al-Ittihadiyah hadir sebagai mitra terpercaya bagi para orang tua dalam mendidik putra-putri di usia remaja. Kami memadukan kurikulum pendidikan nasional dengan pembinaan akhlakul karimah dan nilai-nilai Islam.'
-    const paragraph2 = content['profile.paragraph_2'] || 'Dengan bimbingan para ustadz dan guru yang sabar serta berdedikasi, kami menanamkan kebiasaan sholat berjamaah, hafalan Al-Qur\'an, serta disiplin belajar dalam suasana kekeluargaan yang hangat, nyaman, dan aman bagi buah hati Anda.'
+    const title = content['profile.title']?.trim() || ''
+    const subtitle = content['profile.subtitle']?.trim() || ''
+    const paragraph1 = content['profile.paragraph_1']?.trim() || ''
+    const paragraph2 = content['profile.paragraph_2']?.trim() || ''
 
-    const defaultFasilitas = [
-        'Ruang Kelas Nyaman, Terang, & Bersih',
-        'Masjid Sekolah untuk Sholat Berjamaah & Tadarus',
-        'Laboratorium Komputer & Perpustakaan Lengkap',
-        'Lapangan Olahraga & Area Terbuka yang Asri & Aman'
-    ]
+    const fasilitasItems = [1, 2, 3, 4]
+        .map((num) => content[`fasilitas.item_${num}`]?.trim())
+        .filter((item): item is string => Boolean(item))
 
-    const defaultProgram = [
-        'Tahfidz Al-Qur\'an & Bimbingan Baca Qur\'an Tartil',
-        'Pembiasaan Sholat 5 Waktu Berjamaah & Dhuha Rutin',
-        'Penguatan Adab, Sopan Santun, & Budi Pekerti',
-        'Bimbingan Minat Bakat & Ekstrakurikuler Terbimbing'
-    ]
+    const programItems = [1, 2, 3, 4]
+        .map((num) => content[`program.item_${num}`]?.trim())
+        .filter((item): item is string => Boolean(item))
+
+    const hasProfileContent = Boolean(
+        title || subtitle || paragraph1 || paragraph2 || fasilitasItems.length > 0 || programItems.length > 0
+    )
+
+    // Jika admin belum mengisi profil di CMS, jangan tampilkan data dummy
+    if (!hasProfileContent) {
+        return null
+    }
 
     return (
         <section id="profil" className="py-10 md:py-20 bg-white overflow-hidden">
             <div className="container mx-auto px-4">
                 <div className="max-w-6xl mx-auto">
                     {/* Header */}
-                    <ScrollReveal direction="up">
-                        <div className="text-center mb-8 sm:mb-12">
-                            <p className="text-emerald-800 font-semibold text-xs sm:text-sm tracking-wider uppercase mb-2">
-                                Profil Lembaga
-                            </p>
-                            <h2 className="text-2xl sm:text-3xl md:text-5xl font-extrabold text-gray-900 mb-3 sm:mb-4 tracking-tight">
-                                {title}
-                            </h2>
-                            <p className="text-xs sm:text-base md:text-xl text-gray-600 max-w-2xl mx-auto leading-relaxed">
-                                {subtitle}
-                            </p>
-                        </div>
-                    </ScrollReveal>
+                    {(title || subtitle) && (
+                        <ScrollReveal direction="up">
+                            <div className="text-center mb-8 sm:mb-12">
+                                <p className="text-emerald-800 font-semibold text-xs sm:text-sm tracking-wider uppercase mb-2">
+                                    Profil Lembaga
+                                </p>
+                                {title && (
+                                    <h2 className="text-2xl sm:text-3xl md:text-5xl font-extrabold text-gray-900 mb-3 sm:mb-4 tracking-tight">
+                                        {title}
+                                    </h2>
+                                )}
+                                {subtitle && (
+                                    <p className="text-xs sm:text-base md:text-xl text-gray-600 max-w-2xl mx-auto leading-relaxed">
+                                        {subtitle}
+                                    </p>
+                                )}
+                            </div>
+                        </ScrollReveal>
+                    )}
 
                     {/* Description */}
-                    <ScrollReveal direction="up" delay={0.2}>
-                        <div className="p-5 sm:p-7 md:p-10 mb-6 sm:mb-10 bg-slate-50 border border-slate-200/80 rounded-2xl sm:rounded-3xl">
-                            <div className="space-y-3 sm:space-y-4">
-                                <p className="text-gray-800 leading-relaxed text-sm sm:text-base md:text-lg">
-                                    {paragraph1}
-                                </p>
-                                <p className="text-gray-800 leading-relaxed text-sm sm:text-base md:text-lg">
-                                    {paragraph2}
-                                </p>
+                    {(paragraph1 || paragraph2) && (
+                        <ScrollReveal direction="up" delay={0.2}>
+                            <div className="p-5 sm:p-7 md:p-10 mb-6 sm:mb-10 bg-slate-50 border border-slate-200/80 rounded-2xl sm:rounded-3xl">
+                                <div className="space-y-3 sm:space-y-4">
+                                    {paragraph1 && (
+                                        <p className="text-gray-800 leading-relaxed text-sm sm:text-base md:text-lg">
+                                            {paragraph1}
+                                        </p>
+                                    )}
+                                    {paragraph2 && (
+                                        <p className="text-gray-800 leading-relaxed text-sm sm:text-base md:text-lg">
+                                            {paragraph2}
+                                        </p>
+                                    )}
+                                </div>
                             </div>
-                        </div>
-                    </ScrollReveal>
+                        </ScrollReveal>
+                    )}
 
                     {/* Fasilitas & Program Grid */}
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6 md:gap-8">
-                        {/* Fasilitas Card */}
-                        <ScrollReveal direction="right" delay={0.3}>
-                            <Card className="p-5 sm:p-7 md:p-9 border border-emerald-100 rounded-2xl sm:rounded-3xl hover:shadow-lg transition-all duration-300 h-full bg-white">
-                                <div className="flex items-center gap-3 sm:gap-3.5 mb-4 sm:mb-6 pb-3 sm:pb-4 border-b border-gray-100">
-                                    <div className="bg-emerald-50 text-emerald-800 p-2.5 sm:p-3 rounded-xl sm:rounded-2xl border border-emerald-100">
-                                        <Building2 className="w-5 h-5 sm:w-6 sm:h-6" />
-                                    </div>
-                                    <div>
-                                        <h3 className="text-lg sm:text-xl md:text-2xl font-bold text-gray-900">
-                                            Fasilitas Sekolah
-                                        </h3>
-                                        <p className="text-[11px] sm:text-xs text-gray-500">Mendukung kenyamanan dan fokus belajar siswa</p>
-                                    </div>
-                                </div>
-                                <ul className="space-y-2.5 sm:space-y-3.5">
-                                    {[1, 2, 3, 4].map((num) => {
-                                        const item = content[`fasilitas.item_${num}`] || defaultFasilitas[num - 1]
-                                        return (
-                                            <li
-                                                key={num}
-                                                className="flex items-start gap-2.5 sm:gap-3 text-gray-700"
-                                            >
-                                                <span className="text-emerald-700 font-bold mt-0.5">✓</span>
-                                                <span className="flex-1 text-xs sm:text-sm md:text-base leading-relaxed">{item}</span>
-                                            </li>
-                                        )
-                                    })}
-                                </ul>
-                            </Card>
-                        </ScrollReveal>
+                    {(fasilitasItems.length > 0 || programItems.length > 0) && (
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6 md:gap-8">
+                            {/* Fasilitas Card */}
+                            {fasilitasItems.length > 0 && (
+                                <ScrollReveal direction="right" delay={0.3}>
+                                    <Card className="p-5 sm:p-7 md:p-9 border border-emerald-100 rounded-2xl sm:rounded-3xl hover:shadow-lg transition-all duration-300 h-full bg-white">
+                                        <div className="flex items-center gap-3 sm:gap-3.5 mb-4 sm:mb-6 pb-3 sm:pb-4 border-b border-gray-100">
+                                            <div className="bg-emerald-50 text-emerald-800 p-2.5 sm:p-3 rounded-xl sm:rounded-2xl border border-emerald-100">
+                                                <Building2 className="w-5 h-5 sm:w-6 sm:h-6" />
+                                            </div>
+                                            <div>
+                                                <h3 className="text-lg sm:text-xl md:text-2xl font-bold text-gray-900">
+                                                    Fasilitas Sekolah
+                                                </h3>
+                                                <p className="text-[11px] sm:text-xs text-gray-500">Mendukung kenyamanan dan fokus belajar siswa</p>
+                                            </div>
+                                        </div>
+                                        <ul className="space-y-2.5 sm:space-y-3.5">
+                                            {fasilitasItems.map((item, idx) => (
+                                                <li
+                                                    key={idx}
+                                                    className="flex items-start gap-2.5 sm:gap-3 text-gray-700"
+                                                >
+                                                    <span className="text-emerald-700 font-bold mt-0.5">✓</span>
+                                                    <span className="flex-1 text-xs sm:text-sm md:text-base leading-relaxed">{item}</span>
+                                                </li>
+                                            ))}
+                                        </ul>
+                                    </Card>
+                                </ScrollReveal>
+                            )}
 
-                        {/* Program Unggulan Card */}
-                        <ScrollReveal direction="left" delay={0.3}>
-                            <Card className="p-5 sm:p-7 md:p-9 border border-emerald-100 rounded-2xl sm:rounded-3xl hover:shadow-lg transition-all duration-300 h-full bg-white">
-                                <div className="flex items-center gap-3 sm:gap-3.5 mb-4 sm:mb-6 pb-3 sm:pb-4 border-b border-gray-100">
-                                    <div className="bg-emerald-50 text-emerald-800 p-2.5 sm:p-3 rounded-xl sm:rounded-2xl border border-emerald-100">
-                                        <Trophy className="w-5 h-5 sm:w-6 sm:h-6" />
-                                    </div>
-                                    <div>
-                                        <h3 className="text-lg sm:text-xl md:text-2xl font-bold text-gray-900">
-                                            Program Unggulan
-                                        </h3>
-                                        <p className="text-[11px] sm:text-xs text-gray-500">Kombinasi kurikulum nasional &amp; kepesantrenan</p>
-                                    </div>
-                                </div>
-                                <ul className="space-y-2.5 sm:space-y-3.5">
-                                    {[1, 2, 3, 4].map((num) => {
-                                        const item = content[`program.item_${num}`] || defaultProgram[num - 1]
-                                        return (
-                                            <li
-                                                key={num}
-                                                className="flex items-start gap-2.5 sm:gap-3 text-gray-700"
-                                            >
-                                                <span className="text-emerald-700 font-bold mt-0.5">✓</span>
-                                                <span className="flex-1 text-xs sm:text-sm md:text-base leading-relaxed">{item}</span>
-                                            </li>
-                                        )
-                                    })}
-                                </ul>
-                            </Card>
-                        </ScrollReveal>
-                    </div>
+                            {/* Program Unggulan Card */}
+                            {programItems.length > 0 && (
+                                <ScrollReveal direction="left" delay={0.3}>
+                                    <Card className="p-5 sm:p-7 md:p-9 border border-emerald-100 rounded-2xl sm:rounded-3xl hover:shadow-lg transition-all duration-300 h-full bg-white">
+                                        <div className="flex items-center gap-3 sm:gap-3.5 mb-4 sm:mb-6 pb-3 sm:pb-4 border-b border-gray-100">
+                                            <div className="bg-emerald-50 text-emerald-800 p-2.5 sm:p-3 rounded-xl sm:rounded-2xl border border-emerald-100">
+                                                <Trophy className="w-5 h-5 sm:w-6 sm:h-6" />
+                                            </div>
+                                            <div>
+                                                <h3 className="text-lg sm:text-xl md:text-2xl font-bold text-gray-900">
+                                                    Program Unggulan
+                                                </h3>
+                                                <p className="text-[11px] sm:text-xs text-gray-500">Kombinasi kurikulum nasional &amp; kepesantrenan</p>
+                                            </div>
+                                        </div>
+                                        <ul className="space-y-2.5 sm:space-y-3.5">
+                                            {programItems.map((item, idx) => (
+                                                <li
+                                                    key={idx}
+                                                    className="flex items-start gap-2.5 sm:gap-3 text-gray-700"
+                                                >
+                                                    <span className="text-emerald-700 font-bold mt-0.5">✓</span>
+                                                    <span className="flex-1 text-xs sm:text-sm md:text-base leading-relaxed">{item}</span>
+                                                </li>
+                                            ))}
+                                        </ul>
+                                    </Card>
+                                </ScrollReveal>
+                            )}
+                        </div>
+                    )}
                 </div>
             </div>
         </section>

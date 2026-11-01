@@ -9,15 +9,23 @@ import { MessageCircle, ArrowRight, ShieldCheck, Smartphone, HeartHandshake } fr
 export default async function Hero() {
     const content = await getContentMap('hero')
 
-    // Basic fallbacks for CMS content
+    // Real school information from CMS
     const schoolName = content['hero.school_name'] || 'SMP Terpadu Al-Ittihadiyah'
-    const tagline = content['hero.tagline'] || 'Membimbing Putra-Putri Anda Menjadi Generasi Sholeh, Berakhlak Mulia, dan Berprestasi'
-    const year = content['hero.year'] || 'Tahun Ajaran 2026/2027'
+    const tagline = content['hero.tagline']?.trim() || ''
+    const year = content['hero.year']?.trim() || 'Tahun Ajaran 2026/2027'
 
-    // Stats fallbacks
-    const statExperience = parseInt(content['hero.stat_experience'], 10) || 15
-    const statGraduate = parseInt(content['hero.stat_graduate'], 10) || 98
-    const statAccreditation = content['hero.stat_accreditation'] || 'A'
+    // Stats: only display when filled by admin in CMS
+    const rawExp = content['hero.stat_experience']?.trim()
+    const rawGrad = content['hero.stat_graduate']?.trim()
+    const statAccreditation = content['hero.stat_accreditation']?.trim() || ''
+
+    const statExperience = rawExp ? parseInt(rawExp, 10) : null
+    const statGraduate = rawGrad ? parseInt(rawGrad, 10) : null
+    const hasStats = Boolean(
+        (statExperience !== null && !isNaN(statExperience)) ||
+        (statGraduate !== null && !isNaN(statGraduate)) ||
+        statAccreditation
+    )
 
     const waAdminUrl = "https://wa.me/6281947674100?text=" + encodeURIComponent("Assalamu'alaikum Admin PPDB SMP Terpadu Al-Ittihadiyah, saya orang tua calon siswa ingin bertanya seputar pendaftaran.")
 
@@ -56,10 +64,12 @@ export default async function Hero() {
                             </span> Buah Hati Anda
                         </h1>
 
-                        {/* Reassuring Subtitle */}
-                        <p className="text-xs sm:text-base md:text-lg mb-6 sm:mb-8 text-emerald-100/90 font-normal max-w-xl mx-auto leading-relaxed">
-                            {tagline}. Lingkungan Islami yang aman, bimbingan tahfidz Al-Qur&apos;an, dan asuhan guru yang sabar serta penuh kasih sayang.
-                        </p>
+                        {/* Subtitle from CMS (only shown when filled by admin) */}
+                        {tagline && (
+                            <p className="text-xs sm:text-base md:text-lg mb-6 sm:mb-8 text-emerald-100/90 font-normal max-w-xl mx-auto leading-relaxed">
+                                {tagline}
+                            </p>
+                        )}
 
                         {/* Call to Actions tailored for parents */}
                         <div className="flex flex-col sm:flex-row gap-2.5 sm:gap-4 justify-center items-center mb-8 sm:mb-10">
@@ -104,27 +114,35 @@ export default async function Hero() {
                             </div>
                         </div>
 
-                        {/* Proof Stats - 3 columns on mobile so it stays compact */}
-                        <div className="grid grid-cols-3 gap-2 sm:gap-4 text-center">
-                            <div className="bg-emerald-900/30 rounded-xl sm:rounded-2xl p-2.5 sm:p-4 md:p-5 border border-emerald-700/30">
-                                <div className="text-xl sm:text-3xl md:text-4xl font-extrabold text-white mb-0.5 sm:mb-1">
-                                    <Counter value={statExperience} suffix="+" />
-                                </div>
-                                <div className="text-emerald-200 text-[10px] sm:text-xs md:text-sm leading-tight font-medium">Tahun Mengabdi</div>
+                        {/* Proof Stats - Only displayed when admin fills in CMS */}
+                        {hasStats && (
+                            <div className="grid grid-cols-3 gap-2 sm:gap-4 text-center">
+                                {statExperience !== null && (
+                                    <div className="bg-emerald-900/30 rounded-xl sm:rounded-2xl p-2.5 sm:p-4 md:p-5 border border-emerald-700/30">
+                                        <div className="text-xl sm:text-3xl md:text-4xl font-extrabold text-white mb-0.5 sm:mb-1">
+                                            <Counter value={statExperience} suffix="+" />
+                                        </div>
+                                        <div className="text-emerald-200 text-[10px] sm:text-xs md:text-sm leading-tight font-medium">Tahun Mengabdi</div>
+                                    </div>
+                                )}
+                                {statGraduate !== null && (
+                                    <div className="bg-emerald-900/30 rounded-xl sm:rounded-2xl p-2.5 sm:p-4 md:p-5 border border-emerald-700/30">
+                                        <div className="text-xl sm:text-3xl md:text-4xl font-extrabold text-amber-300 mb-0.5 sm:mb-1">
+                                            <Counter value={statGraduate} suffix="%" />
+                                        </div>
+                                        <div className="text-emerald-200 text-[10px] sm:text-xs md:text-sm leading-tight font-medium">Lulusan ke SMA Unggulan</div>
+                                    </div>
+                                )}
+                                {statAccreditation && (
+                                    <div className="bg-emerald-900/30 rounded-xl sm:rounded-2xl p-2.5 sm:p-4 md:p-5 border border-emerald-700/30">
+                                        <div className="text-xl sm:text-3xl md:text-4xl font-extrabold text-white mb-0.5 sm:mb-1">
+                                            {statAccreditation}
+                                        </div>
+                                        <div className="text-emerald-200 text-[10px] sm:text-xs md:text-sm leading-tight font-medium">Akreditasi</div>
+                                    </div>
+                                )}
                             </div>
-                            <div className="bg-emerald-900/30 rounded-xl sm:rounded-2xl p-2.5 sm:p-4 md:p-5 border border-emerald-700/30">
-                                <div className="text-xl sm:text-3xl md:text-4xl font-extrabold text-amber-300 mb-0.5 sm:mb-1">
-                                    <Counter value={statGraduate} suffix="%" />
-                                </div>
-                                <div className="text-emerald-200 text-[10px] sm:text-xs md:text-sm leading-tight font-medium">Lulusan ke SMA Unggulan</div>
-                            </div>
-                            <div className="bg-emerald-900/30 rounded-xl sm:rounded-2xl p-2.5 sm:p-4 md:p-5 border border-emerald-700/30">
-                                <div className="text-xl sm:text-3xl md:text-4xl font-extrabold text-white mb-0.5 sm:mb-1">
-                                    {statAccreditation}
-                                </div>
-                                <div className="text-emerald-200 text-[10px] sm:text-xs md:text-sm leading-tight font-medium">Akreditasi Unggul</div>
-                            </div>
-                        </div>
+                        )}
 
                     </div>
                 </ScrollReveal>
