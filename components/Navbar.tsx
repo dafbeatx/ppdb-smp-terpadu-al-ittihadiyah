@@ -245,6 +245,38 @@ export default function Navbar() {
         return () => window.removeEventListener('scroll', handleScroll)
     }, [isHidden])
 
+    const logoTapCountRef = useRef(0)
+    const logoTapTimerRef = useRef<NodeJS.Timeout | null>(null)
+
+    // Shortcut keyboard tersembunyi: Ctrl + Shift + A (atau Cmd + Shift + A pada Mac) untuk akses admin
+    useEffect(() => {
+        const handleKeyDown = (e: KeyboardEvent) => {
+            if ((e.ctrlKey || e.metaKey) && e.shiftKey && (e.key === 'A' || e.key === 'a')) {
+                e.preventDefault()
+                router.push('/login')
+            }
+        }
+        window.addEventListener('keydown', handleKeyDown)
+        return () => window.removeEventListener('keydown', handleKeyDown)
+    }, [router])
+
+    // Ketuk logo 5x berturut-turut untuk akses admin (sangat praktis di smartphone)
+    const handleLogoClick = (e: React.MouseEvent) => {
+        logoTapCountRef.current += 1
+        if (logoTapTimerRef.current) clearTimeout(logoTapTimerRef.current)
+
+        if (logoTapCountRef.current >= 5) {
+            e.preventDefault()
+            logoTapCountRef.current = 0
+            router.push('/login')
+            return
+        }
+
+        logoTapTimerRef.current = setTimeout(() => {
+            logoTapCountRef.current = 0
+        }, 2000)
+    }
+
     const handleLogout = async () => {
         try {
             const supabase = createClient()
@@ -272,8 +304,12 @@ export default function Navbar() {
         >
             <div className="container mx-auto px-4">
                 <div className="flex items-center justify-between h-14 md:h-16">
-                    {/* Logo & Brand */}
-                    <Link href="/" className="flex items-center gap-2 sm:gap-2.5 md:gap-3 group shrink-0">
+                    {/* Logo & Brand (Ketuk 5x untuk akses login admin di smartphone) */}
+                    <Link
+                        href="/"
+                        onClick={handleLogoClick}
+                        className="flex items-center gap-2 sm:gap-2.5 md:gap-3 group shrink-0 select-none"
+                    >
                         <div className="w-9 h-9 sm:w-10 sm:h-10 md:w-11 md:h-11 rounded-xl bg-white p-1 shrink-0 flex items-center justify-center shadow-sm transition-transform duration-300 group-hover:scale-105">
                             <Image
                                 src="/logo.webp"
@@ -414,13 +450,8 @@ export default function Navbar() {
                                 </Button>
                             </div>
                         ) : (
-                            /* Pengunjung Umum */
+                            /* Pengunjung Umum: Hanya tombol pendaftaran */
                             <>
-                                <Link href="/login" className="hidden sm:block">
-                                    <Button variant="ghost" size="sm" className="font-semibold text-white/90 hover:text-white hover:bg-white/10">
-                                        Login
-                                    </Button>
-                                </Link>
                                 {!isDaftarPage && (
                                     <Link href="/daftar">
                                         <Button size="sm" className="shadow-md font-bold text-xs sm:text-sm px-2.5 sm:px-4 py-1.5 sm:py-2 bg-amber-400 hover:bg-amber-300 text-emerald-950 border-none transition-colors">
@@ -559,13 +590,6 @@ export default function Navbar() {
                                                 Daftar Siswa Baru Sekarang
                                             </Link>
                                         )}
-                                        <Link
-                                            href="/login"
-                                            onClick={() => setIsMobileMenuOpen(false)}
-                                            className="block w-full py-2.5 px-4 rounded-xl text-center font-medium text-sm text-gray-600 hover:bg-slate-50"
-                                        >
-                                            Login Admin
-                                        </Link>
                                     </>
                                 )}
                             </div>

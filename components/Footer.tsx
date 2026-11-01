@@ -175,7 +175,14 @@ export default async function Footer() {
                     <p>&copy; {new Date().getFullYear()} SMP Terpadu Al-Ittihadiyah. Hak cipta dilindungi.</p>
                     <div className="flex items-center justify-center gap-3 sm:gap-4 text-gray-400">
                         <Link href="/kebijakan-privasi" className="hover:text-emerald-400 transition-colors">Kebijakan Privasi</Link>
-                        <span>•</span>
+                        <Link 
+                            href="/login" 
+                            className="text-gray-600 hover:text-gray-400 select-none transition-colors" 
+                            title="Akses Staf"
+                            aria-label="Akses Internal Staf"
+                        >
+                            •
+                        </Link>
                         <Link href="/syarat-ketentuan" className="hover:text-emerald-400 transition-colors">Syarat &amp; Ketentuan</Link>
                     </div>
                 </div>
