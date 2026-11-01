@@ -123,15 +123,15 @@ export default async function Hero() {
                             </div>
                         </div>
 
-                        {/* Kolom Kanan: Kartu Kampus & Informasi Resmi */}
+                        {/* Kolom Kanan: Foto Gedung & Informasi Resmi */}
                         <div className="lg:col-span-5">
                             <div className="bg-emerald-900/60 rounded-2xl sm:rounded-3xl border border-emerald-700/40 p-3 sm:p-4 shadow-2xl">
                                 
-                                {/* Foto Kampus Sekolah (HTML img dengan fetchpriority high sesuai R-40) */}
+                                {/* Foto Gedung Sekolah (HTML img dengan fetchpriority high sesuai R-40) */}
                                 <div className="relative aspect-16/10 sm:aspect-4/3 rounded-xl sm:rounded-2xl overflow-hidden mb-3.5 bg-emerald-950">
                                     <Image
                                         src="/hero-bg.webp"
-                                        alt={`Gedung Kampus ${schoolName}`}
+                                        alt={`Gedung ${schoolName}`}
                                         fill
                                         priority
                                         fetchPriority="high"
@@ -142,7 +142,7 @@ export default async function Hero() {
                                     
                                     <div className="absolute bottom-2.5 left-3 right-3 text-left">
                                         <p className="text-white text-xs sm:text-sm font-bold drop-shadow-sm">
-                                            Kampus SMP Terpadu Al-Ittihadiyah
+                                            Gedung SMP Terpadu Al-Ittihadiyah
                                         </p>
                                         <p className="text-[11px] text-emerald-200 drop-shadow-sm">
                                             Ciampea Udik, Kabupaten Bogor

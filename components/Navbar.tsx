@@ -65,7 +65,7 @@ const NAVIGATION_MENU: NavItem[] = [
                 icon: ShieldCheck,
             },
             {
-                name: 'Fasilitas & Kampus',
+                name: 'Fasilitas Sekolah',
                 href: '/fasilitas',
                 description: 'Sarana kelas, masjid & lingkungan belajar',
                 icon: Building2,

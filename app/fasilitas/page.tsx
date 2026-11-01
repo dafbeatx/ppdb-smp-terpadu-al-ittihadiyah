@@ -3,7 +3,7 @@ import { ArrowLeft } from 'lucide-react'
 import type { Metadata } from 'next'
 
 export const metadata: Metadata = {
-    title: 'Fasilitas & Sarana Kampus - SMP Terpadu Al-Ittihadiyah',
+    title: 'Fasilitas & Sarana Sekolah - SMP Terpadu Al-Ittihadiyah',
     description: 'Sarana dan prasarana lengkap yang mendukung kenyamanan belajar, ibadah, dan pembinaan karakter di SMP Terpadu Al-Ittihadiyah Ciampea, Bogor.',
 }
 
@@ -35,7 +35,7 @@ const FACILITIES = [
     },
     {
         title: "Lingkungan Asri & Aman",
-        desc: "Suasana kampus yang jauh dari kebisingan jalan raya utama, dilengkapi tata tertib pengawasan pergaulan ramah anak yang bebas bullying.",
+        desc: "Suasana sekolah yang asri, tenang, dan jauh dari kebisingan jalan raya utama, dilengkapi tata tertib pengawasan pergaulan ramah anak yang bebas bullying.",
         tag: "Kenyamanan"
     }
 ]
@@ -62,7 +62,7 @@ export default function FasilitasPage() {
                             Sarana &amp; Prasarana
                         </p>
                         <h1 className="text-2xl sm:text-3xl md:text-5xl font-extrabold tracking-tight mb-2 sm:mb-4">
-                            Fasilitas Kampus Al-Ittihadiyah
+                            Fasilitas Sekolah Al-Ittihadiyah
                         </h1>
                         <p className="text-emerald-100 text-xs sm:text-base md:text-lg leading-relaxed">
                             Mendukung kenyamanan, keselamatan, dan efektivitas proses belajar mengajar serta pembinaan akhlak santri setiap hari.
