@@ -273,8 +273,8 @@ export default function Navbar() {
             <div className="container mx-auto px-4">
                 <div className="flex items-center justify-between h-14 md:h-16">
                     {/* Logo & Brand */}
-                    <Link href="/" className="flex items-center gap-2.5 md:gap-3 group shrink-0">
-                        <div className="w-10 h-10 md:w-11 md:h-11 rounded-xl bg-white p-1 shrink-0 flex items-center justify-center shadow-sm transition-transform duration-300 group-hover:scale-105">
+                    <Link href="/" className="flex items-center gap-2 sm:gap-2.5 md:gap-3 group shrink-0">
+                        <div className="w-9 h-9 sm:w-10 sm:h-10 md:w-11 md:h-11 rounded-xl bg-white p-1 shrink-0 flex items-center justify-center shadow-sm transition-transform duration-300 group-hover:scale-105">
                             <Image
                                 src="/logo.webp"
                                 alt="Logo SMP Al-Ittihadiyah"
@@ -284,11 +284,11 @@ export default function Navbar() {
                                 priority
                             />
                         </div>
-                        <div>
-                            <div className="font-bold text-sm md:text-base text-white leading-tight">
+                        <div className="min-w-0">
+                            <div className="font-bold text-xs sm:text-sm md:text-base text-white leading-tight truncate">
                                 SMP Terpadu Al-Ittihadiyah
                             </div>
-                            <div className="text-[10px] md:text-xs text-amber-300 font-semibold tracking-wide">
+                            <div className="text-[9px] sm:text-[10px] md:text-xs text-amber-300 font-semibold tracking-wide">
                                 {isAdmin ? 'Panel Kontrol Admin' : 'Ciampea, Bogor • Portal Resmi'}
                             </div>
                         </div>
@@ -423,8 +423,9 @@ export default function Navbar() {
                                 </Link>
                                 {!isDaftarPage && (
                                     <Link href="/daftar">
-                                        <Button size="sm" className="shadow-md font-bold px-4 bg-amber-400 hover:bg-amber-300 text-emerald-950 border-none transition-colors">
-                                            Daftar Siswa Baru
+                                        <Button size="sm" className="shadow-md font-bold text-xs sm:text-sm px-2.5 sm:px-4 py-1.5 sm:py-2 bg-amber-400 hover:bg-amber-300 text-emerald-950 border-none transition-colors">
+                                            <span className="inline sm:hidden">Daftar</span>
+                                            <span className="hidden sm:inline">Daftar Siswa Baru</span>
                                         </Button>
                                     </Link>
                                 )}

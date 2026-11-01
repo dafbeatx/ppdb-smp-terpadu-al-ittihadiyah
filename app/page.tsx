@@ -10,7 +10,7 @@ const AlurPPDB = dynamic(() => import('@/components/landing/AlurPPDB'))
 
 export default function HomePage() {
   return (
-    <main>
+    <main className="overflow-x-hidden">
       <Hero />
       <PrincipalWelcome />
       <Profile />

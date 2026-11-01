@@ -27,48 +27,48 @@ const TESTIMONIALS = [
 
 export default function Testimoni() {
     return (
-        <section id="testimoni" className="py-16 lg:py-24 bg-white overflow-hidden">
+        <section id="testimoni" className="py-10 md:py-20 bg-white overflow-hidden">
             <div className="container mx-auto px-4 max-w-7xl">
                 <ScrollReveal direction="up">
-                    <div className="text-center mb-14">
-                        <p className="text-emerald-800 font-semibold text-sm tracking-wider uppercase mb-2">
+                    <div className="text-center mb-8 sm:mb-12">
+                        <p className="text-emerald-800 font-semibold text-xs sm:text-sm tracking-wider uppercase mb-2">
                             Kisah Nyata Para Orang Tua
                         </p>
-                        <h2 className="text-3xl md:text-5xl font-extrabold text-gray-900 mb-4 tracking-tight">
+                        <h2 className="text-2xl sm:text-3xl md:text-5xl font-extrabold text-gray-900 mb-3 sm:mb-4 tracking-tight">
                             Apa Kata Para Orang Tua?
                         </h2>
-                        <p className="text-base md:text-xl text-gray-600 max-w-2xl mx-auto leading-relaxed">
+                        <p className="text-xs sm:text-base md:text-xl text-gray-600 max-w-2xl mx-auto leading-relaxed">
                             Pengalaman nyata dari Bapak dan Ibu yang telah mempercayakan pendidikan akhlak buah hatinya di SMP Terpadu Al-Ittihadiyah
                         </p>
                     </div>
                 </ScrollReveal>
 
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-4 sm:gap-6 md:gap-8">
                     {TESTIMONIALS.map((t, i) => (
                         <ScrollReveal key={i} direction="up" delay={i * 0.1}>
-                            <Card className="p-8 h-full flex flex-col justify-between border border-slate-200/80 bg-slate-50/50 rounded-3xl hover:shadow-md transition-shadow">
+                            <Card className="p-5 sm:p-7 md:p-8 h-full flex flex-col justify-between border border-slate-200/80 bg-slate-50/50 rounded-2xl sm:rounded-3xl hover:shadow-md transition-shadow">
                                 <div>
                                     {/* Quote Icon */}
-                                    <div className="text-emerald-300 mb-5">
-                                        <Quote className="w-8 h-8" />
+                                    <div className="text-emerald-300 mb-3 sm:mb-5">
+                                        <Quote className="w-6 h-6 sm:w-8 sm:h-8" />
                                     </div>
 
                                     {/* Testimonial Quote */}
-                                    <p className="text-gray-700 leading-relaxed text-base italic mb-6">
+                                    <p className="text-gray-700 leading-relaxed text-xs sm:text-sm md:text-base italic mb-4 sm:mb-6">
                                         &ldquo;{t.content}&rdquo;
                                     </p>
                                 </div>
 
                                 {/* User Info */}
-                                <div className="flex items-center gap-3.5 pt-5 border-t border-slate-200/60 mt-auto">
-                                    <div className="w-11 h-11 rounded-full bg-emerald-700 text-white font-bold text-sm flex items-center justify-center shrink-0">
+                                <div className="flex items-center gap-3 sm:gap-3.5 pt-4 sm:pt-5 border-t border-slate-200/60 mt-auto">
+                                    <div className="w-9 h-9 sm:w-11 sm:h-11 rounded-full bg-emerald-700 text-white font-bold text-xs sm:text-sm flex items-center justify-center shrink-0">
                                         {t.initials}
                                     </div>
                                     <div>
-                                        <h4 className="font-bold text-gray-900 text-base leading-snug">
+                                        <h4 className="font-bold text-gray-900 text-sm sm:text-base leading-snug">
                                             {t.name}
                                         </h4>
-                                        <p className="text-xs text-emerald-800 font-medium">
+                                        <p className="text-[11px] sm:text-xs text-emerald-800 font-medium">
                                             {t.role}
                                         </p>
                                     </div>

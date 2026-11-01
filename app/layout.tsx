@@ -1,4 +1,4 @@
-import type { Metadata } from 'next'
+import type { Metadata, Viewport } from 'next'
 import { Inter } from 'next/font/google'
 import './globals.css'
 import Footer from '@/components/Footer'
@@ -13,6 +13,12 @@ const inter = Inter({
   variable: '--font-inter',
 })
 
+export const viewport: Viewport = {
+  width: 'device-width',
+  initialScale: 1,
+  maximumScale: 5,
+  themeColor: '#064e3b',
+}
 
 export const metadata: Metadata = {
   title: 'PPDB SMP Terpadu Al-Ittihadiyah - Pendaftaran Siswa Baru',

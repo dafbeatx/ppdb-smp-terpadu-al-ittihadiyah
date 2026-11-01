@@ -28,19 +28,19 @@ export default async function Profile() {
     ]
 
     return (
-        <section id="profil" className="py-16 md:py-24 bg-white overflow-hidden">
+        <section id="profil" className="py-10 md:py-20 bg-white overflow-hidden">
             <div className="container mx-auto px-4">
                 <div className="max-w-6xl mx-auto">
                     {/* Header */}
                     <ScrollReveal direction="up">
-                        <div className="text-center mb-12">
-                            <p className="text-emerald-800 font-semibold text-sm tracking-wider uppercase mb-2">
+                        <div className="text-center mb-8 sm:mb-12">
+                            <p className="text-emerald-800 font-semibold text-xs sm:text-sm tracking-wider uppercase mb-2">
                                 Profil Lembaga
                             </p>
-                            <h2 className="text-3xl md:text-5xl font-extrabold text-gray-900 mb-4 tracking-tight">
+                            <h2 className="text-2xl sm:text-3xl md:text-5xl font-extrabold text-gray-900 mb-3 sm:mb-4 tracking-tight">
                                 {title}
                             </h2>
-                            <p className="text-base md:text-xl text-gray-600 max-w-2xl mx-auto leading-relaxed">
+                            <p className="text-xs sm:text-base md:text-xl text-gray-600 max-w-2xl mx-auto leading-relaxed">
                                 {subtitle}
                             </p>
                         </div>
@@ -48,12 +48,12 @@ export default async function Profile() {
 
                     {/* Description */}
                     <ScrollReveal direction="up" delay={0.2}>
-                        <div className="p-7 md:p-10 mb-10 bg-slate-50 border border-slate-200/80 rounded-3xl">
-                            <div className="space-y-4">
-                                <p className="text-gray-800 leading-relaxed text-base md:text-lg">
+                        <div className="p-5 sm:p-7 md:p-10 mb-6 sm:mb-10 bg-slate-50 border border-slate-200/80 rounded-2xl sm:rounded-3xl">
+                            <div className="space-y-3 sm:space-y-4">
+                                <p className="text-gray-800 leading-relaxed text-sm sm:text-base md:text-lg">
                                     {paragraph1}
                                 </p>
-                                <p className="text-gray-800 leading-relaxed text-base md:text-lg">
+                                <p className="text-gray-800 leading-relaxed text-sm sm:text-base md:text-lg">
                                     {paragraph2}
                                 </p>
                             </div>
@@ -61,31 +61,31 @@ export default async function Profile() {
                     </ScrollReveal>
 
                     {/* Fasilitas & Program Grid */}
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6 md:gap-8">
                         {/* Fasilitas Card */}
                         <ScrollReveal direction="right" delay={0.3}>
-                            <Card className="p-7 md:p-9 border border-emerald-100 rounded-3xl hover:shadow-lg transition-all duration-300 h-full bg-white">
-                                <div className="flex items-center gap-3.5 mb-6 pb-4 border-b border-gray-100">
-                                    <div className="bg-emerald-50 text-emerald-800 p-3 rounded-2xl border border-emerald-100">
-                                        <Building2 className="w-6 h-6" />
+                            <Card className="p-5 sm:p-7 md:p-9 border border-emerald-100 rounded-2xl sm:rounded-3xl hover:shadow-lg transition-all duration-300 h-full bg-white">
+                                <div className="flex items-center gap-3 sm:gap-3.5 mb-4 sm:mb-6 pb-3 sm:pb-4 border-b border-gray-100">
+                                    <div className="bg-emerald-50 text-emerald-800 p-2.5 sm:p-3 rounded-xl sm:rounded-2xl border border-emerald-100">
+                                        <Building2 className="w-5 h-5 sm:w-6 sm:h-6" />
                                     </div>
                                     <div>
-                                        <h3 className="text-xl md:text-2xl font-bold text-gray-900">
+                                        <h3 className="text-lg sm:text-xl md:text-2xl font-bold text-gray-900">
                                             Fasilitas Sekolah
                                         </h3>
-                                        <p className="text-xs text-gray-500">Mendukung kenyamanan dan fokus belajar siswa</p>
+                                        <p className="text-[11px] sm:text-xs text-gray-500">Mendukung kenyamanan dan fokus belajar siswa</p>
                                     </div>
                                 </div>
-                                <ul className="space-y-3.5">
+                                <ul className="space-y-2.5 sm:space-y-3.5">
                                     {[1, 2, 3, 4].map((num) => {
                                         const item = content[`fasilitas.item_${num}`] || defaultFasilitas[num - 1]
                                         return (
                                             <li
                                                 key={num}
-                                                className="flex items-start gap-3 text-gray-700"
+                                                className="flex items-start gap-2.5 sm:gap-3 text-gray-700"
                                             >
                                                 <span className="text-emerald-700 font-bold mt-0.5">✓</span>
-                                                <span className="flex-1 text-sm md:text-base leading-relaxed">{item}</span>
+                                                <span className="flex-1 text-xs sm:text-sm md:text-base leading-relaxed">{item}</span>
                                             </li>
                                         )
                                     })}
@@ -95,28 +95,28 @@ export default async function Profile() {
 
                         {/* Program Unggulan Card */}
                         <ScrollReveal direction="left" delay={0.3}>
-                            <Card className="p-7 md:p-9 border border-emerald-100 rounded-3xl hover:shadow-lg transition-all duration-300 h-full bg-white">
-                                <div className="flex items-center gap-3.5 mb-6 pb-4 border-b border-gray-100">
-                                    <div className="bg-emerald-50 text-emerald-800 p-3 rounded-2xl border border-emerald-100">
-                                        <Trophy className="w-6 h-6" />
+                            <Card className="p-5 sm:p-7 md:p-9 border border-emerald-100 rounded-2xl sm:rounded-3xl hover:shadow-lg transition-all duration-300 h-full bg-white">
+                                <div className="flex items-center gap-3 sm:gap-3.5 mb-4 sm:mb-6 pb-3 sm:pb-4 border-b border-gray-100">
+                                    <div className="bg-emerald-50 text-emerald-800 p-2.5 sm:p-3 rounded-xl sm:rounded-2xl border border-emerald-100">
+                                        <Trophy className="w-5 h-5 sm:w-6 sm:h-6" />
                                     </div>
                                     <div>
-                                        <h3 className="text-xl md:text-2xl font-bold text-gray-900">
+                                        <h3 className="text-lg sm:text-xl md:text-2xl font-bold text-gray-900">
                                             Program Unggulan
                                         </h3>
-                                        <p className="text-xs text-gray-500">Kombinasi kurikulum nasional &amp; kepesantrenan</p>
+                                        <p className="text-[11px] sm:text-xs text-gray-500">Kombinasi kurikulum nasional &amp; kepesantrenan</p>
                                     </div>
                                 </div>
-                                <ul className="space-y-3.5">
+                                <ul className="space-y-2.5 sm:space-y-3.5">
                                     {[1, 2, 3, 4].map((num) => {
                                         const item = content[`program.item_${num}`] || defaultProgram[num - 1]
                                         return (
                                             <li
                                                 key={num}
-                                                className="flex items-start gap-3 text-gray-700"
+                                                className="flex items-start gap-2.5 sm:gap-3 text-gray-700"
                                             >
                                                 <span className="text-emerald-700 font-bold mt-0.5">✓</span>
-                                                <span className="flex-1 text-sm md:text-base leading-relaxed">{item}</span>
+                                                <span className="flex-1 text-xs sm:text-sm md:text-base leading-relaxed">{item}</span>
                                             </li>
                                         )
                                     })}

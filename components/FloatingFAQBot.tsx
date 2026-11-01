@@ -91,7 +91,7 @@ export default function FloatingFAQBot() {
     if (isInputFocused && typeof window !== 'undefined' && window.innerWidth < 768) return null
 
     return (
-        <div className="fixed bottom-6 right-6 z-[60] flex flex-col items-end gap-3 md:gap-4 sm:bottom-6 bottom-20">
+        <div className="fixed bottom-4 right-4 sm:bottom-6 sm:right-6 z-[60] flex flex-col items-end gap-2.5 sm:gap-3">
             {/* Scroll to Top Button */}
             <AnimatePresence>
                 {showScrollTop && (
@@ -100,9 +100,10 @@ export default function FloatingFAQBot() {
                         animate={{ opacity: 1, scale: 1 }}
                         exit={{ opacity: 0, scale: 0.5 }}
                         onClick={scrollToTop}
-                        className="bg-white text-green-600 p-3 rounded-full shadow-lg border border-green-100 hover:bg-green-50 transition-colors"
+                        className="bg-white text-emerald-800 p-2.5 sm:p-3 rounded-full shadow-lg border border-emerald-100 hover:bg-emerald-50 transition-colors"
+                        aria-label="Scroll ke atas"
                     >
-                        <ArrowUpCircle className="w-6 h-6" />
+                        <ArrowUpCircle className="w-5 h-5 sm:w-6 sm:h-6" />
                     </motion.button>
                 )}
             </AnimatePresence>
@@ -114,17 +115,17 @@ export default function FloatingFAQBot() {
                         initial={{ opacity: 0, y: 20, scale: 0.95 }}
                         animate={{ opacity: 1, y: 0, scale: 1 }}
                         exit={{ opacity: 0, y: 20, scale: 0.95 }}
-                        className="bg-white rounded-2xl shadow-2xl border border-gray-100 w-[300px] sm:w-[380px] overflow-hidden flex flex-col h-[70vh] sm:h-[500px] max-h-[80vh] sm:max-h-[600px] mb-2"
+                        className="bg-white rounded-2xl shadow-2xl border border-gray-100 w-[calc(100vw-32px)] sm:w-[360px] max-w-[360px] overflow-hidden flex flex-col h-[70vh] sm:h-[480px] max-h-[80vh] sm:max-h-[560px] mb-1 sm:mb-2"
                     >
                         {/* Header: Fixed at top */}
-                        <div className="bg-green-600 p-4 text-white flex justify-between items-center shrink-0">
-                            <div className="flex items-center gap-3">
-                                <div className="bg-white/20 p-2 rounded-lg">
-                                    <MessageCircle className="w-5 h-5 text-white" />
+                        <div className="bg-emerald-800 p-3.5 sm:p-4 text-white flex justify-between items-center shrink-0">
+                            <div className="flex items-center gap-2.5 sm:gap-3">
+                                <div className="bg-white/20 p-1.5 sm:p-2 rounded-lg">
+                                    <MessageCircle className="w-4 h-4 sm:w-5 sm:h-5 text-white" />
                                 </div>
                                 <div>
-                                    <h3 className="font-bold text-sm">Bantuan PPDB</h3>
-                                    <p className="text-[10px] opacity-80">Online • Balas otomatis</p>
+                                    <h3 className="font-bold text-xs sm:text-sm">Bantuan PPDB</h3>
+                                    <p className="text-[10px] text-emerald-100/80">Online • Panduan cepat</p>
                                 </div>
                             </div>
                             <button
@@ -211,15 +212,10 @@ export default function FloatingFAQBot() {
             {/* Toggle Button */}
             <button
                 onClick={() => setIsOpen(!isOpen)}
-                className={`bg-green-600 text-white p-4 rounded-full shadow-2xl hover:scale-110 active:scale-95 transition-all group relative ${isOpen ? 'rotate-90' : ''}`}
+                className={`bg-emerald-800 text-white p-3.5 sm:p-4 rounded-full shadow-2xl hover:scale-105 active:scale-95 transition-all group relative ${isOpen ? 'rotate-90' : ''}`}
+                aria-label="Tanya seputar PPDB"
             >
-                {isOpen ? <X className="w-6 h-6" /> : <MessageCircle className="w-6 h-6" />}
-                {!isOpen && (
-                    <span className="absolute -top-1 -right-1 flex h-4 w-4">
-                        <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
-                        <span className="relative inline-flex rounded-full h-4 w-4 bg-green-500 border-2 border-white"></span>
-                    </span>
-                )}
+                {isOpen ? <X className="w-5 h-5 sm:w-6 sm:h-6" /> : <MessageCircle className="w-5 h-5 sm:w-6 sm:h-6" />}
             </button>
         </div>
     )
