@@ -21,5 +21,6 @@ export type Article = {
     summary: string
     content: string
     author?: string
+    image_url?: string
 }
 

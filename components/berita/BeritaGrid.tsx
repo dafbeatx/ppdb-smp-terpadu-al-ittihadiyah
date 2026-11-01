@@ -74,6 +74,18 @@ export default function BeritaGrid({ initialArticles }: BeritaGridProps) {
                         className="bg-white rounded-2xl sm:rounded-3xl p-5 sm:p-7 md:p-8 border border-slate-200/80 shadow-xs flex flex-col justify-between hover:border-emerald-400 hover:shadow-md transition-all cursor-pointer group"
                     >
                         <div>
+                            {/* Gambar Cover Berita (WebP) jika ada */}
+                            {article.image_url && (
+                                <div className="relative aspect-16/10 w-full mb-4 overflow-hidden rounded-xl sm:rounded-2xl bg-slate-100 border border-slate-100">
+                                    <img
+                                        src={article.image_url}
+                                        alt={article.title}
+                                        loading="lazy"
+                                        className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                                    />
+                                </div>
+                            )}
+
                             <div className="flex items-center justify-between text-[11px] sm:text-xs text-gray-500 mb-3 sm:mb-4 pb-2.5 sm:pb-3 border-b border-slate-100">
                                 <span className="flex items-center gap-1.5 font-semibold text-emerald-800 bg-emerald-50 px-2 sm:px-2.5 py-0.5 sm:py-1 rounded-full border border-emerald-100">
                                     <Tag className="w-3 h-3 sm:w-3.5 sm:h-3.5 text-emerald-700" />
@@ -133,6 +145,17 @@ export default function BeritaGrid({ initialArticles }: BeritaGridProps) {
                             </span>
                         </div>
 
+                        {/* Gambar Utama di Modal Baca */}
+                        {activeArticle.image_url && (
+                            <div className="relative aspect-16/10 w-full mb-5 overflow-hidden rounded-2xl bg-slate-100 border border-slate-200">
+                                <img
+                                    src={activeArticle.image_url}
+                                    alt={activeArticle.title}
+                                    className="w-full h-full object-cover"
+                                />
+                            </div>
+                        )}
+
                         <h2 className="text-xl sm:text-2xl md:text-3xl font-extrabold text-gray-900 mb-4 leading-tight">
                             {activeArticle.title}
                         </h2>
@@ -184,4 +207,3 @@ export default function BeritaGrid({ initialArticles }: BeritaGridProps) {
         </div>
     )
 }
-

@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useRef } from 'react'
 import { useRouter } from 'next/navigation'
 import Link from 'next/link'
 import Card from '@/components/ui/Card'
@@ -19,9 +19,15 @@ import {
     X,
     Newspaper,
     Sparkles,
-    FileText
+    FileText,
+    Upload,
+    ImageIcon,
+    Loader2,
+    Link2,
+    Check
 } from 'lucide-react'
 import type { Article } from '@/types/content.types'
+import { compressAndConvertToWebP, formatBytes } from '@/lib/image-compression'
 
 interface BeritaManagerProps {
     initialArticles: Article[]
@@ -56,6 +62,17 @@ export default function BeritaManager({ initialArticles }: BeritaManagerProps) {
     const [formCustomCategory, setFormCustomCategory] = useState('')
     const [formSummary, setFormSummary] = useState('')
     const [formContent, setFormContent] = useState('')
+    const [formImageUrl, setFormImageUrl] = useState('')
+
+    // Image upload state
+    const [imageInputMode, setImageInputMode] = useState<'upload' | 'url'>('upload')
+    const [isProcessingImage, setIsProcessingImage] = useState(false)
+    const [compressionStats, setCompressionStats] = useState<{
+        originalSize: number
+        compressedSize: number
+        savings: number
+    } | null>(null)
+    const fileInputRef = useRef<HTMLInputElement>(null)
 
     // Status state
     const [isSaving, setIsSaving] = useState(false)
@@ -78,6 +95,9 @@ export default function BeritaManager({ initialArticles }: BeritaManagerProps) {
         setFormCustomCategory('')
         setFormSummary('')
         setFormContent('')
+        setFormImageUrl('')
+        setCompressionStats(null)
+        setImageInputMode('upload')
         setIsFormOpen(true)
     }
 
@@ -94,7 +114,70 @@ export default function BeritaManager({ initialArticles }: BeritaManagerProps) {
         }
         setFormSummary(article.summary)
         setFormContent(article.content || article.summary)
+        setFormImageUrl(article.image_url || '')
+        setCompressionStats(null)
+        setImageInputMode(article.image_url ? 'upload' : 'upload')
         setIsFormOpen(true)
+    }
+
+    // Auto-compress to WebP and upload
+    const handleFileSelect = async (e: React.ChangeEvent<HTMLInputElement>) => {
+        const file = e.target.files?.[0]
+        if (!file) return
+
+        setIsProcessingImage(true)
+        setCompressionStats(null)
+
+        try {
+            // 1. Kompresi dan auto-convert ke WebP di sisi browser (Client-Side)
+            // Memangkas file 5MB-10MB menjadi ~50-80KB WebP sebelum dikirim ke jaringan
+            const result = await compressAndConvertToWebP(file, {
+                maxWidth: 1200,
+                maxHeight: 800,
+                quality: 0.82,
+                maxFileSizeKB: 250,
+            })
+
+            setCompressionStats({
+                originalSize: result.originalSize,
+                compressedSize: result.compressedSize,
+                savings: result.savingsPercentage,
+            })
+
+            // Tampilkan preview instan
+            setFormImageUrl(result.dataUrl)
+
+            // 2. Upload file WebP yang sudah sangat ringan ke server
+            const formData = new FormData()
+            formData.append('file', result.file)
+
+            const uploadRes = await fetch('/api/admin/articles/upload-image', {
+                method: 'POST',
+                body: formData,
+            })
+
+            const uploadData = await uploadRes.json()
+
+            if (!uploadRes.ok) {
+                throw new Error(uploadData.error || 'Gagal mengunggah gambar ke server')
+            }
+
+            // Simpan URL media permanen
+            setFormImageUrl(uploadData.url)
+        } catch (err: unknown) {
+            const msg = err instanceof Error ? err.message : 'Gagal memproses gambar'
+            alert('Gagal memproses gambar: ' + msg)
+        } finally {
+            setIsProcessingImage(false)
+            if (fileInputRef.current) {
+                fileInputRef.current.value = ''
+            }
+        }
+    }
+
+    const handleRemoveImage = () => {
+        setFormImageUrl('')
+        setCompressionStats(null)
     }
 
     const handleSaveList = async (updatedList: Article[]) => {
@@ -155,6 +238,7 @@ export default function BeritaManager({ initialArticles }: BeritaManagerProps) {
                         category: finalCategory,
                         summary: formSummary.trim(),
                         content: formContent.trim() || formSummary.trim(),
+                        image_url: formImageUrl.trim() || undefined,
                     }
                     : item
             )
@@ -167,6 +251,7 @@ export default function BeritaManager({ initialArticles }: BeritaManagerProps) {
                 category: finalCategory,
                 summary: formSummary.trim(),
                 content: formContent.trim() || formSummary.trim(),
+                image_url: formImageUrl.trim() || undefined,
             }
             // Put new article on top
             updated = [newArticle, ...articles]
@@ -218,7 +303,7 @@ export default function BeritaManager({ initialArticles }: BeritaManagerProps) {
                         </h1>
                     </div>
                     <p className="text-gray-600 text-sm md:text-base">
-                        Tambah, sunting, atau hapus artikel kegiatan, pengumuman SPMB, dan kabar prestasi santri.
+                        Tambah, sunting gambar (auto WebP &amp; kompres MB), atau hapus kabar santri dan pengumuman SPMB.
                     </p>
                 </div>
 
@@ -275,11 +360,13 @@ export default function BeritaManager({ initialArticles }: BeritaManagerProps) {
                 <Card className="p-4 sm:p-5 border border-slate-200">
                     <div className="flex items-center justify-between">
                         <div>
-                            <p className="text-xs font-semibold text-gray-500 uppercase tracking-wider">Kategori Aktif</p>
-                            <p className="text-2xl sm:text-3xl font-extrabold text-gray-900 mt-1">{uniqueCategories.length}</p>
+                            <p className="text-xs font-semibold text-gray-500 uppercase tracking-wider">Artikel Bergambar</p>
+                            <p className="text-2xl sm:text-3xl font-extrabold text-gray-900 mt-1">
+                                {articles.filter((a) => a.image_url).length}
+                            </p>
                         </div>
                         <div className="w-10 h-10 rounded-xl bg-blue-50 text-blue-700 flex items-center justify-center">
-                            <Tag className="w-5 h-5" />
+                            <ImageIcon className="w-5 h-5" />
                         </div>
                     </div>
                 </Card>
@@ -287,10 +374,10 @@ export default function BeritaManager({ initialArticles }: BeritaManagerProps) {
                 <Card className="p-4 sm:p-5 border border-slate-200">
                     <div className="flex items-center justify-between">
                         <div>
-                            <p className="text-xs font-semibold text-gray-500 uppercase tracking-wider">Status Sinkronisasi</p>
+                            <p className="text-xs font-semibold text-gray-500 uppercase tracking-wider">Optimasi Gambar</p>
                             <p className="text-base sm:text-lg font-bold text-emerald-700 mt-1 flex items-center gap-1.5">
                                 <Sparkles className="w-4 h-4 text-emerald-600" />
-                                <span>Terkoneksi Database</span>
+                                <span>Auto WebP &amp; Egress Safe</span>
                             </p>
                         </div>
                         <div className="w-10 h-10 rounded-xl bg-emerald-50 text-emerald-800 flex items-center justify-center">
@@ -374,24 +461,44 @@ export default function BeritaManager({ initialArticles }: BeritaManagerProps) {
                             className="p-4 sm:p-6 border border-slate-200/90 hover:border-emerald-300 transition-colors"
                         >
                             <div className="flex flex-col sm:flex-row sm:items-start justify-between gap-4">
-                                <div className="space-y-2 flex-1">
-                                    <div className="flex flex-wrap items-center gap-2">
-                                        <span className="text-[11px] font-bold uppercase tracking-wider px-2.5 py-0.5 rounded-md bg-emerald-50 text-emerald-800 border border-emerald-100">
-                                            {art.category}
-                                        </span>
-                                        <span className="text-xs text-gray-400 flex items-center gap-1">
-                                            <Calendar className="w-3.5 h-3.5" />
-                                            {art.date}
-                                        </span>
+                                <div className="flex gap-4 items-start flex-1">
+                                    {/* Thumbnail jika ada gambar */}
+                                    {art.image_url ? (
+                                        <div className="w-20 h-20 sm:w-28 sm:h-24 rounded-xl overflow-hidden bg-slate-100 shrink-0 border border-slate-200 relative group">
+                                            <img
+                                                src={art.image_url}
+                                                alt={art.title}
+                                                className="w-full h-full object-cover"
+                                            />
+                                            <span className="absolute bottom-1 right-1 bg-black/60 text-white text-[9px] font-bold px-1.5 py-0.5 rounded">
+                                                WEBP
+                                            </span>
+                                        </div>
+                                    ) : (
+                                        <div className="w-16 h-16 sm:w-20 sm:h-20 rounded-xl bg-slate-50 border border-dashed border-slate-200 text-slate-300 flex items-center justify-center shrink-0">
+                                            <ImageIcon className="w-6 h-6" />
+                                        </div>
+                                    )}
+
+                                    <div className="space-y-1.5 flex-1 min-w-0">
+                                        <div className="flex flex-wrap items-center gap-2">
+                                            <span className="text-[11px] font-bold uppercase tracking-wider px-2.5 py-0.5 rounded-md bg-emerald-50 text-emerald-800 border border-emerald-100">
+                                                {art.category}
+                                            </span>
+                                            <span className="text-xs text-gray-400 flex items-center gap-1">
+                                                <Calendar className="w-3.5 h-3.5" />
+                                                {art.date}
+                                            </span>
+                                        </div>
+
+                                        <h3 className="text-base sm:text-lg font-bold text-gray-900 leading-snug">
+                                            {art.title}
+                                        </h3>
+
+                                        <p className="text-xs sm:text-sm text-gray-600 line-clamp-2 leading-relaxed">
+                                            {art.summary}
+                                        </p>
                                     </div>
-
-                                    <h3 className="text-base sm:text-lg font-bold text-gray-900 leading-snug">
-                                        {art.title}
-                                    </h3>
-
-                                    <p className="text-xs sm:text-sm text-gray-600 line-clamp-2 leading-relaxed">
-                                        {art.summary}
-                                    </p>
                                 </div>
 
                                 {/* Action Buttons */}
@@ -444,7 +551,7 @@ export default function BeritaManager({ initialArticles }: BeritaManagerProps) {
                                     {editingArticle ? 'Sunting Berita' : 'Tambah Berita Baru'}
                                 </h2>
                                 <p className="text-xs text-gray-500">
-                                    Konten akan langsung tersinkron ke halaman publik /berita
+                                    Konten &amp; gambar auto WebP langsung tersinkron ke halaman publik /berita
                                 </p>
                             </div>
                         </div>
@@ -512,6 +619,163 @@ export default function BeritaManager({ initialArticles }: BeritaManagerProps) {
                                 </div>
                             )}
 
+                            {/* Section: Gambar Berita (Auto WebP & Kompres MB) */}
+                            <div className="p-4 rounded-2xl bg-slate-50 border border-slate-200 space-y-3">
+                                <div className="flex items-center justify-between">
+                                    <div className="flex items-center gap-2">
+                                        <ImageIcon className="w-4 h-4 text-emerald-800" />
+                                        <label className="text-xs font-bold text-gray-800 uppercase tracking-wider">
+                                            Foto / Gambar Berita
+                                        </label>
+                                    </div>
+                                    <div className="flex items-center gap-1.5 text-xs">
+                                        <button
+                                            type="button"
+                                            onClick={() => setImageInputMode('upload')}
+                                            className={`px-2.5 py-1 rounded-lg font-semibold transition-colors ${imageInputMode === 'upload'
+                                                ? 'bg-emerald-800 text-white'
+                                                : 'text-gray-500 hover:text-gray-800'
+                                                }`}
+                                        >
+                                            Unggah File
+                                        </button>
+                                        <button
+                                            type="button"
+                                            onClick={() => setImageInputMode('url')}
+                                            className={`px-2.5 py-1 rounded-lg font-semibold transition-colors ${imageInputMode === 'url'
+                                                ? 'bg-emerald-800 text-white'
+                                                : 'text-gray-500 hover:text-gray-800'
+                                                }`}
+                                        >
+                                            Link URL
+                                        </button>
+                                    </div>
+                                </div>
+
+                                {imageInputMode === 'upload' ? (
+                                    <div className="space-y-3">
+                                        <input
+                                            ref={fileInputRef}
+                                            type="file"
+                                            accept="image/*"
+                                            onChange={handleFileSelect}
+                                            className="hidden"
+                                        />
+
+                                        {formImageUrl ? (
+                                            <div className="flex flex-col sm:flex-row items-center gap-4 bg-white p-3 rounded-xl border border-slate-200">
+                                                <div className="relative w-full sm:w-36 h-24 rounded-lg overflow-hidden bg-slate-100 shrink-0 border border-slate-100">
+                                                    <img
+                                                        src={formImageUrl}
+                                                        alt="Pratinjau"
+                                                        className="w-full h-full object-cover"
+                                                    />
+                                                    <span className="absolute top-1 left-1 bg-emerald-800 text-white text-[9px] font-black px-1.5 py-0.5 rounded shadow-xs">
+                                                        WEBP
+                                                    </span>
+                                                </div>
+
+                                                <div className="flex-1 space-y-1 text-center sm:text-left">
+                                                    <p className="text-xs font-bold text-gray-900 flex items-center justify-center sm:justify-start gap-1">
+                                                        <Check className="w-3.5 h-3.5 text-emerald-600" />
+                                                        <span>Gambar Siap Dipublikasikan</span>
+                                                    </p>
+                                                    {compressionStats && (
+                                                        <div className="text-[11px] text-gray-600 bg-emerald-50 text-emerald-900 p-2 rounded-lg border border-emerald-100">
+                                                            <div className="font-semibold text-emerald-800 flex items-center gap-1">
+                                                                <Sparkles className="w-3 h-3" />
+                                                                <span>Hemat Bandwidth: {compressionStats.savings}%</span>
+                                                            </div>
+                                                            <div className="text-gray-500 mt-0.5">
+                                                                {formatBytes(compressionStats.originalSize)} → {formatBytes(compressionStats.compressedSize)} (Format WebP)
+                                                            </div>
+                                                        </div>
+                                                    )}
+                                                    <p className="text-[10px] text-gray-400">
+                                                        Telah otomatis dikonversi ke WebP untuk menghemat kuota storage dan mencegah lag loading.
+                                                    </p>
+                                                </div>
+
+                                                <div className="flex sm:flex-col gap-2 shrink-0">
+                                                    <button
+                                                        type="button"
+                                                        onClick={() => fileInputRef.current?.click()}
+                                                        disabled={isProcessingImage}
+                                                        className="px-3 py-1.5 bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-semibold rounded-lg transition-colors"
+                                                    >
+                                                        Ganti
+                                                    </button>
+                                                    <button
+                                                        type="button"
+                                                        onClick={handleRemoveImage}
+                                                        className="px-3 py-1.5 bg-red-50 hover:bg-red-100 text-red-600 text-xs font-semibold rounded-lg transition-colors"
+                                                    >
+                                                        Hapus
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        ) : (
+                                            <div
+                                                onClick={() => !isProcessingImage && fileInputRef.current?.click()}
+                                                className={`border-2 border-dashed border-gray-300 hover:border-emerald-600 bg-white hover:bg-emerald-50/30 rounded-xl p-5 text-center cursor-pointer transition-colors ${isProcessingImage ? 'opacity-60 pointer-events-none' : ''
+                                                    }`}
+                                            >
+                                                {isProcessingImage ? (
+                                                    <div className="flex flex-col items-center gap-2">
+                                                        <Loader2 className="w-6 h-6 text-emerald-700 animate-spin" />
+                                                        <p className="text-xs font-bold text-emerald-900">
+                                                            Mengompres &amp; Mengonversi ke WebP...
+                                                        </p>
+                                                        <p className="text-[11px] text-gray-500">
+                                                            Menurunkan ukuran gambar agar hemat storage &amp; egress
+                                                        </p>
+                                                    </div>
+                                                ) : (
+                                                    <div className="flex flex-col items-center gap-2">
+                                                        <div className="w-10 h-10 rounded-full bg-emerald-50 text-emerald-800 flex items-center justify-center">
+                                                            <Upload className="w-5 h-5" />
+                                                        </div>
+                                                        <div>
+                                                            <p className="text-xs font-bold text-gray-800">
+                                                                Klik untuk Memilih Gambar (JPG, PNG, JPEG)
+                                                            </p>
+                                                            <p className="text-[11px] text-gray-500 mt-0.5">
+                                                                Otomatis diubah ke <strong>WebP</strong> dan ukuran file MB diturunkan secara drastis
+                                                            </p>
+                                                        </div>
+                                                    </div>
+                                                )}
+                                            </div>
+                                        )}
+                                    </div>
+                                ) : (
+                                    <div className="space-y-2">
+                                        <div className="relative">
+                                            <Link2 className="w-4 h-4 text-gray-400 absolute left-3 top-1/2 -translate-y-1/2" />
+                                            <input
+                                                type="url"
+                                                value={formImageUrl}
+                                                onChange={(e) => setFormImageUrl(e.target.value)}
+                                                placeholder="https://images.unsplash.com/... atau link gambar"
+                                                className="w-full pl-9 pr-4 py-2 text-xs sm:text-sm border border-gray-300 rounded-xl focus:ring-2 focus:ring-emerald-700 outline-hidden bg-white"
+                                            />
+                                        </div>
+                                        {formImageUrl && (
+                                            <div className="flex items-center justify-between text-xs text-gray-500">
+                                                <span>URL tersimpan</span>
+                                                <button
+                                                    type="button"
+                                                    onClick={() => setFormImageUrl('')}
+                                                    className="text-red-500 hover:underline"
+                                                >
+                                                    Hapus URL
+                                                </button>
+                                            </div>
+                                        )}
+                                    </div>
+                                )}
+                            </div>
+
                             <div>
                                 <label className="block text-xs font-bold text-gray-700 uppercase tracking-wider mb-1">
                                     Ringkasan Singkat (Summary) *
@@ -552,7 +816,7 @@ export default function BeritaManager({ initialArticles }: BeritaManagerProps) {
                                 </button>
                                 <Button
                                     type="submit"
-                                    disabled={isSaving}
+                                    disabled={isSaving || isProcessingImage}
                                     className="bg-emerald-800 hover:bg-emerald-900 text-white font-bold text-xs sm:text-sm px-5 py-2.5 rounded-xl shadow-sm"
                                 >
                                     {isSaving ? 'Menyimpan...' : editingArticle ? 'Simpan Perubahan' : 'Terbitkan Berita'}
@@ -583,6 +847,17 @@ export default function BeritaManager({ initialArticles }: BeritaManagerProps) {
                                 {previewArticle.date}
                             </span>
                         </div>
+
+                        {/* Gambar di Pratinjau */}
+                        {previewArticle.image_url && (
+                            <div className="relative aspect-16/10 w-full mb-4 overflow-hidden rounded-2xl bg-slate-100 border border-slate-200">
+                                <img
+                                    src={previewArticle.image_url}
+                                    alt={previewArticle.title}
+                                    className="w-full h-full object-cover"
+                                />
+                            </div>
+                        )}
 
                         <h2 className="text-xl sm:text-2xl font-extrabold text-gray-900 mb-4 leading-snug">
                             {previewArticle.title}
@@ -648,4 +923,3 @@ export default function BeritaManager({ initialArticles }: BeritaManagerProps) {
         </div>
     )
 }
-
