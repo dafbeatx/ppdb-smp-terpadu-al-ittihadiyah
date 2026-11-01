@@ -681,7 +681,7 @@ export default function BeritaManager({ initialArticles }: BeritaManagerProps) {
                                                         <span>Gambar Siap Dipublikasikan</span>
                                                     </p>
                                                     {compressionStats && (
-                                                        <div className="text-[11px] text-gray-600 bg-emerald-50 text-emerald-900 p-2 rounded-lg border border-emerald-100">
+                                                        <div className="text-[11px] bg-emerald-50 text-emerald-900 p-2 rounded-lg border border-emerald-100">
                                                             <div className="font-semibold text-emerald-800 flex items-center gap-1">
                                                                 <Sparkles className="w-3 h-3" />
                                                                 <span>Hemat Bandwidth: {compressionStats.savings}%</span>
