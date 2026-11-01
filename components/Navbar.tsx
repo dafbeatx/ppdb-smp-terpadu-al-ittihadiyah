@@ -1,22 +1,140 @@
 'use client'
 
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import Link from 'next/link'
 import { usePathname, useRouter } from 'next/navigation'
-import { Menu, X, LayoutDashboard, FileText, LogOut, ShieldCheck } from 'lucide-react'
+import {
+    Menu,
+    X,
+    ChevronDown,
+    LayoutDashboard,
+    FileText,
+    LogOut,
+    ShieldCheck,
+    BookOpen,
+    Building2,
+    Newspaper,
+    ClipboardCheck,
+    UserCheck,
+    HelpCircle
+} from 'lucide-react'
 import { AnimatePresence, motion } from 'framer-motion'
 import Button from '@/components/ui/Button'
 import { cn } from '@/lib/utils'
 import Image from 'next/image'
 import { createClient } from '@/lib/supabase/client'
 
-const NAV_LINKS = [
-    { name: 'Beranda', href: '/#hero' },
-    { name: 'Profil', href: '/#profil' },
-    { name: 'Visi & Misi', href: '/#visi-misi' },
-    { name: 'Keunggulan', href: '/#keunggulan' },
-    { name: 'Testimoni', href: '/#testimoni' },
-    { name: 'Alur', href: '/#alur' },
+// Struktur Navigasi Multi-Layer Sekolah
+interface NavSubItem {
+    name: string
+    href: string
+    description?: string
+    icon?: React.ComponentType<{ className?: string }>
+}
+
+interface NavItem {
+    name: string
+    href?: string
+    items?: NavSubItem[]
+}
+
+const NAVIGATION_MENU: NavItem[] = [
+    {
+        name: 'Beranda',
+        href: '/',
+    },
+    {
+        name: 'Profil Sekolah',
+        items: [
+            {
+                name: 'Sejarah & Perjalanan',
+                href: '/sejarah',
+                description: 'Latar belakang pendirian & ikhtiar kami',
+                icon: BookOpen,
+            },
+            {
+                name: 'Visi & Misi (AKBAR)',
+                href: '/#visi-misi',
+                description: 'Haluan & pilar karakter sekolah',
+                icon: UserCheck,
+            },
+            {
+                name: 'Sambutan Kepala Sekolah',
+                href: '/#profil',
+                description: 'Pesan pimpinan kepada orang tua',
+                icon: ShieldCheck,
+            },
+            {
+                name: 'Fasilitas & Kampus',
+                href: '/fasilitas',
+                description: 'Sarana kelas, masjid & lingkungan belajar',
+                icon: Building2,
+            },
+        ],
+    },
+    {
+        name: 'Akademik',
+        items: [
+            {
+                name: 'Keunggulan Pembiasaan',
+                href: '/#keunggulan',
+                description: 'Sholat berjamaah & adab santun harian',
+                icon: ShieldCheck,
+            },
+            {
+                name: 'Program Bimbingan Tahfidz',
+                href: '/#keunggulan',
+                description: 'Hafalan Qur\'an ramah anak & tartil',
+                icon: BookOpen,
+            },
+            {
+                name: 'Karakter Santri AKBAR',
+                href: '/#visi-misi',
+                description: 'Aktif, Kreatif, Bersih, Antusias, Religius',
+                icon: UserCheck,
+            },
+        ],
+    },
+    {
+        name: 'Informasi',
+        items: [
+            {
+                name: 'Kabar & Berita Sekolah',
+                href: '/berita',
+                description: 'Dokumentasi kegiatan santri & prestasi',
+                icon: Newspaper,
+            },
+            {
+                name: 'Kisah Orang Tua',
+                href: '/#testimoni',
+                description: 'Pengalaman nyata wali murid kami',
+                icon: UserCheck,
+            },
+            {
+                name: 'Syarat & Ketentuan',
+                href: '/syarat-ketentuan',
+                description: 'Ketentuan pendaftaran & berkas',
+                icon: ClipboardCheck,
+            },
+        ],
+    },
+    {
+        name: 'PPDB Online',
+        items: [
+            {
+                name: 'Alur & Panduan Daftar',
+                href: '/#alur',
+                description: 'Panduan mudah 4 langkah lewat HP',
+                icon: HelpCircle,
+            },
+            {
+                name: 'Formulir Siswa Baru',
+                href: '/daftar',
+                description: 'Pendaftaran online resmi 2026/2027',
+                icon: ClipboardCheck,
+            },
+        ],
+    },
 ]
 
 export default function Navbar() {
@@ -25,15 +143,39 @@ export default function Navbar() {
     const isDaftarPage = pathname === '/daftar'
     const isHidden = pathname?.startsWith('/admin') || pathname === '/login'
 
-    const [activeSection, setActiveSection] = useState('hero')
     const [isScrolled, setIsScrolled] = useState(false)
     const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
+    const [openDropdown, setOpenDropdown] = useState<string | null>(null)
+    const [mobileExpanded, setMobileExpanded] = useState<Record<string, boolean>>({})
+
     const [isAdmin, setIsAdmin] = useState(() => {
         if (typeof window !== 'undefined') {
             return localStorage.getItem('is_admin_mode') === 'true'
         }
         return false
     })
+
+    const dropdownTimeoutRef = useRef<NodeJS.Timeout | null>(null)
+
+    // Handle hover dropdown desktop with small delay to avoid accidental closes
+    const handleMouseEnter = (name: string) => {
+        if (dropdownTimeoutRef.current) clearTimeout(dropdownTimeoutRef.current)
+        setOpenDropdown(name)
+    }
+
+    const handleMouseLeave = () => {
+        dropdownTimeoutRef.current = setTimeout(() => {
+            setOpenDropdown(null)
+        }, 150)
+    }
+
+    // Toggle mobile accordion
+    const toggleMobileSection = (name: string) => {
+        setMobileExpanded((prev) => ({
+            ...prev,
+            [name]: !prev[name],
+        }))
+    }
 
     useEffect(() => {
         const supabase = createClient()
@@ -99,30 +241,8 @@ export default function Navbar() {
             setIsScrolled(window.scrollY > 20)
         }
 
-        const observerOptions = {
-            root: null,
-            rootMargin: '-50% 0px -50% 0px',
-            threshold: 0,
-        }
-
-        const observerCallback = (entries: IntersectionObserverEntry[]) => {
-            entries.forEach((entry) => {
-                if (entry.isIntersecting) {
-                    setActiveSection(entry.target.id)
-                }
-            })
-        }
-
-        const observer = new IntersectionObserver(observerCallback, observerOptions)
-        const sections = document.querySelectorAll('section[id]')
-        sections.forEach((section) => observer.observe(section))
-
         window.addEventListener('scroll', handleScroll)
-
-        return () => {
-            window.removeEventListener('scroll', handleScroll)
-            sections.forEach((section) => observer.unobserve(section))
-        }
+        return () => window.removeEventListener('scroll', handleScroll)
     }, [isHidden])
 
     const handleLogout = async () => {
@@ -144,68 +264,139 @@ export default function Navbar() {
     return (
         <nav
             className={cn(
-                "fixed top-0 left-0 right-0 z-50 transition-all duration-300 border-none shadow-none",
+                "fixed top-0 left-0 right-0 z-50 transition-all duration-300",
                 isScrolled
-                    ? "bg-green-700 py-1.5 shadow-lg"
-                    : "bg-transparent py-4"
+                    ? "bg-emerald-900/95 backdrop-blur-md py-2 shadow-lg border-b border-emerald-800/40"
+                    : "bg-emerald-900 md:bg-transparent py-3 md:py-4"
             )}
         >
             <div className="container mx-auto px-4">
-                <div className="flex items-center justify-between h-16">
+                <div className="flex items-center justify-between h-14 md:h-16">
                     {/* Logo & Brand */}
-                    <Link href="/" className="flex items-center gap-2 md:gap-3 group">
-                        <div className="relative overflow-hidden rounded-lg">
+                    <Link href="/" className="flex items-center gap-2.5 md:gap-3 group shrink-0">
+                        <div className="w-10 h-10 md:w-11 md:h-11 rounded-xl bg-white p-1 shrink-0 flex items-center justify-center shadow-sm transition-transform duration-300 group-hover:scale-105">
                             <Image
                                 src="/logo.webp"
                                 alt="Logo SMP Al-Ittihadiyah"
-                                width={48}
-                                height={48}
-                                className="w-10 h-10 md:w-12 md:h-12 object-contain transition-transform duration-500 group-hover:scale-110"
+                                width={44}
+                                height={44}
+                                className="w-full h-full object-contain"
                                 priority
                             />
                         </div>
-                        <div className="hidden sm:block">
-                            <div className={cn(
-                                "font-bold text-sm md:text-base leading-tight transition-colors",
-                                isScrolled ? "text-white" : "text-white"
-                            )}>SMP Terpadu Al-Ittihadiyah</div>
-                            <div className="text-[10px] md:text-xs text-green-300 font-semibold uppercase tracking-wider">
-                                {isAdmin ? 'Panel Kontrol Admin' : 'PPDB Online 2026/2027'}
+                        <div>
+                            <div className="font-bold text-sm md:text-base text-white leading-tight">
+                                SMP Terpadu Al-Ittihadiyah
+                            </div>
+                            <div className="text-[10px] md:text-xs text-amber-300 font-semibold tracking-wide">
+                                {isAdmin ? 'Panel Kontrol Admin' : 'Ciampea, Bogor • Portal Resmi'}
                             </div>
                         </div>
                     </Link>
 
-                    {/* Desktop Navigation */}
+                    {/* Desktop Navigation with Multi-layer Dropdowns */}
                     <div className="hidden lg:flex items-center gap-1">
-                        {NAV_LINKS.map((link) => (
-                            <Link
-                                key={link.name}
-                                href={link.href}
-                                className={cn(
-                                    "px-4 py-2 rounded-full text-sm font-medium transition-all duration-200",
-                                    activeSection === link.href.slice(1)
-                                        ? "bg-white/20 text-white"
-                                        : "text-white/90 hover:text-white hover:bg-white/10"
-                                )}
-                            >
-                                {link.name}
-                            </Link>
-                        ))}
+                        {NAVIGATION_MENU.map((item) => {
+                            if (!item.items) {
+                                return (
+                                    <Link
+                                        key={item.name}
+                                        href={item.href || '/'}
+                                        className="px-3.5 py-2 rounded-xl text-sm font-medium text-white/90 hover:text-white hover:bg-white/10 transition-colors"
+                                    >
+                                        {item.name}
+                                    </Link>
+                                )
+                            }
+
+                            const isDropdownOpen = openDropdown === item.name
+
+                            return (
+                                <div
+                                    key={item.name}
+                                    className="relative"
+                                    onMouseEnter={() => handleMouseEnter(item.name)}
+                                    onMouseLeave={handleMouseLeave}
+                                >
+                                    <button
+                                        type="button"
+                                        className={cn(
+                                            "flex items-center gap-1.5 px-3.5 py-2 rounded-xl text-sm font-medium transition-colors",
+                                            isDropdownOpen
+                                                ? "bg-white/15 text-white"
+                                                : "text-white/90 hover:text-white hover:bg-white/10"
+                                        )}
+                                        aria-expanded={isDropdownOpen}
+                                    >
+                                        <span>{item.name}</span>
+                                        <ChevronDown
+                                            className={cn(
+                                                "w-4 h-4 transition-transform duration-200 opacity-80",
+                                                isDropdownOpen && "rotate-180"
+                                            )}
+                                        />
+                                    </button>
+
+                                    {/* Desktop Dropdown Panel */}
+                                    <AnimatePresence>
+                                        {isDropdownOpen && (
+                                            <motion.div
+                                                initial={{ opacity: 0, y: 8, scale: 0.98 }}
+                                                animate={{ opacity: 1, y: 0, scale: 1 }}
+                                                exit={{ opacity: 0, y: 6, scale: 0.98 }}
+                                                transition={{ duration: 0.15 }}
+                                                className="absolute top-full left-0 mt-1.5 w-64 bg-white rounded-2xl shadow-xl border border-slate-100 p-2 z-50"
+                                            >
+                                                <div className="space-y-1">
+                                                    {item.items.map((sub) => {
+                                                        const SubIcon = sub.icon
+                                                        return (
+                                                            <Link
+                                                                key={sub.name}
+                                                                href={sub.href}
+                                                                onClick={() => setOpenDropdown(null)}
+                                                                className="flex items-start gap-3 p-2.5 rounded-xl hover:bg-emerald-50 text-gray-800 transition-colors group"
+                                                            >
+                                                                {SubIcon && (
+                                                                    <div className="p-1.5 rounded-lg bg-emerald-50 text-emerald-800 group-hover:bg-emerald-100 shrink-0 mt-0.5">
+                                                                        <SubIcon className="w-4 h-4" />
+                                                                    </div>
+                                                                )}
+                                                                <div className="min-w-0">
+                                                                    <div className="text-sm font-bold text-gray-900 group-hover:text-emerald-800 leading-snug">
+                                                                        {sub.name}
+                                                                    </div>
+                                                                    {sub.description && (
+                                                                        <div className="text-xs text-gray-500 leading-tight mt-0.5 truncate">
+                                                                            {sub.description}
+                                                                        </div>
+                                                                    )}
+                                                                </div>
+                                                            </Link>
+                                                        )
+                                                    })}
+                                                </div>
+                                            </motion.div>
+                                        )}
+                                    </AnimatePresence>
+                                </div>
+                            )
+                        })}
                     </div>
 
-                    {/* Action Buttons */}
+                    {/* Action Buttons Area */}
                     <div className="flex items-center gap-2 md:gap-3">
                         {isAdmin ? (
-                            /* TAMPILAN MODE ADMIN: Seluruh kontrol anonym (Login / Daftar) tidak ditampilkan */
+                            /* Mode Admin Aktif */
                             <div className="hidden sm:flex items-center gap-2">
-                                <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold bg-emerald-500/20 text-emerald-200 border border-emerald-400/30 backdrop-blur-xs">
-                                    <ShieldCheck className="w-3.5 h-3.5 text-emerald-300" />
+                                <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold bg-emerald-800/80 text-amber-300 border border-emerald-600">
+                                    <ShieldCheck className="w-3.5 h-3.5" />
                                     Mode Admin
                                 </span>
                                 <Link href="/admin">
                                     <Button
                                         size="sm"
-                                        className="bg-white text-green-800 hover:bg-emerald-50 border border-white font-bold shadow-md flex items-center gap-1.5"
+                                        className="bg-white text-emerald-900 hover:bg-emerald-50 border border-white font-bold shadow-xs flex items-center gap-1.5"
                                     >
                                         <LayoutDashboard className="w-4 h-4" />
                                         Dashboard
@@ -223,28 +414,29 @@ export default function Navbar() {
                                 </Button>
                             </div>
                         ) : (
-                            /* TAMPILAN ANONYM: Hanya muncul bila bukan admin */
+                            /* Pengunjung Umum */
                             <>
                                 <Link href="/login" className="hidden sm:block">
-                                    <Button variant="ghost" size="sm" className="font-bold text-white hover:bg-white/10">
+                                    <Button variant="ghost" size="sm" className="font-semibold text-white/90 hover:text-white hover:bg-white/10">
                                         Login
                                     </Button>
                                 </Link>
                                 {!isDaftarPage && (
                                     <Link href="/daftar">
-                                        <Button size="sm" className="shadow-lg font-bold px-4 bg-white text-green-800 hover:bg-emerald-50 border border-white">
-                                            Daftar Sekarang
+                                        <Button size="sm" className="shadow-md font-bold px-4 bg-amber-400 hover:bg-amber-300 text-emerald-950 border-none transition-colors">
+                                            Daftar Siswa Baru
                                         </Button>
                                     </Link>
                                 )}
                             </>
                         )}
 
-                        {/* Mobile Menu Toggle */}
+                        {/* Mobile Menu Toggle Button */}
                         <button
-                            className="lg:hidden p-2 text-white hover:bg-white/10 rounded-lg transition-colors"
+                            type="button"
+                            className="lg:hidden p-2 text-white hover:bg-white/10 rounded-xl transition-colors"
                             onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-                            aria-label="Toggle menu"
+                            aria-label="Toggle navigation menu"
                         >
                             {isMobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
                         </button>
@@ -252,109 +444,130 @@ export default function Navbar() {
                 </div>
             </div>
 
-            {/* Mobile Menu Overlay */}
+            {/* Mobile Navigation Drawer */}
             <AnimatePresence>
                 {isMobileMenuOpen && (
                     <motion.div
                         initial={{ opacity: 0, height: 0 }}
                         animate={{ opacity: 1, height: 'auto' }}
                         exit={{ opacity: 0, height: 0 }}
-                        className="lg:hidden bg-white border-t border-gray-100 overflow-hidden shadow-xl"
+                        className="lg:hidden bg-white border-t border-slate-100 shadow-2xl overflow-hidden max-h-[85vh] overflow-y-auto"
                     >
-                        <div className="container mx-auto px-4 py-6 space-y-1">
-                            {isAdmin ? (
-                                /* Mobile Menu Khusus Admin */
-                                <>
-                                    <div className="px-4 py-2.5 mb-2 rounded-xl bg-green-50 border border-green-200 flex items-center justify-between">
-                                        <span className="flex items-center gap-2 text-xs font-bold text-green-800 uppercase tracking-wider">
-                                            <ShieldCheck className="w-4 h-4 text-green-600" />
-                                            Mode Admin Aktif
-                                        </span>
-                                    </div>
-
+                        <div className="container mx-auto px-4 py-5 space-y-3">
+                            {isAdmin && (
+                                <div className="px-3.5 py-2.5 rounded-xl bg-emerald-50 border border-emerald-200 flex items-center justify-between mb-2">
+                                    <span className="flex items-center gap-2 text-xs font-bold text-emerald-900 uppercase tracking-wide">
+                                        <ShieldCheck className="w-4 h-4 text-emerald-700" />
+                                        Mode Admin Aktif
+                                    </span>
                                     <Link
                                         href="/admin"
                                         onClick={() => setIsMobileMenuOpen(false)}
-                                        className="flex items-center gap-2.5 px-4 py-3 rounded-xl text-base font-bold text-white bg-green-600 hover:bg-green-700 transition-colors shadow-sm"
+                                        className="text-xs font-bold text-emerald-800 underline"
                                     >
-                                        <LayoutDashboard className="w-5 h-5" />
-                                        Dashboard Admin
+                                        Buka Dashboard
                                     </Link>
-
-                                    <Link
-                                        href="/admin/content"
-                                        onClick={() => setIsMobileMenuOpen(false)}
-                                        className="flex items-center gap-2.5 px-4 py-3 rounded-xl text-base font-medium text-gray-700 hover:bg-gray-100 transition-colors"
-                                    >
-                                        <FileText className="w-5 h-5 text-gray-500" />
-                                        Edit Konten (CMS)
-                                    </Link>
-
-                                    <div className="my-2 border-t border-gray-100 pt-2">
-                                        <div className="text-[11px] font-semibold text-gray-400 px-4 uppercase tracking-wider mb-1">
-                                            Navigasi Beranda
-                                        </div>
-                                        {NAV_LINKS.map((link) => (
-                                            <Link
-                                                key={link.name}
-                                                href={link.href}
-                                                onClick={() => setIsMobileMenuOpen(false)}
-                                                className={cn(
-                                                    "block px-4 py-2 rounded-xl text-sm font-medium transition-all",
-                                                    activeSection === link.href.slice(1)
-                                                        ? "text-green-700 font-bold bg-green-50/60"
-                                                        : "text-gray-600 hover:bg-gray-50 hover:text-green-600"
-                                                )}
-                                            >
-                                                {link.name}
-                                            </Link>
-                                        ))}
-                                    </div>
-
-                                    <button
-                                        onClick={handleLogout}
-                                        className="w-full flex items-center gap-2.5 px-4 py-3 rounded-xl text-base font-medium text-red-600 hover:bg-red-50 transition-colors text-left"
-                                    >
-                                        <LogOut className="w-5 h-5" />
-                                        Keluar dari Admin
-                                    </button>
-                                </>
-                            ) : (
-                                /* Mobile Menu Tampilan Anonym */
-                                <>
-                                    {NAV_LINKS.map((link) => (
-                                        <Link
-                                            key={link.name}
-                                            href={link.href}
-                                            onClick={() => setIsMobileMenuOpen(false)}
-                                            className={cn(
-                                                "block px-4 py-3 rounded-xl text-base font-medium transition-all",
-                                                activeSection === link.href.slice(1)
-                                                    ? "bg-green-50 text-green-700 font-bold"
-                                                    : "text-gray-600 hover:bg-gray-50 hover:text-green-600"
-                                            )}
-                                        >
-                                            {link.name}
-                                        </Link>
-                                    ))}
-                                    {!isDaftarPage && (
-                                        <Link
-                                            href="/daftar"
-                                            onClick={() => setIsMobileMenuOpen(false)}
-                                            className="block px-4 py-3 rounded-xl text-base font-bold text-center bg-green-600 text-white hover:bg-green-700 shadow-sm"
-                                        >
-                                            Daftar Sekarang
-                                        </Link>
-                                    )}
-                                    <Link
-                                        href="/login"
-                                        onClick={() => setIsMobileMenuOpen(false)}
-                                        className="block px-4 py-3 text-gray-600 font-medium hover:bg-gray-50 rounded-xl"
-                                    >
-                                        Login Admin
-                                    </Link>
-                                </>
+                                </div>
                             )}
+
+                            {/* Mobile Accordion Menu */}
+                            <div className="space-y-1">
+                                {NAVIGATION_MENU.map((item) => {
+                                    if (!item.items) {
+                                        return (
+                                            <Link
+                                                key={item.name}
+                                                href={item.href || '/'}
+                                                onClick={() => setIsMobileMenuOpen(false)}
+                                                className="block px-3.5 py-2.5 rounded-xl text-base font-semibold text-gray-800 hover:bg-slate-50 transition-colors"
+                                            >
+                                                {item.name}
+                                            </Link>
+                                        )
+                                    }
+
+                                    const isExpanded = !!mobileExpanded[item.name]
+
+                                    return (
+                                        <div key={item.name} className="border-b border-slate-100 pb-1">
+                                            <button
+                                                type="button"
+                                                onClick={() => toggleMobileSection(item.name)}
+                                                className="w-full flex items-center justify-between px-3.5 py-2.5 text-base font-semibold text-gray-800 hover:text-emerald-800 transition-colors text-left"
+                                            >
+                                                <span>{item.name}</span>
+                                                <ChevronDown
+                                                    className={cn(
+                                                        "w-4 h-4 text-gray-400 transition-transform duration-200",
+                                                        isExpanded && "rotate-180 text-emerald-700"
+                                                    )}
+                                                />
+                                            </button>
+
+                                            {isExpanded && (
+                                                <div className="pl-4 pr-2 py-1 space-y-1 bg-slate-50/60 rounded-xl mb-1">
+                                                    {item.items.map((sub) => (
+                                                        <Link
+                                                            key={sub.name}
+                                                            href={sub.href}
+                                                            onClick={() => setIsMobileMenuOpen(false)}
+                                                            className="block py-2 px-3 rounded-lg text-sm font-medium text-gray-700 hover:bg-emerald-100/50 hover:text-emerald-900 transition-colors"
+                                                        >
+                                                            <div className="font-bold">{sub.name}</div>
+                                                            {sub.description && (
+                                                                <div className="text-xs text-gray-500 mt-0.5">{sub.description}</div>
+                                                            )}
+                                                        </Link>
+                                                    ))}
+                                                </div>
+                                            )}
+                                        </div>
+                                    )
+                                })}
+                            </div>
+
+                            {/* Mobile Action Controls */}
+                            <div className="pt-3 border-t border-slate-100 space-y-2">
+                                {isAdmin ? (
+                                    <>
+                                        <Link
+                                            href="/admin/content"
+                                            onClick={() => setIsMobileMenuOpen(false)}
+                                            className="flex items-center gap-2.5 px-4 py-2.5 rounded-xl text-sm font-medium text-gray-700 hover:bg-slate-50"
+                                        >
+                                            <FileText className="w-4 h-4 text-gray-500" />
+                                            Edit Konten Website (CMS)
+                                        </Link>
+                                        <button
+                                            type="button"
+                                            onClick={handleLogout}
+                                            className="w-full flex items-center gap-2.5 px-4 py-2.5 rounded-xl text-sm font-semibold text-red-600 hover:bg-red-50 text-left"
+                                        >
+                                            <LogOut className="w-4 h-4" />
+                                            Keluar dari Admin
+                                        </button>
+                                    </>
+                                ) : (
+                                    <>
+                                        {!isDaftarPage && (
+                                            <Link
+                                                href="/daftar"
+                                                onClick={() => setIsMobileMenuOpen(false)}
+                                                className="block w-full py-3 px-4 rounded-xl text-center font-bold text-sm bg-amber-400 text-emerald-950 shadow-sm"
+                                            >
+                                                Daftar Siswa Baru Sekarang
+                                            </Link>
+                                        )}
+                                        <Link
+                                            href="/login"
+                                            onClick={() => setIsMobileMenuOpen(false)}
+                                            className="block w-full py-2.5 px-4 rounded-xl text-center font-medium text-sm text-gray-600 hover:bg-slate-50"
+                                        >
+                                            Login Admin
+                                        </Link>
+                                    </>
+                                )}
+                            </div>
                         </div>
                     </motion.div>
                 )}
