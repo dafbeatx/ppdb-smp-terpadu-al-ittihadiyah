@@ -75,7 +75,7 @@ export default async function Hero() {
                         <div className="flex flex-col sm:flex-row gap-2.5 sm:gap-4 justify-center items-center mb-8 sm:mb-10">
                             <Link
                                 href="/daftar"
-                                className="w-full sm:w-auto min-h-[46px] inline-flex items-center justify-center bg-amber-400 hover:bg-amber-300 text-emerald-950 shadow-xl shadow-emerald-950/30 font-bold text-sm sm:text-base md:text-lg py-3 sm:py-3.5 px-6 sm:px-8 rounded-xl gap-2 transition-colors active:scale-95"
+                                className="w-full sm:w-auto min-h-11.5 inline-flex items-center justify-center bg-amber-400 hover:bg-amber-300 text-emerald-950 shadow-xl shadow-emerald-950/30 font-bold text-sm sm:text-base md:text-lg py-3 sm:py-3.5 px-6 sm:px-8 rounded-xl gap-2 transition-colors active:scale-95"
                             >
                                 <span>Daftar Siswa Baru Sekarang</span>
                                 <ArrowRight className="w-4 h-4 sm:w-5 sm:h-5 text-emerald-950" />
@@ -85,7 +85,7 @@ export default async function Hero() {
                                 href={waAdminUrl}
                                 target="_blank"
                                 rel="noopener noreferrer"
-                                className="w-full sm:w-auto min-h-[46px] inline-flex items-center justify-center bg-emerald-900/60 hover:bg-emerald-900/80 border border-emerald-400/40 text-white font-semibold text-sm sm:text-base py-3 sm:py-3.5 px-5 sm:px-6 rounded-xl gap-2 transition-colors active:scale-95"
+                                className="w-full sm:w-auto min-h-11.5 inline-flex items-center justify-center bg-emerald-900/60 hover:bg-emerald-900/80 border border-emerald-400/40 text-white font-semibold text-sm sm:text-base py-3 sm:py-3.5 px-5 sm:px-6 rounded-xl gap-2 transition-colors active:scale-95"
                             >
                                 <MessageCircle className="w-4 h-4 sm:w-5 sm:h-5 text-emerald-300" />
                                 <span>Konsultasi via WhatsApp</span>
