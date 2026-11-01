@@ -27,6 +27,13 @@ export default async function Hero() {
 
     const statExperience = rawExp ? parseInt(rawExp, 10) : null
     const statGraduate = rawGrad ? parseInt(rawGrad, 10) : null
+
+    // Deteksi cerdas: jika angka >= 1900 berarti tahun berdirinya sekolah (misal 2013),
+    // jika angka kecil (< 100) berarti jumlah tahun pengalaman/mengabdi (misal 13+).
+    const isCalendarYear = statExperience !== null && !isNaN(statExperience) && statExperience >= 1900
+    const experienceLabel = isCalendarYear ? 'Berdiri Sejak' : 'Th Mengabdi'
+    const experienceSuffix = isCalendarYear ? '' : '+'
+
     const hasStats = Boolean(
         (statExperience !== null && !isNaN(statExperience)) ||
         (statGraduate !== null && !isNaN(statGraduate)) ||
@@ -166,31 +173,37 @@ export default async function Hero() {
                                     </div>
                                 </div>
 
-                                {/* Statistik Resmi dari CMS (Hanya jika diisi admin) */}
+                                {/* Statistik Kredibilitas Resmi dari CMS */}
                                 {hasStats && (
-                                    <div className="grid grid-cols-3 gap-2 mt-3 pt-3 border-t border-emerald-800/60 text-center">
-                                        {statExperience !== null && (
-                                            <div className="bg-emerald-950/60 rounded-xl p-2 border border-emerald-700/30">
-                                                <div className="text-base sm:text-lg font-black text-white">
-                                                    <Counter value={statExperience} suffix="+" />
+                                    <div className="grid grid-cols-3 gap-2 sm:gap-2.5 mt-3 sm:mt-4 pt-3 sm:pt-3.5 border-t border-emerald-800/60 text-center">
+                                        {statExperience !== null && !isNaN(statExperience) && (
+                                            <div className="bg-emerald-950/80 rounded-xl p-2 sm:p-2.5 border border-emerald-700/50 flex flex-col justify-center">
+                                                <div className="text-sm sm:text-base md:text-lg font-black text-white tracking-tight">
+                                                    <Counter value={statExperience} suffix={experienceSuffix} />
                                                 </div>
-                                                <div className="text-[10px] text-emerald-200 leading-tight">Th Pengabdian</div>
+                                                <div className="text-[11px] sm:text-xs text-emerald-200 font-medium leading-tight mt-0.5">
+                                                    {experienceLabel}
+                                                </div>
                                             </div>
                                         )}
-                                        {statGraduate !== null && (
-                                            <div className="bg-emerald-950/60 rounded-xl p-2 border border-emerald-700/30">
-                                                <div className="text-base sm:text-lg font-black text-amber-300">
+                                        {statGraduate !== null && !isNaN(statGraduate) && (
+                                            <div className="bg-emerald-950/80 rounded-xl p-2 sm:p-2.5 border border-emerald-700/50 flex flex-col justify-center">
+                                                <div className="text-sm sm:text-base md:text-lg font-black text-amber-300 tracking-tight">
                                                     <Counter value={statGraduate} suffix="%" />
                                                 </div>
-                                                <div className="text-[10px] text-emerald-200 leading-tight">Lanjut SMA</div>
+                                                <div className="text-[11px] sm:text-xs text-emerald-200 font-medium leading-tight mt-0.5">
+                                                    Lanjut SMA
+                                                </div>
                                             </div>
                                         )}
                                         {statAccreditation && (
-                                            <div className="bg-emerald-950/60 rounded-xl p-2 border border-emerald-700/30">
-                                                <div className="text-base sm:text-lg font-black text-white">
+                                            <div className="bg-emerald-950/80 rounded-xl p-2 sm:p-2.5 border border-emerald-700/50 flex flex-col justify-center">
+                                                <div className="text-sm sm:text-base md:text-lg font-black text-white tracking-tight">
                                                     {statAccreditation}
                                                 </div>
-                                                <div className="text-[10px] text-emerald-200 leading-tight">Akreditasi</div>
+                                                <div className="text-[11px] sm:text-xs text-emerald-200 font-medium leading-tight mt-0.5">
+                                                    Akreditasi
+                                                </div>
                                             </div>
                                         )}
                                     </div>

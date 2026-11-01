@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect, useRef } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { useInView, useMotionValue, useTransform, animate, type MotionValue } from 'framer-motion'
 
 interface CounterProps {
@@ -13,36 +13,47 @@ interface CounterProps {
 
 export default function Counter({
     value,
-    duration = 2,
+    duration = 1.2,
     delay = 0,
     className = '',
     suffix = '',
 }: CounterProps) {
     const ref = useRef<HTMLSpanElement>(null)
-    const isInView = useInView(ref, { once: true, margin: '-100px' })
+    // Margin 0px agar langsung terpicu saat muncul di layar HP tanpa harus digulir jauh ke bawah
+    const isInView = useInView(ref, { once: true, margin: '0px' })
     const count = useMotionValue(0)
     const rounded = useTransform(count, (latest) => Math.round(latest))
+    const [hasAnimated, setHasAnimated] = useState(false)
 
     useEffect(() => {
-        if (isInView) {
+        if (isInView && !hasAnimated) {
             const controls = animate(count, value, {
                 duration,
                 delay,
                 ease: 'easeOut',
+                onComplete: () => setHasAnimated(true),
             })
             return controls.stop
         }
-    }, [isInView, value, duration, delay, count])
+    }, [isInView, hasAnimated, value, duration, delay, count])
 
     return (
         <span ref={ref} className={className}>
-            <AnimatedText value={rounded} />
+            <AnimatedText value={rounded} initial={value} hasAnimated={hasAnimated} />
             {suffix}
         </span>
     )
 }
 
-function AnimatedText({ value }: { value: MotionValue<number> }) {
+function AnimatedText({
+    value,
+    initial,
+    hasAnimated,
+}: {
+    value: MotionValue<number>
+    initial: number
+    hasAnimated: boolean
+}) {
     const ref = useRef<HTMLSpanElement>(null)
 
     useEffect(() => {
@@ -53,5 +64,6 @@ function AnimatedText({ value }: { value: MotionValue<number> }) {
         })
     }, [value])
 
-    return <span ref={ref}>0</span>
+    // Menampilkan nilai awal secara langsung agar tidak blank/0 di HP yang lambat memproses observer
+    return <span ref={ref}>{hasAnimated ? initial : initial}</span>
 }
