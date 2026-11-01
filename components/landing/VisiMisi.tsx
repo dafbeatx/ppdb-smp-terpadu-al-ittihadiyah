@@ -37,7 +37,7 @@ export default async function VisiMisi() {
             content['visi_misi.misi_5'],
             content['visi_misi.misi_6'],
         ]
-    ).filter(Boolean)
+    ).filter((item): item is string => Boolean(item))
 
     const misiItems = fetchedMisi.length > 0 ? fetchedMisi : defaultMisi
 
@@ -95,7 +95,7 @@ export default async function VisiMisi() {
                                         {/* Teks Visi */}
                                         <div className="relative my-4">
                                             <span className="text-6xl text-amber-300/30 font-serif leading-none absolute -top-4 -left-2 select-none">
-                                                &ldquo;
+                                                “
                                             </span>
                                             <p className="text-white text-lg md:text-xl font-medium leading-relaxed italic pl-6 border-l-2 border-amber-400/60">
                                                 {visi}
@@ -115,11 +115,11 @@ export default async function VisiMisi() {
                                             {akbarPillars.map((p, idx) => (
                                                 <div
                                                     key={p.letter}
-                                                    className={`bg-white/10 backdrop-blur-xs hover:bg-white/15 transition-colors p-2.5 rounded-xl border border-white/10 flex items-start gap-2.5 ${
+                                                    className={`bg-white/10 backdrop-blur-sm hover:bg-white/15 transition-colors p-2.5 rounded-xl border border-white/10 flex items-start gap-2.5 ${
                                                         idx === 4 ? 'sm:col-span-2' : ''
                                                     }`}
                                                 >
-                                                    <div className="w-6 h-6 rounded-lg bg-amber-400 text-emerald-950 font-black flex items-center justify-center shrink-0 text-xs shadow-xs">
+                                                    <div className="w-6 h-6 rounded-lg bg-amber-400 text-emerald-950 font-black flex items-center justify-center shrink-0 text-xs shadow-sm">
                                                         {p.letter}
                                                     </div>
                                                     <div className="min-w-0">
@@ -157,11 +157,11 @@ export default async function VisiMisi() {
                                         <div className="space-y-3">
                                             {misiItems.map((item, index) => (
                                                 <div
-                                                    key={index}
+                                                    key={`misi-${index + 1}`}
                                                     className="group flex items-start gap-3.5 p-3 rounded-2xl hover:bg-emerald-50/50 transition-all duration-200 border-b border-dashed border-slate-100 last:border-b-0"
                                                 >
                                                     {/* Centang Keemasan */}
-                                                    <div className="w-7 h-7 rounded-full bg-amber-100 border border-amber-300 text-amber-700 flex items-center justify-center shrink-0 mt-0.5 shadow-xs group-hover:scale-110 group-hover:bg-amber-400 group-hover:text-emerald-950 transition-all duration-200">
+                                                    <div className="w-7 h-7 rounded-full bg-amber-100 border border-amber-300 text-amber-700 flex items-center justify-center shrink-0 mt-0.5 shadow-sm group-hover:scale-110 group-hover:bg-amber-400 group-hover:text-emerald-950 transition-all duration-200">
                                                         <CheckCircle2 className="w-4 h-4" />
                                                     </div>
 
@@ -179,7 +179,7 @@ export default async function VisiMisi() {
                                     <div className="mt-6 pt-4 border-t border-slate-100 flex flex-wrap items-center justify-between gap-2 text-xs text-gray-500">
                                         <span className="flex items-center gap-1.5 font-medium text-emerald-700">
                                             <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
-                                            Berlandaskan Al-Qur&apos;an &amp; As-Sunnah
+                                            {'Berlandaskan Al-Qur\'an & As-Sunnah'}
                                         </span>
                                         <span className="font-semibold text-gray-400">SMP Terpadu Al-Ittihadiyah</span>
                                     </div>
