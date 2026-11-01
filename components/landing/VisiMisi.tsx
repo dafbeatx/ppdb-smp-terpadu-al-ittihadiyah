@@ -51,7 +51,7 @@ export default async function VisiMisi() {
     ]
 
     return (
-        <section id="visi-misi" className="py-16 md:py-24 bg-gradient-to-b from-white via-emerald-50/30 to-white overflow-hidden">
+        <section id="visi-misi" className="py-16 md:py-24 bg-linear-to-b from-white via-emerald-50/30 to-white overflow-hidden">
             <div className="container mx-auto px-4">
                 <div className="max-w-6xl mx-auto">
                     {/* Header Section */}
@@ -75,7 +75,7 @@ export default async function VisiMisi() {
                         {/* Kolom Visi (kiri) */}
                         <div className="lg:col-span-5 h-full">
                             <ScrollReveal direction="right" delay={0.2} className="h-full">
-                                <div className="h-full bg-gradient-to-br from-emerald-800 via-emerald-700 to-green-900 text-white rounded-3xl p-7 md:p-9 shadow-xl shadow-emerald-950/15 border border-emerald-600/30 flex flex-col justify-between relative overflow-hidden group">
+                                <div className="h-full bg-linear-to-br from-emerald-800 via-emerald-700 to-green-900 text-white rounded-3xl p-7 md:p-9 shadow-xl shadow-emerald-950/15 border border-emerald-600/30 flex flex-col justify-between relative overflow-hidden group">
                                     {/* Ambient glow backgrounds */}
                                     <div className="absolute top-0 right-0 -mr-16 -mt-16 w-60 h-60 bg-amber-400/15 rounded-full blur-3xl pointer-events-none" />
                                     <div className="absolute bottom-0 left-0 -ml-16 -mb-16 w-60 h-60 bg-emerald-400/15 rounded-full blur-3xl pointer-events-none" />
@@ -83,7 +83,7 @@ export default async function VisiMisi() {
                                     <div className="relative z-10">
                                         {/* Header Pill Visi (kuning keemasan khas spanduk sekolah) */}
                                         <div className="flex items-center justify-between mb-6">
-                                            <div className="inline-flex items-center gap-2 bg-gradient-to-r from-amber-400 via-yellow-400 to-amber-400 text-emerald-950 px-6 py-2 rounded-full font-black text-lg md:text-xl shadow-md tracking-wider">
+                                            <div className="inline-flex items-center gap-2 bg-linear-to-r from-amber-400 via-yellow-400 to-amber-400 text-emerald-950 px-6 py-2 rounded-full font-black text-lg md:text-xl shadow-md tracking-wider">
                                                 <Eye className="w-5 h-5 text-emerald-950" />
                                                 <span>VISI</span>
                                             </div>
@@ -139,12 +139,12 @@ export default async function VisiMisi() {
                             <ScrollReveal direction="left" delay={0.2} className="h-full">
                                 <div className="h-full bg-white rounded-3xl p-7 md:p-9 shadow-xl shadow-slate-200/60 border border-slate-100 flex flex-col justify-between relative overflow-hidden">
                                     {/* Top decorative accent bar */}
-                                    <div className="absolute top-0 left-0 right-0 h-1.5 bg-gradient-to-r from-emerald-600 via-amber-400 to-emerald-700" />
+                                    <div className="absolute top-0 left-0 right-0 h-1.5 bg-linear-to-r from-emerald-600 via-amber-400 to-emerald-700" />
 
                                     <div>
                                         {/* Header Pill Misi (kuning keemasan khas spanduk sekolah) */}
                                         <div className="flex items-center justify-between mb-6">
-                                            <div className="inline-flex items-center gap-2 bg-gradient-to-r from-amber-400 via-yellow-400 to-amber-400 text-emerald-950 px-6 py-2 rounded-full font-black text-lg md:text-xl shadow-md tracking-wider">
+                                            <div className="inline-flex items-center gap-2 bg-linear-to-r from-amber-400 via-yellow-400 to-amber-400 text-emerald-950 px-6 py-2 rounded-full font-black text-lg md:text-xl shadow-md tracking-wider">
                                                 <Target className="w-5 h-5 text-emerald-950" />
                                                 <span>MISI</span>
                                             </div>
