@@ -21,7 +21,7 @@ export default function PrivacyPolicyPage() {
                 </div>
             </header>
 
-            <main className="flex-grow container mx-auto px-4 py-12 max-w-4xl">
+            <main className="grow container mx-auto px-4 py-12 max-w-4xl">
                 <div className="bg-white rounded-3xl shadow-sm border border-gray-100 overflow-hidden">
                     <div className="bg-green-600 px-8 py-10 text-white text-center">
                         <div className="bg-white/20 w-16 h-16 rounded-2xl flex items-center justify-center mx-auto mb-4 backdrop-blur-sm">
