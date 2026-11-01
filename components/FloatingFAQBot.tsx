@@ -2,7 +2,7 @@
 
 import { useState, useEffect, useRef } from 'react'
 import { usePathname } from 'next/navigation'
-import { MessageCircle, X, Send, Phone, ArrowUpCircle } from 'lucide-react'
+import { MessageCircle, X, Phone, ArrowUpCircle } from 'lucide-react'
 import { motion, AnimatePresence } from 'framer-motion'
 
 const FAQ_DATA = [

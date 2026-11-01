@@ -1,5 +1,5 @@
 import Card from '@/components/ui/Card'
-import { School, Building2, Trophy } from 'lucide-react'
+import { Building2, Trophy } from 'lucide-react'
 import { getContentMap } from '@/lib/content'
 import ScrollReveal from '@/components/ScrollReveal'
 
@@ -34,10 +34,9 @@ export default async function Profile() {
                     {/* Header */}
                     <ScrollReveal direction="up">
                         <div className="text-center mb-12">
-                            <div className="inline-flex items-center gap-2 bg-emerald-100 text-emerald-800 px-4 py-1.5 rounded-full text-xs md:text-sm font-bold uppercase tracking-wider mb-3">
-                                <School className="w-4 h-4 text-emerald-600" />
-                                <span>Profil Sekolah</span>
-                            </div>
+                            <p className="text-emerald-800 font-semibold text-sm tracking-wider uppercase mb-2">
+                                Profil Lembaga
+                            </p>
                             <h2 className="text-3xl md:text-5xl font-extrabold text-gray-900 mb-4 tracking-tight">
                                 {title}
                             </h2>
@@ -49,7 +48,7 @@ export default async function Profile() {
 
                     {/* Description */}
                     <ScrollReveal direction="up" delay={0.2}>
-                        <Card className="p-7 md:p-10 mb-10 bg-linear-to-br from-emerald-50/70 via-green-50/40 to-blue-50/50 border border-emerald-100 rounded-3xl shadow-sm">
+                        <div className="p-7 md:p-10 mb-10 bg-slate-50 border border-slate-200/80 rounded-3xl">
                             <div className="space-y-4">
                                 <p className="text-gray-800 leading-relaxed text-base md:text-lg">
                                     {paragraph1}
@@ -58,23 +57,23 @@ export default async function Profile() {
                                     {paragraph2}
                                 </p>
                             </div>
-                        </Card>
+                        </div>
                     </ScrollReveal>
 
                     {/* Fasilitas & Program Grid */}
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                         {/* Fasilitas Card */}
                         <ScrollReveal direction="right" delay={0.3}>
-                            <Card className="p-7 md:p-9 border-2 border-emerald-100 rounded-3xl hover:shadow-xl transition-all duration-300 group h-full bg-white">
-                                <div className="flex items-center gap-3.5 mb-6">
-                                    <div className="bg-emerald-100 text-emerald-700 p-3 rounded-2xl group-hover:scale-110 transition-transform">
-                                        <Building2 className="w-7 h-7" />
+                            <Card className="p-7 md:p-9 border border-emerald-100 rounded-3xl hover:shadow-lg transition-all duration-300 h-full bg-white">
+                                <div className="flex items-center gap-3.5 mb-6 pb-4 border-b border-gray-100">
+                                    <div className="bg-emerald-50 text-emerald-800 p-3 rounded-2xl border border-emerald-100">
+                                        <Building2 className="w-6 h-6" />
                                     </div>
                                     <div>
                                         <h3 className="text-xl md:text-2xl font-bold text-gray-900">
                                             Fasilitas Sekolah
                                         </h3>
-                                        <p className="text-xs text-gray-500">Mendukung belajar dan kenyamanan anak</p>
+                                        <p className="text-xs text-gray-500">Mendukung kenyamanan dan fokus belajar siswa</p>
                                     </div>
                                 </div>
                                 <ul className="space-y-3.5">
@@ -83,9 +82,9 @@ export default async function Profile() {
                                         return (
                                             <li
                                                 key={num}
-                                                className="flex items-start gap-3 text-gray-700 group/item"
+                                                className="flex items-start gap-3 text-gray-700"
                                             >
-                                                <span className="text-emerald-600 font-bold mt-0.5 group-hover/item:scale-125 transition-transform">✓</span>
+                                                <span className="text-emerald-700 font-bold mt-0.5">✓</span>
                                                 <span className="flex-1 text-sm md:text-base leading-relaxed">{item}</span>
                                             </li>
                                         )
@@ -96,16 +95,16 @@ export default async function Profile() {
 
                         {/* Program Unggulan Card */}
                         <ScrollReveal direction="left" delay={0.3}>
-                            <Card className="p-7 md:p-9 border-2 border-blue-100 rounded-3xl hover:shadow-xl transition-all duration-300 group h-full bg-white">
-                                <div className="flex items-center gap-3.5 mb-6">
-                                    <div className="bg-blue-100 text-blue-700 p-3 rounded-2xl group-hover:scale-110 transition-transform">
-                                        <Trophy className="w-7 h-7" />
+                            <Card className="p-7 md:p-9 border border-emerald-100 rounded-3xl hover:shadow-lg transition-all duration-300 h-full bg-white">
+                                <div className="flex items-center gap-3.5 mb-6 pb-4 border-b border-gray-100">
+                                    <div className="bg-emerald-50 text-emerald-800 p-3 rounded-2xl border border-emerald-100">
+                                        <Trophy className="w-6 h-6" />
                                     </div>
                                     <div>
                                         <h3 className="text-xl md:text-2xl font-bold text-gray-900">
                                             Program Unggulan
                                         </h3>
-                                        <p className="text-xs text-gray-500">Fokus pada agama dan masa depan siswa</p>
+                                        <p className="text-xs text-gray-500">Kombinasi kurikulum nasional &amp; kepesantrenan</p>
                                     </div>
                                 </div>
                                 <ul className="space-y-3.5">
@@ -114,9 +113,9 @@ export default async function Profile() {
                                         return (
                                             <li
                                                 key={num}
-                                                className="flex items-start gap-3 text-gray-700 group/item"
+                                                className="flex items-start gap-3 text-gray-700"
                                             >
-                                                <span className="text-blue-600 font-bold mt-0.5 group-hover/item:scale-125 transition-transform">✓</span>
+                                                <span className="text-emerald-700 font-bold mt-0.5">✓</span>
                                                 <span className="flex-1 text-sm md:text-base leading-relaxed">{item}</span>
                                             </li>
                                         )

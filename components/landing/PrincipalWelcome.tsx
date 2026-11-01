@@ -38,15 +38,15 @@ export default function PrincipalWelcome() {
                             {/* Text Column */}
                             <div className="w-full flex-1">
                                 <div className="space-y-6 text-center md:text-left">
-                                    <div className="inline-block px-4 py-1.5 bg-green-100 text-green-700 rounded-full text-xs font-bold uppercase tracking-widest mb-2">
+                                    <p className="text-emerald-800 font-semibold text-sm tracking-wider uppercase">
                                         Sambutan Kepala Sekolah
-                                    </div>
+                                    </p>
 
-                                    <h2 className="text-3xl md:text-4xl font-bold text-green-700 leading-tight">
-                                        Mencetak Generasi <span className="text-gray-900">Unggul & Berakhlak</span>
+                                    <h2 className="text-3xl md:text-4xl font-extrabold text-gray-900 leading-tight">
+                                        Mencetak Generasi <span className="text-emerald-700">Unggul &amp; Berakhlak Mulia</span>
                                     </h2>
 
-                                    <div className="space-y-5 text-[#333333] text-base md:text-lg leading-[1.7] md:leading-[1.8]">
+                                    <div className="space-y-5 text-gray-700 text-base md:text-lg leading-relaxed">
                                         <p className="font-semibold text-gray-900">
                                             Assalamu&apos;alaikum Warahmatullahi Wabarakatuh.
                                         </p>
@@ -59,7 +59,7 @@ export default function PrincipalWelcome() {
                                         <p>
                                             Mari bersama-sama kita wujudkan masa depan putra-putri kita menjadi generasi yang tidak hanya cerdas secara intelektual, namun juga kokoh dalam akhlak dan iman. Terima kasih atas kepercayaan Bapak/Ibu kepada institusi kami.
                                         </p>
-                                        <p className="font-bold text-gray-900 mt-6 pt-4 border-t border-green-100 md:border-none">
+                                        <p className="font-bold text-gray-900 mt-6 pt-4 border-t border-emerald-100 md:border-none">
                                             Wassalamu&apos;alaikum Warahmatullahi Wabarakatuh.
                                         </p>
                                     </div>

@@ -1,4 +1,4 @@
-import { Target, Eye, CheckCircle2, Compass, Sparkles } from 'lucide-react'
+import { Target, Eye, CheckCircle2 } from 'lucide-react'
 import { getContentMap } from '@/lib/content'
 import ScrollReveal from '@/components/ScrollReveal'
 
@@ -51,16 +51,15 @@ export default async function VisiMisi() {
     ]
 
     return (
-        <section id="visi-misi" className="py-16 md:py-24 bg-linear-to-b from-white via-emerald-50/30 to-white overflow-hidden">
+        <section id="visi-misi" className="py-16 md:py-24 bg-linear-to-b from-white via-emerald-50/20 to-white overflow-hidden">
             <div className="container mx-auto px-4">
                 <div className="max-w-6xl mx-auto">
                     {/* Header Section */}
                     <ScrollReveal direction="up">
                         <div className="text-center mb-14">
-                            <div className="inline-flex items-center gap-2 bg-emerald-100 text-emerald-800 px-4 py-1.5 rounded-full text-xs md:text-sm font-bold uppercase tracking-wider mb-3">
-                                <Compass className="w-4 h-4 text-emerald-600" />
-                                <span>Arah & Tujuan Kami</span>
-                            </div>
+                            <p className="text-emerald-800 font-semibold text-sm tracking-wider uppercase mb-2">
+                                Komitmen &amp; Haluan Pendidikan
+                            </p>
                             <h2 className="text-3xl md:text-5xl font-extrabold text-gray-900 mb-4 tracking-tight">
                                 {title}
                             </h2>
@@ -75,11 +74,7 @@ export default async function VisiMisi() {
                         {/* Kolom Visi (kiri) */}
                         <div className="lg:col-span-5 h-full">
                             <ScrollReveal direction="right" delay={0.2} className="h-full">
-                                <div className="h-full bg-linear-to-br from-emerald-800 via-emerald-700 to-green-900 text-white rounded-3xl p-7 md:p-9 shadow-xl shadow-emerald-950/15 border border-emerald-600/30 flex flex-col justify-between relative overflow-hidden group">
-                                    {/* Ambient glow backgrounds */}
-                                    <div className="absolute top-0 right-0 -mr-16 -mt-16 w-60 h-60 bg-amber-400/15 rounded-full blur-3xl pointer-events-none" />
-                                    <div className="absolute bottom-0 left-0 -ml-16 -mb-16 w-60 h-60 bg-emerald-400/15 rounded-full blur-3xl pointer-events-none" />
-
+                                <div className="h-full bg-linear-to-br from-emerald-800 via-emerald-700 to-green-900 text-white rounded-3xl p-7 md:p-9 shadow-lg shadow-emerald-950/10 border border-emerald-600/30 flex flex-col justify-between relative overflow-hidden group">
                                     <div className="relative z-10">
                                         {/* Header Pill Visi (kuning keemasan khas spanduk sekolah) */}
                                         <div className="flex items-center justify-between mb-6">
@@ -105,12 +100,9 @@ export default async function VisiMisi() {
 
                                     {/* 5 Pilar Karakter AKBAR */}
                                     <div className="relative z-10 mt-8 pt-6 border-t border-emerald-600/50">
-                                        <div className="flex items-center gap-2 mb-3.5">
-                                            <Sparkles className="w-4 h-4 text-amber-300" />
-                                            <h4 className="text-xs font-bold uppercase tracking-wider text-amber-300">
-                                                5 Pilar Karakter AKBAR
-                                            </h4>
-                                        </div>
+                                        <h4 className="text-xs font-bold uppercase tracking-wider text-amber-300 mb-3">
+                                            5 Pilar Karakter AKBAR
+                                        </h4>
                                         <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs">
                                             {akbarPillars.map((p, idx) => (
                                                 <div
@@ -137,7 +129,7 @@ export default async function VisiMisi() {
                         {/* Kolom Misi (kanan) */}
                         <div className="lg:col-span-7 h-full">
                             <ScrollReveal direction="left" delay={0.2} className="h-full">
-                                <div className="h-full bg-white rounded-3xl p-7 md:p-9 shadow-xl shadow-slate-200/60 border border-slate-100 flex flex-col justify-between relative overflow-hidden">
+                                <div className="h-full bg-white rounded-3xl p-7 md:p-9 shadow-lg shadow-slate-200/50 border border-slate-200/80 flex flex-col justify-between relative overflow-hidden">
                                     {/* Top decorative accent bar */}
                                     <div className="absolute top-0 left-0 right-0 h-1.5 bg-linear-to-r from-emerald-600 via-amber-400 to-emerald-700" />
 
@@ -177,8 +169,7 @@ export default async function VisiMisi() {
 
                                     {/* Footer Catatan */}
                                     <div className="mt-6 pt-4 border-t border-slate-100 flex flex-wrap items-center justify-between gap-2 text-xs text-gray-500">
-                                        <span className="flex items-center gap-1.5 font-medium text-emerald-700">
-                                            <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
+                                        <span className="font-medium text-emerald-700">
                                             {'Berlandaskan Al-Qur\'an & As-Sunnah'}
                                         </span>
                                         <span className="font-semibold text-gray-400">SMP Terpadu Al-Ittihadiyah</span>

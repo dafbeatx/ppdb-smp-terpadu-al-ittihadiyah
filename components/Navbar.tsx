@@ -28,14 +28,14 @@ export default function Navbar() {
     const [activeSection, setActiveSection] = useState('hero')
     const [isScrolled, setIsScrolled] = useState(false)
     const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
-    const [isAdmin, setIsAdmin] = useState(false)
+    const [isAdmin, setIsAdmin] = useState(() => {
+        if (typeof window !== 'undefined') {
+            return localStorage.getItem('is_admin_mode') === 'true'
+        }
+        return false
+    })
 
     useEffect(() => {
-        // Cek localStorage segera untuk mencegah kedipan UI (flicker)
-        if (typeof window !== 'undefined' && localStorage.getItem('is_admin_mode') === 'true') {
-            setIsAdmin(true)
-        }
-
         const supabase = createClient()
         let isMounted = true
 

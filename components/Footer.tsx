@@ -1,6 +1,7 @@
 import { getContentMap } from '@/lib/content'
-import { GraduationCap, MapPin, Phone, Mail, Instagram, Github, Clock } from 'lucide-react'
+import { MapPin, Phone, Mail, Instagram, Github, Clock } from 'lucide-react'
 import Link from 'next/link'
+import Image from 'next/image'
 
 export default async function Footer() {
     // Fetch footer content from CMS
@@ -30,12 +31,18 @@ export default async function Footer() {
                     {/* Brand & Description */}
                     <div className="flex flex-col items-center md:items-start text-center md:text-left space-y-6">
                         <div className="flex flex-col items-center md:flex-row md:items-center gap-3">
-                            <div className="p-2 bg-green-600 rounded-lg shrink-0">
-                                <GraduationCap className="w-8 h-8 text-white" />
+                            <div className="w-12 h-12 rounded-xl bg-white p-1.5 shrink-0 flex items-center justify-center">
+                                <Image
+                                    src="/logo.webp"
+                                    alt="Logo SMP Terpadu Al-Ittihadiyah"
+                                    width={40}
+                                    height={40}
+                                    className="w-full h-full object-contain"
+                                />
                             </div>
                             <h3 className="font-bold text-xl leading-tight">
                                 SMP Terpadu <br className="hidden md:block" />
-                                <span className="text-green-500 text-lg">Al-Ittihadiyah</span>
+                                <span className="text-emerald-400 text-lg">Al-Ittihadiyah</span>
                             </h3>
                         </div>
                         <p className="text-gray-400 leading-relaxed max-w-sm mx-auto md:mx-0">
