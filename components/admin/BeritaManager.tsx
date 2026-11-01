@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-img-element */
 'use client'
 
 import { useState, useRef } from 'react'
@@ -12,7 +13,6 @@ import {
     Eye,
     Search,
     Calendar,
-    Tag,
     CheckCircle2,
     AlertCircle,
     ExternalLink,
@@ -310,7 +310,7 @@ export default function BeritaManager({ initialArticles }: BeritaManagerProps) {
                     <button
                         type="button"
                         onClick={closeForm}
-                        className="inline-flex items-center gap-2 text-slate-700 hover:text-emerald-900 font-bold text-sm sm:text-base py-2 px-3 rounded-xl hover:bg-slate-100 transition-colors self-start min-h-[44px]"
+                        className="inline-flex items-center gap-2 text-slate-700 hover:text-emerald-900 font-bold text-sm sm:text-base py-2 px-3 rounded-xl hover:bg-slate-100 transition-colors self-start min-h-11"
                     >
                         <ArrowLeft className="w-5 h-5 text-emerald-800" />
                         <span>Kembali ke Daftar Berita</span>
@@ -419,7 +419,7 @@ export default function BeritaManager({ initialArticles }: BeritaManagerProps) {
                                     <button
                                         type="button"
                                         onClick={() => setImageInputMode('upload')}
-                                        className={`px-3 py-1.5 rounded-lg text-xs font-bold transition-all min-h-[36px] ${imageInputMode === 'upload'
+                                        className={`px-3 py-1.5 rounded-lg text-xs font-bold transition-all min-h-9 ${imageInputMode === 'upload'
                                             ? 'bg-white text-emerald-900 shadow-2xs'
                                             : 'text-gray-600 hover:text-gray-900'
                                             }`}
@@ -429,7 +429,7 @@ export default function BeritaManager({ initialArticles }: BeritaManagerProps) {
                                     <button
                                         type="button"
                                         onClick={() => setImageInputMode('url')}
-                                        className={`px-3 py-1.5 rounded-lg text-xs font-bold transition-all min-h-[36px] ${imageInputMode === 'url'
+                                        className={`px-3 py-1.5 rounded-lg text-xs font-bold transition-all min-h-9 ${imageInputMode === 'url'
                                             ? 'bg-white text-emerald-900 shadow-2xs'
                                             : 'text-gray-600 hover:text-gray-900'
                                             }`}
@@ -480,14 +480,14 @@ export default function BeritaManager({ initialArticles }: BeritaManagerProps) {
                                                         type="button"
                                                         onClick={() => fileInputRef.current?.click()}
                                                         disabled={isProcessingImage}
-                                                        className="flex-1 sm:flex-initial px-4 py-2.5 bg-slate-100 hover:bg-slate-200 text-slate-800 text-xs sm:text-sm font-bold rounded-xl transition-colors min-h-[44px] flex items-center justify-center gap-1.5"
+                                                        className="flex-1 sm:flex-initial px-4 py-2.5 bg-slate-100 hover:bg-slate-200 text-slate-800 text-xs sm:text-sm font-bold rounded-xl transition-colors min-h-11 flex items-center justify-center gap-1.5"
                                                     >
                                                         <span>Ganti Foto</span>
                                                     </button>
                                                     <button
                                                         type="button"
                                                         onClick={handleRemoveImage}
-                                                        className="flex-1 sm:flex-initial px-4 py-2.5 bg-red-50 hover:bg-red-100 text-red-600 text-xs sm:text-sm font-bold rounded-xl transition-colors min-h-[44px] flex items-center justify-center gap-1.5"
+                                                        className="flex-1 sm:flex-initial px-4 py-2.5 bg-red-50 hover:bg-red-100 text-red-600 text-xs sm:text-sm font-bold rounded-xl transition-colors min-h-11 flex items-center justify-center gap-1.5"
                                                     >
                                                         <span>Hapus</span>
                                                     </button>
@@ -497,7 +497,7 @@ export default function BeritaManager({ initialArticles }: BeritaManagerProps) {
                                     ) : (
                                         <div
                                             onClick={() => !isProcessingImage && fileInputRef.current?.click()}
-                                            className={`border-2 border-dashed border-emerald-300 hover:border-emerald-600 bg-white hover:bg-emerald-50/40 rounded-2xl p-6 sm:p-10 text-center cursor-pointer transition-all min-h-[140px] flex items-center justify-center ${isProcessingImage ? 'opacity-60 pointer-events-none' : ''
+                                            className={`border-2 border-dashed border-emerald-300 hover:border-emerald-600 bg-white hover:bg-emerald-50/40 rounded-2xl p-6 sm:p-10 text-center cursor-pointer transition-all min-h-35 flex items-center justify-center ${isProcessingImage ? 'opacity-60 pointer-events-none' : ''
                                                 }`}
                                         >
                                             {isProcessingImage ? (
@@ -581,7 +581,7 @@ export default function BeritaManager({ initialArticles }: BeritaManagerProps) {
                                 value={formContent}
                                 onChange={(e) => setFormContent(e.target.value)}
                                 placeholder="Tuliskan narasi lengkap kegiatan, kutipan pesan kepala sekolah/asatidz, detail prestasi siswa, jadwal, panduan pendaftaran, dll..."
-                                className="w-full px-4 py-3 text-base border border-gray-300 rounded-xl focus:ring-2 focus:ring-emerald-700 focus:border-emerald-700 outline-hidden font-normal leading-relaxed min-h-[220px]"
+                                className="w-full px-4 py-3 text-base border border-gray-300 rounded-xl focus:ring-2 focus:ring-emerald-700 focus:border-emerald-700 outline-hidden font-normal leading-relaxed min-h-55"
                             />
                             <p className="text-xs text-gray-400 mt-1.5">
                                 Jika dikosongkan, halaman baca publik akan otomatis menggunakan teks ringkasan di atas.
@@ -594,14 +594,14 @@ export default function BeritaManager({ initialArticles }: BeritaManagerProps) {
                                 type="button"
                                 onClick={closeForm}
                                 disabled={isSaving || isProcessingImage}
-                                className="w-full sm:w-auto px-6 py-3.5 rounded-xl border border-gray-300 text-gray-700 hover:bg-gray-50 text-base font-bold transition-colors min-h-[48px] flex items-center justify-center"
+                                className="w-full sm:w-auto px-6 py-3.5 rounded-xl border border-gray-300 text-gray-700 hover:bg-gray-50 text-base font-bold transition-colors min-h-12 flex items-center justify-center"
                             >
                                 Batal
                             </button>
                             <Button
                                 type="submit"
                                 disabled={isSaving || isProcessingImage}
-                                className="w-full sm:w-auto bg-emerald-800 hover:bg-emerald-900 text-white font-bold text-base px-8 py-3.5 rounded-xl shadow-md min-h-[48px] flex items-center justify-center gap-2"
+                                className="w-full sm:w-auto bg-emerald-800 hover:bg-emerald-900 text-white font-bold text-base px-8 py-3.5 rounded-xl shadow-md min-h-12 flex items-center justify-center gap-2"
                             >
                                 {isSaving ? (
                                     <>
@@ -644,14 +644,14 @@ export default function BeritaManager({ initialArticles }: BeritaManagerProps) {
                     <Link
                         href="/berita"
                         target="_blank"
-                        className="inline-flex items-center gap-2 px-3.5 py-2.5 rounded-xl border border-gray-200 bg-white text-gray-700 hover:text-emerald-800 hover:border-emerald-300 font-semibold text-xs sm:text-sm shadow-2xs transition-colors min-h-[44px]"
+                        className="inline-flex items-center gap-2 px-3.5 py-2.5 rounded-xl border border-gray-200 bg-white text-gray-700 hover:text-emerald-800 hover:border-emerald-300 font-semibold text-xs sm:text-sm shadow-2xs transition-colors min-h-11"
                     >
                         <span>Lihat Publik</span>
                         <ExternalLink className="w-4 h-4 text-gray-400" />
                     </Link>
                     <Button
                         onClick={openAddForm}
-                        className="bg-emerald-800 hover:bg-emerald-900 text-white font-bold text-xs sm:text-sm px-4 py-2.5 rounded-xl flex items-center gap-2 shadow-sm min-h-[44px]"
+                        className="bg-emerald-800 hover:bg-emerald-900 text-white font-bold text-xs sm:text-sm px-4 py-2.5 rounded-xl flex items-center gap-2 shadow-sm min-h-11"
                     >
                         <Plus className="w-4 h-4" />
                         <span>Tambah Berita Baru</span>
@@ -746,7 +746,7 @@ export default function BeritaManager({ initialArticles }: BeritaManagerProps) {
                     <div className="flex items-center gap-1.5 overflow-x-auto pb-1 max-w-full">
                         <button
                             onClick={() => setSelectedCategory('all')}
-                            className={`px-3 py-1.5 rounded-lg text-xs font-semibold whitespace-nowrap transition-colors min-h-[36px] ${selectedCategory === 'all'
+                            className={`px-3 py-1.5 rounded-lg text-xs font-semibold whitespace-nowrap transition-colors min-h-9 ${selectedCategory === 'all'
                                 ? 'bg-emerald-800 text-white shadow-2xs'
                                 : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
                                 }`}
@@ -757,7 +757,7 @@ export default function BeritaManager({ initialArticles }: BeritaManagerProps) {
                             <button
                                 key={cat}
                                 onClick={() => setSelectedCategory(cat)}
-                                className={`px-3 py-1.5 rounded-lg text-xs font-semibold whitespace-nowrap transition-colors min-h-[36px] ${selectedCategory === cat
+                                className={`px-3 py-1.5 rounded-lg text-xs font-semibold whitespace-nowrap transition-colors min-h-9 ${selectedCategory === cat
                                     ? 'bg-emerald-800 text-white shadow-2xs'
                                     : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
                                     }`}
@@ -782,7 +782,7 @@ export default function BeritaManager({ initialArticles }: BeritaManagerProps) {
                         </p>
                         <Button
                             onClick={openAddForm}
-                            className="bg-emerald-800 hover:bg-emerald-900 text-white font-bold text-xs sm:text-sm px-4 py-2 rounded-xl min-h-[44px]"
+                            className="bg-emerald-800 hover:bg-emerald-900 text-white font-bold text-xs sm:text-sm px-4 py-2 rounded-xl min-h-11"
                         >
                             Tambah Berita Baru
                         </Button>
@@ -839,21 +839,21 @@ export default function BeritaManager({ initialArticles }: BeritaManagerProps) {
                                     <button
                                         onClick={() => setPreviewArticle(art)}
                                         title="Pratinjau Berita"
-                                        className="p-2.5 text-slate-600 hover:text-emerald-800 hover:bg-emerald-50 rounded-xl transition-colors border border-slate-200 min-h-[44px] min-w-[44px] flex items-center justify-center"
+                                        className="p-2.5 text-slate-600 hover:text-emerald-800 hover:bg-emerald-50 rounded-xl transition-colors border border-slate-200 min-h-11 min-w-11 flex items-center justify-center"
                                     >
                                         <Eye className="w-4 h-4" />
                                     </button>
                                     <button
                                         onClick={() => openEditForm(art)}
                                         title="Edit Berita"
-                                        className="p-2.5 text-blue-600 hover:text-blue-800 hover:bg-blue-50 rounded-xl transition-colors border border-blue-200 min-h-[44px] min-w-[44px] flex items-center justify-center"
+                                        className="p-2.5 text-blue-600 hover:text-blue-800 hover:bg-blue-50 rounded-xl transition-colors border border-blue-200 min-h-11 min-w-11 flex items-center justify-center"
                                     >
                                         <Pencil className="w-4 h-4" />
                                     </button>
                                     <button
                                         onClick={() => setDeleteTarget(art)}
                                         title="Hapus Berita"
-                                        className="p-2.5 text-red-600 hover:text-red-800 hover:bg-red-50 rounded-xl transition-colors border border-red-200 min-h-[44px] min-w-[44px] flex items-center justify-center"
+                                        className="p-2.5 text-red-600 hover:text-red-800 hover:bg-red-50 rounded-xl transition-colors border border-red-200 min-h-11 min-w-11 flex items-center justify-center"
                                     >
                                         <Trash2 className="w-4 h-4" />
                                     </button>
@@ -870,7 +870,7 @@ export default function BeritaManager({ initialArticles }: BeritaManagerProps) {
                     <div className="bg-white rounded-none sm:rounded-3xl max-w-2xl w-full min-h-screen sm:min-h-0 p-5 sm:p-8 shadow-2xl border border-slate-200 relative my-0 sm:my-8">
                         <button
                             onClick={() => setPreviewArticle(null)}
-                            className="absolute top-4 right-4 text-gray-500 hover:text-gray-800 p-2 rounded-xl bg-slate-100 hover:bg-slate-200 transition-colors min-h-[44px] min-w-[44px] flex items-center justify-center"
+                            className="absolute top-4 right-4 text-gray-500 hover:text-gray-800 p-2 rounded-xl bg-slate-100 hover:bg-slate-200 transition-colors min-h-11 min-w-11 flex items-center justify-center"
                         >
                             <X className="w-5 h-5" />
                         </button>
@@ -916,7 +916,7 @@ export default function BeritaManager({ initialArticles }: BeritaManagerProps) {
                             </span>
                             <button
                                 onClick={() => setPreviewArticle(null)}
-                                className="px-5 py-2.5 rounded-xl bg-gray-100 hover:bg-gray-200 text-gray-800 text-xs sm:text-sm font-bold min-h-[44px]"
+                                className="px-5 py-2.5 rounded-xl bg-gray-100 hover:bg-gray-200 text-gray-800 text-xs sm:text-sm font-bold min-h-11"
                             >
                                 Tutup Pratinjau
                             </button>
@@ -942,14 +942,14 @@ export default function BeritaManager({ initialArticles }: BeritaManagerProps) {
                             <button
                                 onClick={() => setDeleteTarget(null)}
                                 disabled={isSaving}
-                                className="px-4 py-2.5 rounded-xl border border-gray-300 text-gray-700 hover:bg-gray-50 text-xs sm:text-sm font-semibold transition-colors min-h-[44px]"
+                                className="px-4 py-2.5 rounded-xl border border-gray-300 text-gray-700 hover:bg-gray-50 text-xs sm:text-sm font-semibold transition-colors min-h-11"
                             >
                                 Batal
                             </button>
                             <Button
                                 onClick={confirmDelete}
                                 disabled={isSaving}
-                                className="bg-red-600 hover:bg-red-700 text-white font-bold text-xs sm:text-sm px-5 py-2.5 rounded-xl shadow-sm min-h-[44px]"
+                                className="bg-red-600 hover:bg-red-700 text-white font-bold text-xs sm:text-sm px-5 py-2.5 rounded-xl shadow-sm min-h-11"
                             >
                                 {isSaving ? 'Menghapus...' : 'Ya, Hapus'}
                             </Button>
