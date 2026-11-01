@@ -141,7 +141,7 @@ export default async function Hero() {
                             <div className="bg-emerald-900/60 rounded-2xl sm:rounded-3xl border border-emerald-700/40 p-3 sm:p-4 shadow-2xl">
                                 
                                 {/* Foto Kampus Sekolah (HTML img dengan fetchpriority high sesuai R-40) */}
-                                <div className="relative aspect-[16/10] sm:aspect-[4/3] rounded-xl sm:rounded-2xl overflow-hidden mb-3.5 bg-emerald-950">
+                                <div className="relative aspect-16/10 sm:aspect-4/3 rounded-xl sm:rounded-2xl overflow-hidden mb-3.5 bg-emerald-950">
                                     <Image
                                         src="/hero-bg.webp"
                                         alt={`Gedung Kampus ${schoolName}`}
