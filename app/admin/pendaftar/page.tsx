@@ -279,7 +279,7 @@ export default function PendaftarPage() {
             {/* Header */}
             <div>
                 <h1 className="text-2xl lg:text-3xl font-bold text-gray-900">Daftar Pendaftar</h1>
-                <p className="text-gray-600 mt-1">Kelola data pendaftar PPDB 2026/2027</p>
+                <p className="text-gray-600 mt-1">Kelola data pendaftar SPMB 2026/2027</p>
             </div>
 
             {/* Stats Cards */}

@@ -29,7 +29,7 @@ export default function FloatingFAQBot() {
     const [isOpen, setIsOpen] = useState(false)
     const [isTyping, setIsTyping] = useState(false)
     const [messages, setMessages] = useState<{ type: 'bot' | 'user', content: string }[]>([
-        { type: 'bot', content: 'Halo! Ada yang bisa kami bantu terkait pendaftaran (PPDB)?' }
+        { type: 'bot', content: 'Halo! Ada yang bisa kami bantu terkait pendaftaran (SPMB)?' }
     ])
     const [showScrollTop, setShowScrollTop] = useState(false)
     const [isInputFocused, setIsInputFocused] = useState(false)
@@ -124,7 +124,7 @@ export default function FloatingFAQBot() {
                                     <MessageCircle className="w-4 h-4 sm:w-5 sm:h-5 text-white" />
                                 </div>
                                 <div>
-                                    <h3 className="font-bold text-xs sm:text-sm">Bantuan PPDB</h3>
+                                    <h3 className="font-bold text-xs sm:text-sm">Bantuan SPMB</h3>
                                     <p className="text-[10px] text-emerald-100/80">Online • Panduan cepat</p>
                                 </div>
                             </div>
@@ -194,7 +194,7 @@ export default function FloatingFAQBot() {
 
                                 <div className="mt-4">
                                     <a
-                                        href="https://wa.me/6281947674100?text=Assalamu%27alaikum%20Admin%20PPDB%2C%20saya%20ingin%20bertanya%20seputar%20pendaftaran%20siswa%20baru"
+                                        href="https://wa.me/6281947674100?text=Assalamu%27alaikum%20Admin%20SPMB%2C%20saya%20ingin%20bertanya%20seputar%20pendaftaran%20siswa%20baru"
                                         target="_blank"
                                         rel="noopener noreferrer"
                                         className="flex items-center justify-center gap-2 w-full bg-green-600 hover:bg-green-700 text-white font-bold py-3 rounded-xl transition-all text-xs sm:text-sm shadow-md shadow-green-200 active:scale-95"
@@ -213,7 +213,7 @@ export default function FloatingFAQBot() {
             <button
                 onClick={() => setIsOpen(!isOpen)}
                 className={`bg-emerald-800 text-white p-3.5 sm:p-4 rounded-full shadow-2xl hover:scale-105 active:scale-95 transition-all group relative ${isOpen ? 'rotate-90' : ''}`}
-                aria-label="Tanya seputar PPDB"
+                aria-label="Tanya seputar SPMB"
             >
                 {isOpen ? <X className="w-5 h-5 sm:w-6 sm:h-6" /> : <MessageCircle className="w-5 h-5 sm:w-6 sm:h-6" />}
             </button>

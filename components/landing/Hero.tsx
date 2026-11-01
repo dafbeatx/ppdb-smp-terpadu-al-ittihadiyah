@@ -33,7 +33,7 @@ export default async function Hero() {
         statAccreditation
     )
 
-    const waAdminUrl = "https://wa.me/6281947674100?text=" + encodeURIComponent("Assalamu'alaikum Admin PPDB SMP Terpadu Al-Ittihadiyah, saya orang tua calon siswa ingin bertanya seputar pendaftaran.")
+    const waAdminUrl = "https://wa.me/6281947674100?text=" + encodeURIComponent("Assalamu'alaikum Admin SPMB SMP Terpadu Al-Ittihadiyah, saya orang tua calon siswa ingin bertanya seputar pendaftaran.")
 
     return (
         <section id="hero" className="relative bg-linear-to-b from-emerald-950 via-emerald-900 to-emerald-950 text-white pt-24 pb-12 sm:pt-28 sm:pb-16 md:pt-36 md:pb-20 overflow-hidden">
@@ -64,7 +64,7 @@ export default async function Hero() {
                             {/* Headline Utama */}
                             <div className="space-y-2.5">
                                 <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-black text-white leading-tight sm:leading-tight tracking-tight">
-                                    Penerimaan Peserta Didik Baru (PPDB)
+                                    Sistem Penerimaan Murid Baru (SPMB)
                                 </h1>
 
                                 <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-lg bg-emerald-800/80 border border-emerald-600/50 text-emerald-100 text-xs sm:text-sm font-semibold">
@@ -83,7 +83,7 @@ export default async function Hero() {
                                     href="/daftar"
                                     className="w-full sm:w-auto min-h-12 inline-flex items-center justify-center bg-amber-400 hover:bg-amber-300 text-emerald-950 font-bold text-sm sm:text-base px-6 sm:px-8 rounded-xl shadow-lg transition-colors active:scale-95 text-center"
                                 >
-                                    Daftar Siswa Baru (PPDB Online)
+                                    Daftar Siswa Baru (SPMB Online)
                                 </Link>
 
                                 <Link

@@ -16,7 +16,7 @@ export default function PrivacyPolicyPage() {
                     </Link>
                     <div className="flex items-center gap-2 text-green-600">
                         <ShieldCheck className="w-6 h-6" />
-                        <span className="font-bold hidden sm:inline">PPDB Online</span>
+                        <span className="font-bold hidden sm:inline">SPMB Online</span>
                     </div>
                 </div>
             </header>
@@ -28,13 +28,13 @@ export default function PrivacyPolicyPage() {
                             <Lock className="w-8 h-8" />
                         </div>
                         <h1 className="text-3xl font-bold mb-2">Kebijakan Privasi</h1>
-                        <p className="text-green-50 opacity-90">PPDB Online SMP Terpadu Al-Ittihadiyah</p>
+                        <p className="text-green-50 opacity-90">SPMB Online SMP Terpadu Al-Ittihadiyah</p>
                     </div>
 
                     <div className="p-8 md:p-12 space-y-10 leading-relaxed text-gray-700">
                         <section>
                             <p className="text-lg">
-                                Website PPDB Online SMP Terpadu Al-Ittihadiyah dibuat untuk membantu proses pendaftaran peserta didik baru secara daring. Kami menghargai dan melindungi privasi setiap pengguna yang mengisi formulir pendaftaran melalui website ini.
+                                Website SPMB Online SMP Terpadu Al-Ittihadiyah dibuat untuk membantu proses pendaftaran peserta didik baru secara daring. Kami menghargai dan melindungi privasi setiap pengguna yang mengisi formulir pendaftaran melalui website ini.
                             </p>
                         </section>
 
@@ -62,7 +62,7 @@ export default function PrivacyPolicyPage() {
                             </div>
                             <p>Data yang dikumpulkan digunakan untuk:</p>
                             <ul className="space-y-2 pl-4">
-                                <li className="flex items-start gap-2 before:content-['✓'] before:text-green-500 before:font-bold">Keperluan proses seleksi dan administrasi PPDB</li>
+                                <li className="flex items-start gap-2 before:content-['✓'] before:text-green-500 before:font-bold">Keperluan proses seleksi dan administrasi SPMB</li>
                                 <li className="flex items-start gap-2 before:content-['✓'] before:text-green-500 before:font-bold">Verifikasi data calon peserta didik</li>
                                 <li className="flex items-start gap-2 before:content-['✓'] before:text-green-500 before:font-bold">Keperluan komunikasi terkait proses pendaftaran</li>
                                 <li className="flex items-start gap-2 before:content-['✓'] before:text-green-500 before:font-bold">Arsip administrasi sekolah sesuai ketentuan yang berlaku</li>
@@ -75,7 +75,7 @@ export default function PrivacyPolicyPage() {
                                 <h2 className="text-xl font-bold text-gray-900 underline decoration-green-500/30 decoration-4 underline-offset-4">3. Penyimpanan dan Keamanan Data</h2>
                             </div>
                             <p>
-                                Data dan dokumen yang dikirimkan melalui website akan disimpan secara terbatas dan hanya dapat diakses oleh pihak sekolah yang berwenang. Kami berupaya menjaga keamanan data dengan sistem yang wajar dan sesuai kebutuhan layanan PPDB.
+                                Data dan dokumen yang dikirimkan melalui website akan disimpan secara terbatas dan hanya dapat diakses oleh pihak sekolah yang berwenang. Kami berupaya menjaga keamanan data dengan sistem yang wajar dan sesuai kebutuhan layanan SPMB.
                             </p>
                         </section>
 
@@ -108,7 +108,7 @@ export default function PrivacyPolicyPage() {
                                 <h2 className="text-xl font-bold text-gray-900 underline decoration-green-500/30 decoration-4 underline-offset-4">6. Perubahan Kebijakan</h2>
                             </div>
                             <p>
-                                Kebijakan privasi ini dapat diperbarui sewaktu-waktu sesuai kebutuhan operasional sekolah dan akan ditampilkan melalui website PPDB.
+                                Kebijakan privasi ini dapat diperbarui sewaktu-waktu sesuai kebutuhan operasional sekolah dan akan ditampilkan melalui website SPMB.
                             </p>
                         </section>
 

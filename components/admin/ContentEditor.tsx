@@ -17,7 +17,7 @@ const categories = [
     { id: 'profile', label: 'Profil Sekolah' },
     { id: 'visi_misi', label: 'Visi & Misi' },
     { id: 'keunggulan', label: 'Keunggulan' },
-    { id: 'alur', label: 'Alur PPDB' },
+    { id: 'alur', label: 'Alur SPMB' },
     { id: 'footer', label: 'Footer' },
     { id: 'branding', label: 'Logo & Branding' },
 ]

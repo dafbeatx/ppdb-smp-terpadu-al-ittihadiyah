@@ -44,9 +44,9 @@ export default async function AlurPPDB() {
     const steps = rawSteps.filter((s) => s.title || s.description)
 
     const ctaTitle = content['alur.cta_title']?.trim() || 'Merasa Awam dengan Teknologi atau Butuh Bantuan?'
-    const ctaText = content['alur.cta_text']?.trim() || 'Bapak/Ibu jangan ragu untuk bertanya. Panitia PPDB kami siap memandu pendaftaran via WhatsApp sampai tuntas.'
+    const ctaText = content['alur.cta_text']?.trim() || 'Bapak/Ibu jangan ragu untuk bertanya. Panitia SPMB kami siap memandu pendaftaran via WhatsApp sampai tuntas.'
 
-    const waAdminUrl = "https://wa.me/6281947674100?text=" + encodeURIComponent("Assalamu'alaikum Admin PPDB, saya ingin dibantu cara mendaftar di SMP Terpadu Al-Ittihadiyah.")
+    const waAdminUrl = "https://wa.me/6281947674100?text=" + encodeURIComponent("Assalamu'alaikum Admin SPMB, saya ingin dibantu cara mendaftar di SMP Terpadu Al-Ittihadiyah.")
 
     return (
         <section id="alur" className="py-10 md:py-20 bg-slate-50 overflow-hidden">

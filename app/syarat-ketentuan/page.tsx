@@ -16,7 +16,7 @@ export default function TermsAndConditionsPage() {
                     </Link>
                     <div className="flex items-center gap-2 text-green-600">
                         <ScrollText className="w-6 h-6" />
-                        <span className="font-bold hidden sm:inline">PPDB Online</span>
+                        <span className="font-bold hidden sm:inline">SPMB Online</span>
                     </div>
                 </div>
             </header>
@@ -28,13 +28,13 @@ export default function TermsAndConditionsPage() {
                             <ClipboardCheck className="w-8 h-8" />
                         </div>
                         <h1 className="text-3xl font-bold mb-2">Syarat dan Ketentuan</h1>
-                        <p className="text-blue-50 opacity-90">PPDB Online SMP Terpadu Al-Ittihadiyah</p>
+                        <p className="text-blue-50 opacity-90">SPMB Online SMP Terpadu Al-Ittihadiyah</p>
                     </div>
 
                     <div className="p-8 md:p-12 space-y-10 leading-relaxed text-gray-700">
                         <section>
                             <p className="text-lg">
-                                Dengan menggunakan layanan PPDB Online melalui website ini, pengguna dianggap telah memahami dan menyetujui syarat dan ketentuan berikut:
+                                Dengan menggunakan layanan SPMB Online melalui website ini, pengguna dianggap telah memahami dan menyetujui syarat dan ketentuan berikut:
                             </p>
                         </section>
 
@@ -54,7 +54,7 @@ export default function TermsAndConditionsPage() {
                                 <h2 className="text-xl font-bold text-gray-900 underline decoration-blue-500/30 decoration-4 underline-offset-4">2. Kelengkapan Berkas</h2>
                             </div>
                             <p>
-                                Calon peserta didik wajib mengunggah seluruh dokumen yang dipersyaratkan sesuai ketentuan PPDB. Pendaftaran dianggap belum lengkap apabila berkas tidak sesuai atau tidak dapat dibaca dengan jelas.
+                                Calon peserta didik wajib mengunggah seluruh dokumen yang dipersyaratkan sesuai ketentuan SPMB. Pendaftaran dianggap belum lengkap apabila berkas tidak sesuai atau tidak dapat dibaca dengan jelas.
                             </p>
                         </section>
 
@@ -84,7 +84,7 @@ export default function TermsAndConditionsPage() {
                                 <h2 className="text-xl font-bold text-gray-900 underline decoration-blue-500/30 decoration-4 underline-offset-4">5. Penggunaan Website</h2>
                             </div>
                             <p>
-                                Website ini hanya digunakan untuk keperluan pendaftaran PPDB. Pengguna dilarang menggunakan website untuk tujuan lain yang dapat mengganggu sistem atau layanan.
+                                Website ini hanya digunakan untuk keperluan pendaftaran SPMB. Pengguna dilarang menggunakan website untuk tujuan lain yang dapat mengganggu sistem atau layanan.
                             </p>
                         </section>
 
@@ -104,7 +104,7 @@ export default function TermsAndConditionsPage() {
                                 <h2 className="text-xl font-bold text-gray-900 underline decoration-blue-500/30 decoration-4 underline-offset-4">7. Kontak Resmi</h2>
                             </div>
                             <p>
-                                Untuk informasi lebih lanjut terkait PPDB, pengguna diharapkan menghubungi pihak sekolah melalui kontak resmi yang tercantum di website.
+                                Untuk informasi lebih lanjut terkait SPMB, pengguna diharapkan menghubungi pihak sekolah melalui kontak resmi yang tercantum di website.
                             </p>
                         </section>
 

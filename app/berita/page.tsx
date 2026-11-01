@@ -10,9 +10,9 @@ export const metadata: Metadata = {
 const ARTICLES = [
     {
         id: '1',
-        title: 'Pembukaan Penerimaan Peserta Didik Baru (PPDB) Tahun Ajaran 2026/2027',
+        title: 'Pembukaan Sistem Penerimaan Murid Baru (SPMB) Tahun Ajaran 2026/2027',
         date: '28 Oktober 2026',
-        category: 'Pengumuman PPDB',
+        category: 'Pengumuman SPMB',
         summary: 'Pendaftaran gelombang pertama resmi dibuka secara online. Panitia menyediakan kemudahan pengisian form langsung dari smartphone serta panduan tatap muka via WhatsApp.',
     },
     {

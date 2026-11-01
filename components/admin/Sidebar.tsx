@@ -79,7 +79,7 @@ export default function AdminSidebar() {
                         <Home className="w-8 h-8" />
                         <div>
                             <div className="font-bold text-lg">← Balik ke Beranda</div>
-                            <div className="text-sm text-gray-400">PPDB 2026/2027</div>
+                            <div className="text-sm text-gray-400">SPMB 2026/2027</div>
                         </div>
                     </Link>
                 </div>

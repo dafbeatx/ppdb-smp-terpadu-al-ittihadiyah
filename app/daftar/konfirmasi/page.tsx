@@ -260,7 +260,7 @@ export default async function KonfirmasiPage({
                     <PrintButton />
                     
                     <a
-                        href={`https://wa.me/6281947674100?text=${encodeURIComponent(`Halo Admin PPDB SMP Terpadu Al-Ittihadiyah, saya telah mendaftar dengan Nomor Pendaftaran: ${registration.registration_number || ''} atas nama ${student?.full_name || 'Calon Siswa'}. Mohon info verifikasinya.`)}`}
+                        href={`https://wa.me/6281947674100?text=${encodeURIComponent(`Halo Admin SPMB SMP Terpadu Al-Ittihadiyah, saya telah mendaftar dengan Nomor Pendaftaran: ${registration.registration_number || ''} atas nama ${student?.full_name || 'Calon Siswa'}. Mohon info verifikasinya.`)}`}
                         target="_blank"
                         rel="noopener noreferrer"
                         className="w-full sm:w-auto"

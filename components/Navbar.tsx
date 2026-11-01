@@ -119,7 +119,7 @@ const NAVIGATION_MENU: NavItem[] = [
         ],
     },
     {
-        name: 'PPDB Online',
+        name: 'SPMB Online',
         items: [
             {
                 name: 'Alur & Panduan Daftar',

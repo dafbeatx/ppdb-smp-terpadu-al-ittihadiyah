@@ -39,7 +39,7 @@ export default async function AdminDashboard() {
             <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
                 <div>
                     <h1 className="text-3xl font-bold text-gray-900 mb-2">Dashboard Admin</h1>
-                    <p className="text-gray-600">Ringkasan data pendaftaran PPDB 2026/2027</p>
+                    <p className="text-gray-600">Ringkasan data pendaftaran SPMB 2026/2027</p>
                 </div>
                 <ExportButton />
             </div>

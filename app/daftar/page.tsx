@@ -2,7 +2,7 @@ import MultiStepForm from '@/components/registration/MultiStepForm'
 import { HeartHandshake, PhoneCall } from 'lucide-react'
 
 export default function DaftarPage() {
-    const waHelpUrl = "https://wa.me/6281947674100?text=" + encodeURIComponent("Assalamu'alaikum Panitia PPDB SMP Al-Ittihadiyah, saya sedang membuka formulir pendaftaran dan butuh bantuan.")
+    const waHelpUrl = "https://wa.me/6281947674100?text=" + encodeURIComponent("Assalamu'alaikum Panitia SPMB SMP Al-Ittihadiyah, saya sedang membuka formulir pendaftaran dan butuh bantuan.")
 
     return (
         <main className="min-h-[calc(100vh-80px)] bg-linear-to-br from-slate-50 via-emerald-50/30 to-green-50/50 pt-24 pb-8 md:pt-32 md:pb-16">

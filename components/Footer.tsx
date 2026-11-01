@@ -143,7 +143,7 @@ export default async function Footer() {
                             <div className="w-full bg-gray-800/60 p-4 sm:p-5 rounded-2xl border border-gray-700/60 space-y-3">
                                 <div className="flex items-center gap-2 pb-2.5 border-b border-gray-700/60">
                                     <Clock className="w-4 h-4 text-emerald-400 shrink-0" />
-                                    <span className="text-xs sm:text-sm font-semibold text-white">Waktu Layanan PPDB</span>
+                                    <span className="text-xs sm:text-sm font-semibold text-white">Waktu Layanan SPMB</span>
                                 </div>
                                 <div className="space-y-2 text-xs sm:text-sm">
                                     {footer['footer.hours_weekday'] && (
