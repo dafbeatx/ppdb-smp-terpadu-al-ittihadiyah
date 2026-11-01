@@ -59,11 +59,13 @@ VALUES
 -- VISI & MISI (category: visi_misi, section: visi_misi)
 ('visi_misi', 'visi_misi', 'title', 'Visi & Misi', 'Judul Section', 'text', 80),
 ('visi_misi', 'visi_misi', 'subtitle', 'Arah dan tujuan pendidikan kami', 'Subjudul', 'text', 81),
-('visi_misi', 'visi_misi', 'visi', 'Menjadi lembaga pendidikan Islam terpadu yang unggul dalam prestasi, berakhlak mulia, dan berjiwa pemimpin berdasarkan nilai-nilai Al-Quran dan As-Sunnah.', 'Visi', 'textarea', 82),
-('visi_misi', 'visi_misi', 'misi_1', 'Menyelenggarakan pendidikan berkualitas dengan kurikulum terpadu', 'Misi 1', 'text', 83),
-('visi_misi', 'visi_misi', 'misi_2', 'Membentuk karakter Islami yang kuat', 'Misi 2', 'text', 84),
-('visi_misi', 'visi_misi', 'misi_3', 'Mengembangkan potensi siswa secara maksimal', 'Misi 3', 'text', 85),
-('visi_misi', 'visi_misi', 'misi_4', 'Menciptakan lingkungan belajar yang kondusif', 'Misi 4', 'text', 86),
+('visi_misi', 'visi_misi', 'visi', 'Terciptanya SMP Terpadu Al Ittihadiyah yang aktif, Kreatif, Bersih, Antusias dan Religius (AKBAR) di Tahun 2024', 'Visi', 'textarea', 82),
+('visi_misi', 'visi_misi', 'misi_1', 'Mendorong aktivitas dan kreatifitas secara optimal kepada seluruh komponen sekolah terutama siswa.', 'Misi 1', 'textarea', 83),
+('visi_misi', 'visi_misi', 'misi_2', 'Mengoptimalkan pembelajaran dalam jangka meningkatkan keterampilan siswa supaya mereka memiliki prestasi yang dapat dibanggakan.', 'Misi 2', 'textarea', 84),
+('visi_misi', 'visi_misi', 'misi_3', 'Melaksanakan pembelajaran dan bimbingan secara efektif sehingga kecerdasan siswa terus diasah agar tercapainya kecerdasan intelektual dan emosional yang mantap.', 'Misi 3', 'textarea', 85),
+('visi_misi', 'visi_misi', 'misi_4', 'Menanamkan cinta kebersihan dan keindahan kepada semua komponen sekolah.', 'Misi 4', 'textarea', 86),
+('visi_misi', 'visi_misi', 'misi_5', 'Antusias terhadap perkembangan dan kemajuan ilmu pengetahuan dan tekhnologi.', 'Misi 5', 'textarea', 87),
+('visi_misi', 'visi_misi', 'misi_6', 'Menimbulkan penghayatan yang dalam dan pengalaman yang tinggi terhadap ajaran agama (religi) sehingga tercipta kematangan dalam berpikir dan bertindak.', 'Misi 6', 'textarea', 88),
 
 -- FOOTER (category: footer, section: footer)
 ('footer', 'footer', 'school_desc', 'Lembaga pendidikan Islam terpadu yang berkomitmen mencetak generasi unggul dan berakhlak mulia.', 'Deskripsi Sekolah', 'textarea', 90),

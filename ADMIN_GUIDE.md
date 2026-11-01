@@ -71,7 +71,7 @@ Sebelum bisa login, Anda harus membuat admin account di Supabase:
 |-----|-------------|
 | **Hero Section** | Nama sekolah, tagline, tahun ajaran, statistik (pengalaman, lulusan, akreditasi) |
 | **Profil Sekolah** | Judul, subjudul, paragraf 1 & 2 tentang sekolah |
-| **Visi & Misi** | Visi sekolah dan 4 poin misi |
+| **Visi & Misi** | Visi sekolah dan 6 poin misi (AKBAR) |
 | **Keunggulan** | 4 keunggulan sekolah (judul + deskripsi masing-masing) |
 | **Alur PPDB** | 4 step pendaftaran + CTA text |
 | **Footer** | Deskripsi, alamat, kontak, jam operasional |
