@@ -18,6 +18,8 @@ const categories = [
     { id: 'visi_misi', label: 'Visi & Misi' },
     { id: 'keunggulan', label: 'Keunggulan' },
     { id: 'alur', label: 'Alur SPMB' },
+    { id: 'sejarah', label: 'Sejarah Sekolah' },
+    { id: 'fasilitas', label: 'Fasilitas Sekolah' },
     { id: 'footer', label: 'Footer' },
     { id: 'branding', label: 'Logo & Branding' },
 ]

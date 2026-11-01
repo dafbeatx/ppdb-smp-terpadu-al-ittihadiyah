@@ -10,7 +10,8 @@ import {
     LogOut,
     Home,
     Menu,
-    X
+    X,
+    Newspaper
 } from 'lucide-react'
 import { createClient } from '@/lib/supabase/client'
 import { useRouter } from 'next/navigation'
@@ -25,6 +26,11 @@ const menuItems = [
         href: '/admin/content',
         label: 'Edit Content',
         icon: FileText,
+    },
+    {
+        href: '/admin/berita',
+        label: 'Kelola Berita',
+        icon: Newspaper,
     },
     {
         href: '/admin/pendaftar',

@@ -1,13 +1,32 @@
 import Link from 'next/link'
 import { ArrowLeft, BookOpen, Milestone, ShieldCheck, GraduationCap } from 'lucide-react'
 import type { Metadata } from 'next'
+import { getContentMap } from '@/lib/content'
 
 export const metadata: Metadata = {
     title: 'Sejarah Singkat - SMP Terpadu Al-Ittihadiyah',
     description: 'Perjalanan, sejarah pendirian, dan komitmen SMP Terpadu Al-Ittihadiyah dalam mencetak generasi Islam yang berakhlak mulia dan berprestasi di Ciampea, Bogor.',
 }
 
-export default function SejarahPage() {
+export default async function SejarahPage() {
+    const content = await getContentMap('sejarah')
+
+    const title = content['sejarah.title'] || 'Sejarah & Perjalanan Kami'
+    const subtitle = content['sejarah.subtitle'] || 'Membangun peradaban generasi muda melalui perpaduan ilmu pengetahuan umum, pembiasaan ibadah, dan penguatan nilai Al-Qur\'an di Ciampea, Bogor.'
+    const latarBelakang1 = content['sejarah.latar_belakang_1'] || 'SMP Terpadu Al-Ittihadiyah lahir dari kepedulian mendalam para tokoh pendidikan dan masyarakat di Ciampea, Kabupaten Bogor terhadap tantangan pendidikan usia remaja. Di tengah derasnya arus globalisasi dan ancaman pergaulan bebas, dirasakan adanya kebutuhan mendesak akan lembaga pendidikan tingkat menengah pertama yang mampu menjadi benteng moral sekaligus kawah candradimuka intelektual bagi putra-putri Islam.'
+    const latarBelakang2 = content['sejarah.latar_belakang_2'] || 'Dengan mengusung konsep Sekolah Menengah Pertama Terpadu, yayasan berikhtiar memadukan keunggulan Kurikulum Nasional (Kemendikbudristek) dengan kurikulum kepesantrenan yang menitikberatkan pada pembinaan akhlak mulia, tahfidz Al-Qur\'an, dan pembiasaan ibadah harian.'
+    
+    const tonggak1Tahun = content['sejarah.tonggak_1_tahun'] || 'Tahun 2018'
+    const tonggak1Desc = content['sejarah.tonggak_1_desc'] || 'Peletakan batu pertama dan perintisan gedung pembelajaran di Ciampea Udik, dimulai dengan rombongan belajar perdana santri mukim dan non-mukim.'
+    
+    const tonggak2Tahun = content['sejarah.tonggak_2_tahun'] || 'Tahun 2021'
+    const tonggak2Desc = content['sejarah.tonggak_2_desc'] || 'Raihan akreditasi resmi dari Badan Akreditasi Nasional (BAN-S/M) serta perluasan sarana laboratorium komputer dan masjid sekolah.'
+    
+    const tonggak3Tahun = content['sejarah.tonggak_3_tahun'] || 'Tahun 2024 - Sekarang'
+    const tonggak3Desc = content['sejarah.tonggak_3_desc'] || 'Penerapan Kurikulum Merdeka Terpadu berbasis digital, penguatan program tahfidz mandiri, dan integrasi pendaftaran santri baru online.'
+    
+    const komitmen = content['sejarah.komitmen'] || 'SMP Terpadu Al-Ittihadiyah terus berikhtiar melayani para orang tua dengan sepenuh hati. Kami mendidik setiap santri selayaknya anak kandung sendiri, dengan keteladanan, kesabaran, serta kedisiplinan yang berimbang demi mengantarkan mereka menjadi pribadi yang bermanfaat bagi agama, bangsa, dan keluarga.'
+
     return (
         <div className="min-h-screen bg-slate-50 flex flex-col pt-20 pb-10 sm:pt-24 sm:pb-16">
             <div className="container mx-auto px-4 max-w-4xl">
@@ -29,10 +48,10 @@ export default function SejarahPage() {
                             Mengenal Lebih Dekat
                         </p>
                         <h1 className="text-2xl sm:text-3xl md:text-5xl font-extrabold tracking-tight mb-2 sm:mb-4">
-                            Sejarah &amp; Perjalanan Kami
+                            {title}
                         </h1>
                         <p className="text-emerald-100 text-xs sm:text-base md:text-lg leading-relaxed">
-                            Membangun peradaban generasi muda melalui perpaduan ilmu pengetahuan umum, pembiasaan ibadah, dan penguatan nilai Al-Qur&apos;an di Ciampea, Bogor.
+                            {subtitle}
                         </p>
                     </div>
                 </div>
@@ -46,11 +65,13 @@ export default function SejarahPage() {
                             <h2 className="text-lg sm:text-2xl font-bold text-gray-900">Latar Belakang Pendirian</h2>
                         </div>
                         <p className="text-xs sm:text-base md:text-lg leading-relaxed">
-                            SMP Terpadu Al-Ittihadiyah lahir dari kepedulian mendalam para tokoh pendidikan dan masyarakat di Ciampea, Kabupaten Bogor terhadap tantangan pendidikan usia remaja. Di tengah derasnya arus globalisasi dan ancaman pergaulan bebas, dirasakan adanya kebutuhan mendesak akan lembaga pendidikan tingkat menengah pertama yang mampu menjadi benteng moral sekaligus kawah candradimuka intelektual bagi putra-putri Islam.
+                            {latarBelakang1}
                         </p>
-                        <p className="text-xs sm:text-base md:text-lg leading-relaxed">
-                            Dengan mengusung konsep <strong>Sekolah Menengah Pertama Terpadu</strong>, yayasan berikhtiar memadukan keunggulan Kurikulum Nasional (Kemendikbudristek) dengan kurikulum kepesantrenan yang menitikberatkan pada pembinaan akhlak mulia, tahfidz Al-Qur&apos;an, dan pembiasaan ibadah harian.
-                        </p>
+                        {latarBelakang2 && (
+                            <p className="text-xs sm:text-base md:text-lg leading-relaxed">
+                                {latarBelakang2}
+                            </p>
+                        )}
                     </section>
 
                     {/* Section 2: Tonggak Perkembangan */}
@@ -66,9 +87,9 @@ export default function SejarahPage() {
                                     01
                                 </div>
                                 <div>
-                                    <h3 className="font-bold text-gray-900 text-sm sm:text-lg mb-0.5 sm:mb-1">Peletakan Pondasi &amp; Izin Operasional</h3>
+                                    <h3 className="font-bold text-gray-900 text-sm sm:text-lg mb-0.5 sm:mb-1">{tonggak1Tahun}</h3>
                                     <p className="text-xs sm:text-sm md:text-base text-gray-600 leading-relaxed">
-                                        Dimulai dengan penyediaan sarana ruang belajar yang asri dan aman di Kp. Pasar Salasa, Ciampea Udik, serta legalitas formal perizinan dinas pendidikan setempat.
+                                        {tonggak1Desc}
                                     </p>
                                 </div>
                             </div>
@@ -78,9 +99,9 @@ export default function SejarahPage() {
                                     02
                                 </div>
                                 <div>
-                                    <h3 className="font-bold text-gray-900 text-sm sm:text-lg mb-0.5 sm:mb-1">Penguatan Program Tahfidz &amp; Karakter</h3>
+                                    <h3 className="font-bold text-gray-900 text-sm sm:text-lg mb-0.5 sm:mb-1">{tonggak2Tahun}</h3>
                                     <p className="text-xs sm:text-sm md:text-base text-gray-600 leading-relaxed">
-                                        Menghadirkan ustadz dan ustadzah berkompeten untuk membimbing hafalan Al-Qur&apos;an juz amma, tahsin tartil, dan sholat berjamaah rutin bagi seluruh santri.
+                                        {tonggak2Desc}
                                     </p>
                                 </div>
                             </div>
@@ -90,9 +111,9 @@ export default function SejarahPage() {
                                     03
                                 </div>
                                 <div>
-                                    <h3 className="font-bold text-gray-900 text-sm sm:text-lg mb-0.5 sm:mb-1">Penerapan Budaya AKBAR (2024 - Sekarang)</h3>
+                                    <h3 className="font-bold text-gray-900 text-sm sm:text-lg mb-0.5 sm:mb-1">{tonggak3Tahun}</h3>
                                     <p className="text-xs sm:text-sm md:text-base text-gray-600 leading-relaxed">
-                                        Merumuskan visi institusi yang <strong>Aktif, Kreatif, Bersih, Antusias, dan Religius (AKBAR)</strong> sebagai pedoman seluruh aktivitas belajar, kesiswaan, dan tata kelola sekolah.
+                                        {tonggak3Desc}
                                     </p>
                                 </div>
                             </div>
@@ -106,7 +127,7 @@ export default function SejarahPage() {
                             <span>Komitmen Kami untuk Masa Depan Siswa</span>
                         </div>
                         <p className="text-xs sm:text-sm md:text-base text-emerald-950 leading-relaxed">
-                            SMP Terpadu Al-Ittihadiyah terus berikhtiar melayani para orang tua dengan sepenuh hati. Kami mendidik setiap santri selayaknya anak kandung sendiri, dengan keteladanan, kesabaran, serta kedisiplinan yang berimbang demi mengantarkan mereka menjadi pribadi yang bermanfaat bagi agama, bangsa, dan keluarga.
+                            {komitmen}
                         </p>
                     </section>
 
@@ -128,4 +149,3 @@ export default function SejarahPage() {
         </div>
     )
 }
-

@@ -1,13 +1,14 @@
 import Link from 'next/link'
 import { ArrowLeft } from 'lucide-react'
 import type { Metadata } from 'next'
+import { getContentMap } from '@/lib/content'
 
 export const metadata: Metadata = {
     title: 'Fasilitas & Sarana Sekolah - SMP Terpadu Al-Ittihadiyah',
     description: 'Sarana dan prasarana lengkap yang mendukung kenyamanan belajar, ibadah, dan pembinaan karakter di SMP Terpadu Al-Ittihadiyah Ciampea, Bogor.',
 }
 
-const FACILITIES = [
+const DEFAULT_FACILITIES = [
     {
         title: "Masjid & Musholla Sekolah",
         desc: "Pusat pembiasaan ibadah sholat lima waktu berjamaah, sholat dhuha rutin, tadarus pagi, dan halaqah bimbingan tahfidz Al-Qur'an dalam suasana khusyuk.",
@@ -40,7 +41,21 @@ const FACILITIES = [
     }
 ]
 
-export default function FasilitasPage() {
+export default async function FasilitasPage() {
+    const content = await getContentMap('fasilitas')
+
+    const title = content['fasilitas.title'] || 'Fasilitas Sekolah Al-Ittihadiyah'
+    const subtitle = content['fasilitas.subtitle'] || 'Mendukung kenyamanan, keselamatan, dan efektivitas proses belajar mengajar serta pembinaan akhlak santri setiap hari.'
+
+    const facilities = [1, 2, 3, 4, 5, 6].map((num, idx) => {
+        const fallback = DEFAULT_FACILITIES[idx]
+        return {
+            title: content[`fasilitas.item_${num}_title`] || fallback.title,
+            tag: content[`fasilitas.item_${num}_tag`] || fallback.tag,
+            desc: content[`fasilitas.item_${num}_desc`] || fallback.desc,
+        }
+    })
+
     return (
         <div className="min-h-screen bg-slate-50 flex flex-col pt-20 pb-10 sm:pt-24 sm:pb-16">
             <div className="container mx-auto px-4 max-w-5xl">
@@ -62,17 +77,17 @@ export default function FasilitasPage() {
                             Sarana &amp; Prasarana
                         </p>
                         <h1 className="text-2xl sm:text-3xl md:text-5xl font-extrabold tracking-tight mb-2 sm:mb-4">
-                            Fasilitas Sekolah Al-Ittihadiyah
+                            {title}
                         </h1>
                         <p className="text-emerald-100 text-xs sm:text-base md:text-lg leading-relaxed">
-                            Mendukung kenyamanan, keselamatan, dan efektivitas proses belajar mengajar serta pembinaan akhlak santri setiap hari.
+                            {subtitle}
                         </p>
                     </div>
                 </div>
 
                 {/* Facilities Grid */}
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6 mb-8 sm:mb-12">
-                    {FACILITIES.map((f, i) => (
+                    {facilities.map((f, i) => (
                         <div
                             key={i}
                             className="bg-white rounded-2xl sm:rounded-3xl p-5 sm:p-7 md:p-8 border border-slate-200/80 shadow-xs flex flex-col justify-between hover:border-emerald-300 transition-colors"
@@ -126,4 +141,3 @@ export default function FasilitasPage() {
         </div>
     )
 }
-

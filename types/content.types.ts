@@ -11,4 +11,15 @@ export type PageContent = {
     updated_by: string | null
 }
 
-export type ContentCategory = 'hero' | 'profile' | 'visi_misi' | 'keunggulan' | 'alur' | 'footer'
+export type ContentCategory = 'hero' | 'profile' | 'visi_misi' | 'keunggulan' | 'alur' | 'footer' | 'sejarah' | 'fasilitas' | 'branding' | 'berita'
+
+export type Article = {
+    id: string
+    title: string
+    date: string
+    category: string
+    summary: string
+    content: string
+    author?: string
+}
+

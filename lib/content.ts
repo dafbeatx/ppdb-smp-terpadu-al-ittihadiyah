@@ -1,6 +1,6 @@
 import { createServerClient } from '@supabase/ssr'
 import { cookies } from 'next/headers'
-import type { PageContent } from '@/types/content.types'
+import type { PageContent, Article } from '@/types/content.types'
 
 export async function getContent(category?: string): Promise<PageContent[]> {
     const supabase = await createClient()
@@ -52,6 +52,17 @@ export async function getContentMap(category: string): Promise<Record<string, st
     })
 
     return map
+}
+
+export async function getArticles(): Promise<Article[]> {
+    const raw = await getContentByKey('berita', 'articles_list')
+    if (!raw) return []
+    try {
+        const parsed = JSON.parse(raw)
+        return Array.isArray(parsed) ? parsed : []
+    } catch {
+        return []
+    }
 }
 
 async function createClient() {
