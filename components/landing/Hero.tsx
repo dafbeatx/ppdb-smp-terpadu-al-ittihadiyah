@@ -5,11 +5,12 @@ import ScrollReveal from '@/components/ScrollReveal'
 import Counter from '@/components/Counter'
 import ParallaxHeroBg from '@/components/landing/ParallaxHeroBg'
 import { 
-    CheckCircle2, 
-    MessageCircle, 
     MapPin, 
-    Calendar, 
-    FileText 
+    CheckCircle2, 
+    GraduationCap, 
+    ClipboardCheck, 
+    MessageCircle, 
+    ArrowRight 
 } from 'lucide-react'
 
 export default async function Hero() {
@@ -23,7 +24,7 @@ export default async function Hero() {
     // Stats: only display when filled by admin in CMS
     const rawExp = content['hero.stat_experience']?.trim()
     const rawGrad = content['hero.stat_graduate']?.trim()
-    const statAccreditation = content['hero.stat_accreditation']?.trim() || ''
+    const statAccreditation = content['hero.stat_accreditation']?.trim() || 'Terakreditasi B'
 
     const statExperience = rawExp ? parseInt(rawExp, 10) : null
     const statGraduate = rawGrad ? parseInt(rawGrad, 10) : null
@@ -43,175 +44,146 @@ export default async function Hero() {
     const waAdminUrl = "https://wa.me/6281947674100?text=" + encodeURIComponent("Assalamu'alaikum Admin SPMB SMP Terpadu Al-Ittihadiyah, saya orang tua calon siswa ingin bertanya seputar pendaftaran.")
 
     return (
-        <section id="hero" className="relative bg-linear-to-b from-emerald-950 via-emerald-900 to-emerald-950 text-white pt-24 pb-12 sm:pt-28 sm:pb-16 md:pt-36 md:pb-20 overflow-hidden">
-            <ParallaxHeroBg />
+        <section 
+            id="hero" 
+            className="relative min-h-[580px] sm:min-h-[640px] md:min-h-[720px] flex flex-col justify-between pt-24 sm:pt-28 md:pt-36 text-white overflow-visible"
+        >
+            {/* Full-width grayscale photograph of school building & dark overlay */}
+            <div className="absolute inset-0 -z-10 overflow-hidden bg-slate-950">
+                <Image
+                    src="/hero-bg.webp"
+                    alt={`Gedung ${schoolName}`}
+                    fill
+                    priority
+                    fetchPriority="high"
+                    sizes="100vw"
+                    className="object-cover filter grayscale contrast-115 brightness-90 scale-[1.02]"
+                />
+                <div className="absolute inset-0 bg-slate-950/75 bg-linear-to-b from-slate-950/85 via-slate-950/70 to-slate-950/90" />
+                <ParallaxHeroBg />
+            </div>
 
-            <div className="container mx-auto px-4 relative z-10">
+            {/* Main Content Area (Left-aligned typography) */}
+            <div className="container mx-auto px-4 sm:px-6 relative z-10 flex-1 flex flex-col justify-center py-8 sm:py-12 md:py-16">
                 <ScrollReveal direction="up" distance={25}>
-                    <div className="max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
+                    <div className="max-w-4xl text-left space-y-4 sm:space-y-6">
                         
-                        {/* Kolom Kiri: Identitas Resmi & Ajakan Pendaftaran */}
-                        <div className="lg:col-span-7 text-left space-y-5 sm:space-y-6">
-                            
-                            {/* Identitas Lembaga & Lokasi */}
-                            <div className="space-y-1.5">
-                                <p className="text-xs sm:text-sm font-bold text-emerald-300 uppercase tracking-wider">
-                                    SMP Terpadu Al-Ittihadiyah
-                                </p>
-                                <div className="flex flex-wrap items-center gap-x-2 gap-y-0.5 text-xs sm:text-sm text-emerald-100/90 font-medium">
-                                    <span className="flex items-center gap-1">
-                                        <MapPin className="w-3.5 h-3.5 text-amber-400 shrink-0" />
-                                        <span>Ciampea, Kab. Bogor</span>
-                                    </span>
+                        {/* Institutional Badge */}
+                        <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-emerald-950/80 border border-emerald-500/40 text-emerald-200 text-xs sm:text-sm font-semibold tracking-wide">
+                            <MapPin className="w-3.5 h-3.5 text-amber-400 shrink-0" />
+                            <span>{schoolName} • Ciampea, Kab. Bogor</span>
+                            {statAccreditation && (
+                                <>
                                     <span className="text-emerald-400">•</span>
-                                    <span className="text-amber-300 font-semibold">Terakreditasi B</span>
-                                </div>
+                                    <span className="text-amber-300 font-bold">{statAccreditation}</span>
+                                </>
+                            )}
+                        </div>
+
+                        {/* Bold 2-Line Headline */}
+                        <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-black text-white tracking-tight leading-[1.15]">
+                            Sistem Penerimaan Murid Baru
+                            <span className="block text-emerald-300 font-extrabold mt-1 sm:mt-2">
+                                {year}
+                            </span>
+                        </h1>
+
+                        {/* 2-Line Sub-headline */}
+                        <p className="text-base sm:text-lg md:text-xl text-slate-200 font-normal leading-relaxed max-w-2xl pt-1">
+                            {tagline ? tagline : "Membina Generasi Qur'ani yang Berkarakter, Unggul dalam Akademik, dan Berakhlak Mulia melalui kurikulum terpadu dan kepesantrenan."}
+                        </p>
+
+                        {/* Quick Credibility Badges */}
+                        <div className="flex flex-wrap items-center gap-2.5 sm:gap-3 pt-2 text-xs sm:text-sm">
+                            {hasStats && (
+                                <>
+                                    {statExperience !== null && !isNaN(statExperience) && (
+                                        <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-lg bg-black/45 backdrop-blur-xs border border-white/15 text-slate-200">
+                                            <span className="font-bold text-white"><Counter value={statExperience} suffix={experienceSuffix} /></span>
+                                            <span className="text-slate-300">{experienceLabel}</span>
+                                        </div>
+                                    )}
+                                    {statGraduate !== null && !isNaN(statGraduate) && (
+                                        <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-lg bg-black/45 backdrop-blur-xs border border-white/15 text-slate-200">
+                                            <span className="font-bold text-amber-300"><Counter value={statGraduate} suffix="%" /></span>
+                                            <span className="text-slate-300">Lanjut SMA</span>
+                                        </div>
+                                    )}
+                                </>
+                            )}
+                            <div className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-emerald-950/70 border border-emerald-500/40 text-emerald-200 font-semibold">
+                                <CheckCircle2 className="w-4 h-4 text-amber-400 shrink-0" />
+                                <span>Pendaftaran Gelombang I Dibuka</span>
                             </div>
+                        </div>
 
-                            {/* Headline Utama */}
-                            <div className="space-y-2.5">
-                                <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-black text-white leading-tight sm:leading-tight tracking-tight">
-                                    Sistem Penerimaan Murid Baru (SPMB)
-                                </h1>
+                    </div>
+                </ScrollReveal>
+            </div>
 
-                                <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-lg bg-emerald-800/80 border border-emerald-600/50 text-emerald-100 text-xs sm:text-sm font-semibold">
-                                    <Calendar className="w-3.5 h-3.5 text-amber-300" />
-                                    <span>{year}</span>
-                                </div>
-
-                                <p className="text-sm sm:text-base md:text-lg text-emerald-100 font-normal leading-relaxed pt-1">
-                                    {tagline ? tagline : "Membina Generasi Qur'ani yang Aktif, Kreatif, dan Berakhlak Mulia melalui integrasi kurikulum nasional dan nilai-nilai kepesantrenan."}
+            {/* 3 Floating / Overlapping Action Cards (Bottom of Hero) */}
+            <div className="container mx-auto px-4 sm:px-6 relative z-20 -mb-12 sm:-mb-16 md:-mb-20">
+                <ScrollReveal direction="up" distance={20} delay={0.1}>
+                    <div className="grid grid-cols-1 md:grid-cols-3 gap-3.5 sm:gap-4 md:gap-6 max-w-6xl mx-auto">
+                        {/* Card 1: Pendaftaran Siswa Baru */}
+                        <Link
+                            href="/daftar"
+                            className="group flex items-center gap-4 p-5 sm:p-6 bg-emerald-900 hover:bg-emerald-800 text-white rounded-2xl shadow-xl hover:shadow-2xl transition-all duration-300 border border-emerald-700/60 min-h-20"
+                        >
+                            <div className="w-12 h-12 rounded-xl bg-white/10 group-hover:bg-white/15 border border-white/20 flex items-center justify-center shrink-0 transition-transform duration-300 group-hover:scale-105">
+                                <GraduationCap className="w-6 h-6 text-white" strokeWidth={1.75} />
+                            </div>
+                            <div className="min-w-0 flex-1">
+                                <h3 className="font-bold text-base sm:text-lg text-white group-hover:text-amber-300 transition-colors leading-snug truncate">
+                                    Pendaftaran Siswa Baru
+                                </h3>
+                                <p className="text-xs sm:text-sm text-emerald-100 font-medium mt-0.5 flex items-center gap-1">
+                                    <span>Daftar Online Sekarang</span>
+                                    <ArrowRight className="w-3.5 h-3.5 opacity-80 group-hover:translate-x-1 transition-transform" />
                                 </p>
                             </div>
+                        </Link>
 
-                            {/* Tombol Aksi Nyata (Tanpa ornamen panah berlebih) */}
-                            <div className="flex flex-col sm:flex-row gap-3 pt-1">
-                                <Link
-                                    href="/daftar"
-                                    className="w-full sm:w-auto min-h-12 inline-flex items-center justify-center bg-amber-400 hover:bg-amber-300 text-emerald-950 font-bold text-sm sm:text-base px-6 sm:px-8 rounded-xl shadow-lg transition-colors active:scale-95 text-center"
-                                >
-                                    Daftar Siswa Baru (SPMB Online)
-                                </Link>
-
-                                <Link
-                                    href="/#alur"
-                                    className="w-full sm:w-auto min-h-12 inline-flex items-center justify-center bg-white/10 hover:bg-white/15 border border-white/20 text-white font-semibold text-sm sm:text-base px-5 sm:px-6 rounded-xl transition-colors active:scale-95 text-center gap-2"
-                                >
-                                    <FileText className="w-4 h-4 text-emerald-300" />
-                                    <span>Alur Pendaftaran</span>
-                                </Link>
-
-                                <a 
-                                    href={waAdminUrl}
-                                    target="_blank"
-                                    rel="noopener noreferrer"
-                                    className="w-full sm:w-auto min-h-12 inline-flex items-center justify-center bg-emerald-800/70 hover:bg-emerald-700/80 border border-emerald-600/50 text-white font-medium text-sm sm:text-base px-4 sm:px-5 rounded-xl gap-2 transition-colors active:scale-95 text-center"
-                                    aria-label="Konsultasi Panitia via WhatsApp"
-                                >
-                                    <MessageCircle className="w-4 h-4 text-emerald-300" />
-                                    <span>Konsultasi WA</span>
-                                </a>
+                        {/* Card 2: Alur & Persyaratan */}
+                        <Link
+                            href="/#alur"
+                            className="group flex items-center gap-4 p-5 sm:p-6 bg-emerald-900 hover:bg-emerald-800 text-white rounded-2xl shadow-xl hover:shadow-2xl transition-all duration-300 border border-emerald-700/60 min-h-20"
+                        >
+                            <div className="w-12 h-12 rounded-xl bg-white/10 group-hover:bg-white/15 border border-white/20 flex items-center justify-center shrink-0 transition-transform duration-300 group-hover:scale-105">
+                                <ClipboardCheck className="w-6 h-6 text-white" strokeWidth={1.75} />
                             </div>
-
-                            {/* Tiga Pilar Komitmen Sekolah */}
-                            <div className="grid grid-cols-1 sm:grid-cols-3 gap-2 sm:gap-3 pt-3 border-t border-emerald-800/70 text-xs sm:text-sm text-emerald-100/90">
-                                <div className="flex items-center gap-2">
-                                    <CheckCircle2 className="w-4 h-4 text-amber-400 shrink-0" />
-                                    <span>Kurikulum Terpadu</span>
-                                </div>
-                                <div className="flex items-center gap-2">
-                                    <CheckCircle2 className="w-4 h-4 text-amber-400 shrink-0" />
-                                    <span>Bimbingan Tahfidz &amp; Sholat</span>
-                                </div>
-                                <div className="flex items-center gap-2">
-                                    <CheckCircle2 className="w-4 h-4 text-amber-400 shrink-0" />
-                                    <span>Lingkungan Asri &amp; Santun</span>
-                                </div>
+                            <div className="min-w-0 flex-1">
+                                <h3 className="font-bold text-base sm:text-lg text-white group-hover:text-amber-300 transition-colors leading-snug truncate">
+                                    Alur &amp; Persyaratan
+                                </h3>
+                                <p className="text-xs sm:text-sm text-emerald-100 font-medium mt-0.5 flex items-center gap-1">
+                                    <span>Pelajari Prosedur Masuk</span>
+                                    <ArrowRight className="w-3.5 h-3.5 opacity-80 group-hover:translate-x-1 transition-transform" />
+                                </p>
                             </div>
-                        </div>
+                        </Link>
 
-                        {/* Kolom Kanan: Foto Gedung & Informasi Resmi */}
-                        <div className="lg:col-span-5">
-                            <div className="bg-emerald-900/60 rounded-2xl sm:rounded-3xl border border-emerald-700/40 p-3 sm:p-4 shadow-2xl">
-                                
-                                {/* Foto Gedung Sekolah (HTML img dengan fetchpriority high sesuai R-40) */}
-                                <div className="relative aspect-16/10 sm:aspect-4/3 rounded-xl sm:rounded-2xl overflow-hidden mb-3.5 bg-emerald-950">
-                                    <Image
-                                        src="/hero-bg.webp"
-                                        alt={`Gedung ${schoolName}`}
-                                        fill
-                                        priority
-                                        fetchPriority="high"
-                                        sizes="(max-width: 1024px) 100vw, 420px"
-                                        className="object-cover"
-                                    />
-                                    <div className="absolute inset-0 bg-linear-to-t from-emerald-950/80 via-transparent to-transparent" />
-                                    
-                                    <div className="absolute bottom-2.5 left-3 right-3 text-left">
-                                        <p className="text-white text-xs sm:text-sm font-bold drop-shadow-sm">
-                                            Gedung SMP Terpadu Al-Ittihadiyah
-                                        </p>
-                                        <p className="text-[11px] text-emerald-200 drop-shadow-sm">
-                                            Ciampea Udik, Kabupaten Bogor
-                                        </p>
-                                    </div>
-                                </div>
-
-                                {/* Ringkasan Status Pendaftaran Resmi */}
-                                <div className="space-y-2 text-xs sm:text-sm text-left">
-                                    <div className="flex items-center justify-between py-1.5 px-2.5 rounded-lg bg-emerald-950/40 border border-emerald-800/40">
-                                        <span className="text-emerald-200">Status Pendaftaran:</span>
-                                        <span className="font-bold text-amber-300">Gelombang I Terbuka</span>
-                                    </div>
-                                    <div className="flex items-center justify-between py-1.5 px-2.5 rounded-lg bg-emerald-950/40 border border-emerald-800/40">
-                                        <span className="text-emerald-200">Jenjang Siswa:</span>
-                                        <span className="font-semibold text-white">SMP Terpadu Putra &amp; Putri</span>
-                                    </div>
-                                    <div className="flex items-center justify-between py-1.5 px-2.5 rounded-lg bg-emerald-950/40 border border-emerald-800/40">
-                                        <span className="text-emerald-200">Program Utama:</span>
-                                        <span className="font-semibold text-white">Akademik &amp; Karakter AKBAR</span>
-                                    </div>
-                                </div>
-
-                                {/* Statistik Kredibilitas Resmi dari CMS */}
-                                {hasStats && (
-                                    <div className="grid grid-cols-3 gap-2 sm:gap-2.5 mt-3 sm:mt-4 pt-3 sm:pt-3.5 border-t border-emerald-800/60 text-center">
-                                        {statExperience !== null && !isNaN(statExperience) && (
-                                            <div className="bg-emerald-950/80 rounded-xl p-2 sm:p-2.5 border border-emerald-700/50 flex flex-col justify-center">
-                                                <div className="text-sm sm:text-base md:text-lg font-black text-white tracking-tight">
-                                                    <Counter value={statExperience} suffix={experienceSuffix} />
-                                                </div>
-                                                <div className="text-[11px] sm:text-xs text-emerald-200 font-medium leading-tight mt-0.5">
-                                                    {experienceLabel}
-                                                </div>
-                                            </div>
-                                        )}
-                                        {statGraduate !== null && !isNaN(statGraduate) && (
-                                            <div className="bg-emerald-950/80 rounded-xl p-2 sm:p-2.5 border border-emerald-700/50 flex flex-col justify-center">
-                                                <div className="text-sm sm:text-base md:text-lg font-black text-amber-300 tracking-tight">
-                                                    <Counter value={statGraduate} suffix="%" />
-                                                </div>
-                                                <div className="text-[11px] sm:text-xs text-emerald-200 font-medium leading-tight mt-0.5">
-                                                    Lanjut SMA
-                                                </div>
-                                            </div>
-                                        )}
-                                        {statAccreditation && (
-                                            <div className="bg-emerald-950/80 rounded-xl p-2 sm:p-2.5 border border-emerald-700/50 flex flex-col justify-center">
-                                                <div className="text-sm sm:text-base md:text-lg font-black text-white tracking-tight">
-                                                    {statAccreditation}
-                                                </div>
-                                                <div className="text-[11px] sm:text-xs text-emerald-200 font-medium leading-tight mt-0.5">
-                                                    Akreditasi
-                                                </div>
-                                            </div>
-                                        )}
-                                    </div>
-                                )}
-
+                        {/* Card 3: Layanan Konsultasi WA */}
+                        <a
+                            href={waAdminUrl}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="group flex items-center gap-4 p-5 sm:p-6 bg-emerald-900 hover:bg-emerald-800 text-white rounded-2xl shadow-xl hover:shadow-2xl transition-all duration-300 border border-emerald-700/60 min-h-20"
+                            aria-label="Konsultasi Panitia via WhatsApp"
+                        >
+                            <div className="w-12 h-12 rounded-xl bg-white/10 group-hover:bg-white/15 border border-white/20 flex items-center justify-center shrink-0 transition-transform duration-300 group-hover:scale-105">
+                                <MessageCircle className="w-6 h-6 text-white" strokeWidth={1.75} />
                             </div>
-                        </div>
-
+                            <div className="min-w-0 flex-1">
+                                <h3 className="font-bold text-base sm:text-lg text-white group-hover:text-amber-300 transition-colors leading-snug truncate">
+                                    Layanan Konsultasi WA
+                                </h3>
+                                <p className="text-xs sm:text-sm text-emerald-100 font-medium mt-0.5 flex items-center gap-1">
+                                    <span>Hubungi Panitia SPMB</span>
+                                    <ArrowRight className="w-3.5 h-3.5 opacity-80 group-hover:translate-x-1 transition-transform" />
+                                </p>
+                            </div>
+                        </a>
                     </div>
                 </ScrollReveal>
             </div>

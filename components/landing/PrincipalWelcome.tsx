@@ -17,7 +17,7 @@ export default async function PrincipalWelcome() {
     }
 
     return (
-        <section id="sambutan" className="py-10 md:py-20 bg-[#f4f9f6]">
+        <section id="sambutan" className="pt-20 sm:pt-28 md:pt-36 pb-12 md:pb-20 bg-[#f4f9f6]">
             <div className="container mx-auto px-4 sm:px-6 md:px-12">
                 <div className="max-w-6xl mx-auto">
                     <ScrollReveal direction="up">
