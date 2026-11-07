@@ -23,8 +23,8 @@ export default async function PrincipalWelcome() {
                     <ScrollReveal direction="up">
                         <div className="flex flex-col md:flex-row items-center gap-6 md:gap-16">
                             {/* Photo Column */}
-                            <div className="w-full md:w-[280px] flex justify-center shrink-0">
-                                <Card className="overflow-hidden rounded-2xl border-none shadow-xl bg-white p-2 w-[200px] sm:w-[240px] md:w-full">
+                            <div className="w-full md:w-70 flex justify-center shrink-0">
+                                <Card className="overflow-hidden rounded-2xl border-none shadow-xl bg-white p-2 w-50 sm:w-60 md:w-full">
                                     <div className="relative rounded-xl overflow-hidden aspect-3/4">
                                         <Image
                                             src="/kepala-sekolah.webp"
@@ -35,7 +35,7 @@ export default async function PrincipalWelcome() {
                                             priority
                                         />
                                     </div>
-                                    <div className="px-3 py-3.5 md:px-4 md:py-5 text-center flex flex-col justify-center min-h-[70px] md:min-h-[90px]">
+                                    <div className="px-3 py-3.5 md:px-4 md:py-5 text-center flex flex-col justify-center min-h-17.5 md:min-h-22.5">
                                         <h3 className="text-sm sm:text-base md:text-lg font-bold text-gray-900 leading-snug">
                                             {nama}
                                         </h3>
