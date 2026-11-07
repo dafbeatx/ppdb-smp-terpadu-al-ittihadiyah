@@ -17,15 +17,15 @@ export default async function PrincipalWelcome() {
     }
 
     return (
-        <section className="py-10 md:py-20 bg-[#f4f9f6]">
+        <section id="sambutan" className="py-10 md:py-20 bg-[#f4f9f6]">
             <div className="container mx-auto px-4 sm:px-6 md:px-12">
                 <div className="max-w-6xl mx-auto">
                     <ScrollReveal direction="up">
-                        <div className="flex flex-col md:flex-row items-center md:items-center gap-6 md:gap-16">
+                        <div className="flex flex-col md:flex-row items-center gap-6 md:gap-16">
                             {/* Photo Column */}
-                            <div className="w-full md:w-[280px] flex justify-center flex-shrink-0">
+                            <div className="w-full md:w-[280px] flex justify-center shrink-0">
                                 <Card className="overflow-hidden rounded-2xl border-none shadow-xl bg-white p-2 w-[200px] sm:w-[240px] md:w-full">
-                                    <div className="relative rounded-xl overflow-hidden aspect-[3/4]">
+                                    <div className="relative rounded-xl overflow-hidden aspect-3/4">
                                         <Image
                                             src="/kepala-sekolah.webp"
                                             alt={nama || 'Kepala Sekolah'}
